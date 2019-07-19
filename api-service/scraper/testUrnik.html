@@ -1,0 +1,974 @@
+<div id="main">
+    <style type="text/css">
+        #okvir_glavni_vsebina {
+            padding-left: 0 !important;
+        }
+    </style>
+    <div>
+        <div class="horizontal_tabs">
+            <a href="https://www.easistent.com/urniki/e29aeb36cd1efde89c2b2c28e33209813ec32756" title="Urniki" class="horizontal_tab_active">Urniki</a>
+            <div class="horizontal_tab_div"></div>
+            <a href="https://www.easistent.com/nadomescanja/e29aeb36cd1efde89c2b2c28e33209813ec32756" title="Nadomeščanja" class="horizontal_tab">Nadomeščanja</a>
+
+            <div class="horizontal_tab_div"></div>
+        </div>
+        <div id="okvir_prijava">
+            <h1><span class="text18">Šolski center Nova Gorica - Elektrotehniška in računalniška šola</span></h1>
+            <div class="padding5" style="background-color:#fff;">
+                <table class="collapse w100 novi_filtri" style="margin-top: 5px; border-bottom: none;">
+                    <tbody><tr>
+                        <td style="vertical-align: middle; padding-left: 5px; padding-right: 5px;  width: 33%;">
+                            <select id="prikaz" onchange="spremeni_urnik()" class="urnik-filter" autocomplete="off">
+                                <option value="razredi" selected="selected">Oddelki</option>                    <option value="ucilnice">Učilnice</option>            </select>
+                            <img src="https://www.easistent.com/images/icons/filter_separator.gif" alt=" | " width="5" height="7">                             <select id="id_parameter" onchange="spremeni_urnik()" class="urnik-filter" autocomplete="off">
+                            <option value="343294" selected="selected">1. AE</option>                            <option value="343299">1. CE</option>                            <option value="343304">1. NE</option>                            <option value="343309">1. NR</option>                            <option value="343314">1. RA</option>                            <option value="343319">1. RB</option>                            <option value="343324">1. RC</option>                            <option value="343259">2. AE</option>                            <option value="343264">2. CE</option>                            <option value="343269">2. NE</option>                            <option value="343274">2. NR</option>                            <option value="343279">2. RA</option>                            <option value="343284">2. RB</option>                            <option value="343289">2. RC</option>                            <option value="343234">3. AE</option>                            <option value="343239">3. CE</option>                            <option value="343244">3. RA</option>                            <option value="343249">3. RB</option>                            <option value="343254">3. RC</option>                            <option value="343219">4. AE</option>                            <option value="343224">4. RA</option>                            <option value="343229">4. RB</option>                </select>
+                            <img src="https://www.easistent.com/images/icons/filter_separator.gif" alt=" | " width="5" height="7">                 <select id="id_dijak" onchange="spremeni_urnik(true)" class="urnik-filter" autocomplete="off">
+                            <option value="0" selected="selected">Vsi dijaki</option>                            <optgroup label="Dijaki v oddelku">                                <option value="9480174">9480174</option>                                <option value="9480179">9480179</option>                                <option value="9480184">9480184</option>                                <option value="9480204">9480204</option>                                <option value="9480199">9480199</option>                                <option value="9480194">9480194</option>                                <option value="9480189">9480189</option>                                <option value="9480209">9480209</option>                                <option value="9480214">9480214</option>                                <option value="9480219">9480219</option>                                <option value="9480224">9480224</option>                                <option value="9480229">9480229</option>                                <option value="9480234">9480234</option>                                <option value="9480239">9480239</option>                                <option value="9480244">9480244</option>                                <option value="9526063">9526063</option>                                <option value="9480249">9480249</option>                                <option value="9480254">9480254</option>                                <option value="9480259">9480259</option>                                <option value="9480264">9480264</option>                                <option value="9480269">9480269</option>                                <option value="9480274">9480274</option>                                <option value="9480279">9480279</option>                                <option value="9480284">9480284</option></optgroup>                </select>
+                        </td>
+                        <td style="vertical-align: middle;  width: 33%;">
+                            <table class="ednevnik-seznam_ur_teden-navigacija" style="margin: 0 auto;">
+                                <tbody><tr>
+                                    <td style="border-bottom: 1px solid #e6e6e6;">
+                                        <a id="link_nazaj" href="javascript:ajax_urnik('nazaj');"><img src="https://www.easistent.com/images/icons/ednevnik_seznam_ur_nazaj.png" alt="<" title="Nazaj"></a>
+                                    </td>
+                                    <td class="middle bold" style="padding:0 10px; border-bottom: 1px solid #e6e6e6;" id="seznam_ur_teden-teden-td">
+                                        <select onchange="teden=$(this).val();ajax_urnik(false);" id="seznam_ur_teden-teden" class="ednevnik-seznam_ur_teden-navigacija-teden" autocomplete="off">
+                                            <option value="1">
+                                                Teden 1: 3. 9.                                - 9. 9. </option>                            <option value="2">
+                                            Teden 2: 10. 9.                                - 16. 9. </option>                            <option value="3">
+                                            Teden 3: 17. 9.                                - 23. 9. </option>                            <option value="4">
+                                            Teden 4: 24. 9.                                - 30. 9. </option>                            <option value="5">
+                                            Teden 5: 1. 10.                                - 7. 10. </option>                            <option value="6">
+                                            Teden 6: 8. 10.                                - 14. 10. </option>                            <option value="7">
+                                            Teden 7: 15. 10.                                - 21. 10. </option>                            <option value="8">
+                                            Teden 8: 22. 10.                                - 28. 10. </option>                            <option value="9">
+                                            Teden 9: 29. 10.                                - 4. 11. </option>                            <option value="10">
+                                            Teden 10: 5. 11.                                - 11. 11. </option>                            <option value="11">
+                                            Teden 11: 12. 11.                                - 18. 11. </option>                            <option value="12">
+                                            Teden 12: 19. 11.                                - 25. 11. </option>                            <option value="13">
+                                            Teden 13: 26. 11.                                - 2. 12. </option>                            <option value="14">
+                                            Teden 14: 3. 12.                                - 9. 12. </option>                            <option value="15">
+                                            Teden 15: 10. 12.                                - 16. 12. </option>                            <option value="16">
+                                            Teden 16: 17. 12.                                - 23. 12. </option>                            <option value="17">
+                                            Teden 17: 24. 12.                                - 30. 12. </option>                            <option value="18">
+                                            Teden 18: 31. 12.                                - 6. 1. </option>                            <option value="19">
+                                            Teden 19: 7. 1.                                - 13. 1. </option>                            <option value="20">
+                                            Teden 20: 14. 1.                                - 20. 1. </option>                            <option value="21">
+                                            Teden 21: 21. 1.                                - 27. 1. </option>                            <option value="22">
+                                            Teden 22: 28. 1.                                - 3. 2. </option>                            <option value="23">
+                                            Teden 23: 4. 2.                                - 10. 2. </option>                            <option value="24">
+                                            Teden 24: 11. 2.                                - 17. 2. </option>                            <option value="25">
+                                            Teden 25: 18. 2.                                - 24. 2. </option>                            <option value="26">
+                                            Teden 26: 25. 2.                                - 3. 3. </option>                            <option value="27">
+                                            Teden 27: 4. 3.                                - 10. 3. </option>                            <option value="28">
+                                            Teden 28: 11. 3.                                - 17. 3. </option>                            <option value="29">
+                                            Teden 29: 18. 3.                                - 24. 3. </option>                            <option value="30">
+                                            Teden 30: 25. 3.                                - 31. 3. </option>                            <option value="31">
+                                            Teden 31: 1. 4.                                - 7. 4. </option>                            <option value="32">
+                                            Teden 32: 8. 4.                                - 14. 4. </option>                            <option value="33">
+                                            Teden 33: 15. 4.                                - 21. 4. </option>                            <option value="34">
+                                            Teden 34: 22. 4.                                - 28. 4. </option>                            <option value="35">
+                                            Teden 35: 29. 4.                                - 5. 5. </option>                            <option value="36">
+                                            Teden 36: 6. 5.                                - 12. 5. </option>                            <option value="37">
+                                            Teden 37: 13. 5.                                - 19. 5. </option>                            <option value="38">
+                                            Teden 38: 20. 5.                                - 26. 5. </option>                            <option value="39">
+                                            Teden 39: 27. 5.                                - 2. 6. </option>                            <option value="40">
+                                            Teden 40: 3. 6.                                - 9. 6. </option>                            <option value="41">
+                                            Teden 41: 10. 6.                                - 16. 6. </option>                            <option value="42">
+                                            Teden 42: 17. 6.                                - 23. 6. </option>                            <option value="43">
+                                            Teden 43: 24. 6.                                - 30. 6. </option>                            <option value="44">
+                                            Teden 44: 1. 7.                                - 7. 7. </option>                            <option value="45">
+                                            Teden 45: 8. 7.                                - 14. 7. </option>                            <option value="46" class="ednevnik-seznam_ur_teden-navigacija-teden-danes" selected="selected">
+                                            Teden 46: 15. 7.                                - 21. 7. </option>                            <option value="47">
+                                            Teden 47: 22. 7.                                - 28. 7. </option>                            <option value="48">
+                                            Teden 48: 29. 7.                                - 4. 8. </option>                            <option value="49">
+                                            Teden 49: 5. 8.                                - 11. 8. </option>                            <option value="50">
+                                            Teden 50: 12. 8.                                - 18. 8. </option>                            <option value="51">
+                                            Teden 51: 19. 8.                                - 25. 8. </option>                            <option value="52">
+                                            Teden 52: 26. 8.                                - 1. 9. </option>                        </select>
+                                    </td>
+                                    <td style="border-bottom: 1px solid #e6e6e6;">
+                                        <a href="javascript:ajax_urnik('naprej');"><img src="https://www.easistent.com/images/icons/ednevnik_seznam_ur_naprej.png" alt="<" title="Naprej"></a>
+                                    </td>
+                                </tr>
+                                </tbody></table>
+                        </td>
+                        <td align="right" style="vertical-align: middle; line-height: 33px; width: 33%;">
+                            <a href="javascript:;" class="add" onclick="$('#seznam_ur_teden .ednevnik-seznam_ur_teden-td div').show();">Razširi vse</a>
+                            |
+                            <a href="javascript:;" class="delete" onclick="$('#seznam_ur_teden .ednevnik-seznam_ur_teden-td .ni_prvi').hide();">Skrči vse</a>&nbsp;
+                            | <a onclick="ajax_izpis()" href="javascript:;" style="margin-right: 10px;">Natisni</a>        </td>
+                    </tr>
+                    </tbody></table>
+
+                <div id="seznam_ur_teden" style="height: auto;"><div class="hidden" style="background-color:#fff;padding:3px;border:1px solid #E6E6E6;border-bottom:0;">
+                    <table class="w100">
+                        <tbody><tr>
+                            <td class="bold" width="60">OPOMBE:</td>
+                            <td class="lgray"><em></em></td>
+                        </tr>
+                        </tbody></table>
+                </div>
+                    <table class="ednevnik-seznam_ur_teden">
+                        <tbody><tr>
+                            <th width="10%">
+                                <div style="color:black;">Ura</div>
+                                <div style="font-size:11px;">&nbsp;</div></th>
+                            <th>
+                                <div>Ponedeljek</div>
+                                <div style="font-size:10px;font-weight:normal;color:#777;">15. 4.</div>
+                            </th>
+                            <th>
+                                <div>Torek</div>
+                                <div style="font-size:10px;font-weight:normal;color:#777;">16. 4.</div>
+                            </th>
+                            <th>
+                                <div>Sreda</div>
+                                <div style="font-size:10px;font-weight:normal;color:#777;">17. 4.</div>
+                            </th>
+                            <th>
+                                <div>Četrtek</div>
+                                <div style="font-size:10px;font-weight:normal;color:#777;">18. 4.</div>
+                            </th>
+                            <th>
+                                <div>Petek</div>
+                                <div style="font-size:10px;font-weight:normal;color:#777;">19. 4.</div>
+                            </th>
+                            <th>
+                                <div>Sobota</div>
+                                <div style="font-size:10px;font-weight:normal;color:#777;">20. 4.</div>
+                            </th>
+                            <th>
+                                <div>Nedelja</div>
+                                <div style="font-size:10px;font-weight:normal;color:#777;">21. 4.</div>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td width="9%" class="ednevnik-seznam_ur_teden-td ednevnik-seznam_ur_teden-ura">
+
+                                <div class="black bold text14" style="padding-bottom:0px;">0. predura</div>
+                                <div class="text10 gray">6:55 - 7:40</div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-0-2019-04-15" class="ednevnik-seznam_ur_teden-td ">
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-0-2019-04-16" class="ednevnik-seznam_ur_teden-td ">
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-0-2019-04-17" class="ednevnik-seznam_ur_teden-td ">
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-0-2019-04-18" class="ednevnik-seznam_ur_teden-td ">
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-0-2019-04-19" class="ednevnik-seznam_ur_teden-td ">
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-0-2019-04-20" class="ednevnik-seznam_ur_teden-td ">
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-0-2019-04-21" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik ednevnik-seznam_ur_teden-td-dogodek " style="color:#444;">					<table class="w100 collapse" title="Šolski koledar">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold">
+                                            Praznik						</td>
+                                        <td style="border:none;" align="right"><img src="https://www.easistent.com/images/icons/ednevnik_seznam_ur_dogodek.png" title="Šolski koledar"></td>
+                                    </tr>
+                                    </tbody></table>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="9%" class="ednevnik-seznam_ur_teden-td ednevnik-seznam_ur_teden-ura">
+
+                                <div class="black bold text14" style="padding-bottom:0px;">1. ura</div>
+                                <div class="text10 gray">7:45 - 8:30</div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-1-2019-04-15" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;">                        <table class="w100 collapse">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold"><span title="Angleščina">ANG</span>                            </td>
+                                        <td style="border:none;" align="right"></td>
+                                    </tr>
+                                    </tbody></table>
+                                    <div class="text11">
+                                        R. Češčut, E36                        </div>
+
+                                </div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-1-2019-04-16" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;">                        <table class="w100 collapse">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold"><span title="Umetnost">UME</span>                            </td>
+                                        <td style="border:none;" align="right"></td>
+                                    </tr>
+                                    </tbody></table>
+                                    <div class="text11">
+                                        S. Peršolja Bučinel, E33                        </div>
+
+                                </div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-1-2019-04-17" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;">                        <table class="w100 collapse">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold"><span title="Športna vzgoja">ŠVZ</span>                            </td>
+                                        <td style="border:none;" align="right"></td>
+                                    </tr>
+                                    </tbody></table>
+                                    <div class="text11">
+                                        I. Čehovin, ŠP2                        </div>
+
+                                </div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-1-2019-04-18" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;">                        <table class="w100 collapse">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold"><span title="Umetnost">UME</span>                            </td>
+                                        <td style="border:none;" align="right"></td>
+                                    </tr>
+                                    </tbody></table>
+                                    <div class="text11">
+                                        S. Peršolja Bučinel, E31                        </div>
+
+                                </div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-1-2019-04-19" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;">                        <table class="w100 collapse">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold"><span title="Izdelava osnovnih vezij - praksa">IOVp</span>                            </td>
+                                        <td style="border:none;" align="right"><a href="javascript:;" onclick="$('#ednevnik-seznam_ur_teden-blok-177824-2019-04-19').toggle();stop_propagation(event);" class="ednevnik-seznam_ur_teden-vec_ur" title="Več skupin">2</a></td>
+                                    </tr>
+                                    </tbody></table>
+                                    <div class="text11">
+                                        V. Jug, M1-07                        </div>
+                                    <div class="text11 gray bold">Skupina 1</div>
+                                </div>
+                                <div id="ednevnik-seznam_ur_teden-blok-177824-2019-04-19" class="ni_prvi">
+                                    <div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;border-top:1px solid #E6E6E6;">                        <table class="w100 collapse">
+                                        <tbody><tr>
+                                            <td style="border:none;" class="text14 bold"><span title="Izdelava osnovnih vezij - praksa">IOVp</span>                            </td>
+                                            <td style="border:none;" align="right"></td>
+                                        </tr>
+                                        </tbody></table>
+                                        <div class="text11">
+                                            B. Pregelj, P15                        </div>
+                                        <div class="text11 gray bold">Skupina 2</div>
+                                    </div>
+                                </div>			</td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-1-2019-04-20" class="ednevnik-seznam_ur_teden-td ">
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-1-2019-04-21" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik ednevnik-seznam_ur_teden-td-dogodek " style="color:#444;">					<table class="w100 collapse" title="Šolski koledar">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold">
+                                            Praznik						</td>
+                                        <td style="border:none;" align="right"><img src="https://www.easistent.com/images/icons/ednevnik_seznam_ur_dogodek.png" title="Šolski koledar"></td>
+                                    </tr>
+                                    </tbody></table>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="9%" class="ednevnik-seznam_ur_teden-td ednevnik-seznam_ur_teden-ura">
+
+                                <div class="black bold text14" style="padding-bottom:0px;">2. ura</div>
+                                <div class="text10 gray">8:35 - 9:20</div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-2-2019-04-15" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;">                        <table class="w100 collapse">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold"><span title="Kemija">KEM</span>                            </td>
+                                        <td style="border:none;" align="right"></td>
+                                    </tr>
+                                    </tbody></table>
+                                    <div class="text11">
+                                        I. Rutar, A22                        </div>
+
+                                </div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-2-2019-04-16" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik ednevnik-seznam_ur_teden-td-nadomescanje " style="color:#444;">                        <table class="w100 collapse">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold"><span title="Umetnost">UME</span>                            </td>
+                                        <td style="border:none;" align="right"><img src="https://www.easistent.com/images/icons/ednevnik_seznam_ur_nadomescanje.png" title="Nadomeščanje"></td>
+                                    </tr>
+                                    </tbody></table>
+                                    <div class="text11">
+                                        S. Peršolja Bučinel, E33                        </div>
+
+                                </div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-2-2019-04-17" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;">                        <table class="w100 collapse">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold"><span title="Upravljanje s programirljivimi napravami">UPN</span>                            </td>
+                                        <td style="border:none;" align="right"></td>
+                                    </tr>
+                                    </tbody></table>
+                                    <div class="text11">
+                                        G. Milič, E21                        </div>
+
+                                </div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-2-2019-04-18" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;">                        <table class="w100 collapse">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold"><span title="Geografija">GEO</span>                            </td>
+                                        <td style="border:none;" align="right"></td>
+                                    </tr>
+                                    </tbody></table>
+                                    <div class="text11">
+                                        T. Stanič, D32                        </div>
+
+                                </div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-2-2019-04-19" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;">                        <table class="w100 collapse">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold"><span title="Izdelava osnovnih vezij - praksa">IOVp</span>                            </td>
+                                        <td style="border:none;" align="right"><a href="javascript:;" onclick="$('#ednevnik-seznam_ur_teden-blok-177864-2019-04-19').toggle();stop_propagation(event);" class="ednevnik-seznam_ur_teden-vec_ur" title="Več skupin">2</a></td>
+                                    </tr>
+                                    </tbody></table>
+                                    <div class="text11">
+                                        V. Jug, M1-07                        </div>
+                                    <div class="text11 gray bold">Skupina 1</div>
+                                </div>
+                                <div id="ednevnik-seznam_ur_teden-blok-177864-2019-04-19" class="ni_prvi">
+                                    <div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;border-top:1px solid #E6E6E6;">                        <table class="w100 collapse">
+                                        <tbody><tr>
+                                            <td style="border:none;" class="text14 bold"><span title="Izdelava osnovnih vezij - praksa">IOVp</span>                            </td>
+                                            <td style="border:none;" align="right"></td>
+                                        </tr>
+                                        </tbody></table>
+                                        <div class="text11">
+                                            B. Pregelj, P15                        </div>
+                                        <div class="text11 gray bold">Skupina 2</div>
+                                    </div>
+                                </div>			</td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-2-2019-04-20" class="ednevnik-seznam_ur_teden-td ">
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-2-2019-04-21" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik ednevnik-seznam_ur_teden-td-dogodek " style="color:#444;">					<table class="w100 collapse" title="Šolski koledar">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold">
+                                            Praznik						</td>
+                                        <td style="border:none;" align="right"><img src="https://www.easistent.com/images/icons/ednevnik_seznam_ur_dogodek.png" title="Šolski koledar"></td>
+                                    </tr>
+                                    </tbody></table>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="9%" class="ednevnik-seznam_ur_teden-td ednevnik-seznam_ur_teden-ura">
+
+                                <div class="black bold text14" style="padding-bottom:0px;">3. ura</div>
+                                <div class="text10 gray">9:25 - 10:10</div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-3-2019-04-15" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;">                        <table class="w100 collapse">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold"><span title="Matematika">MAT</span>                            </td>
+                                        <td style="border:none;" align="right"></td>
+                                    </tr>
+                                    </tbody></table>
+                                    <div class="text11">
+                                        U. Komel, E34                        </div>
+
+                                </div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-3-2019-04-16" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik ednevnik-seznam_ur_teden-td-nadomescanje " style="color:#444;">                        <table class="w100 collapse">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold"><span title="Izdelava osnovnih vezij">IOV</span>                            </td>
+                                        <td style="border:none;" align="right"><img src="https://www.easistent.com/images/icons/ednevnik_seznam_ur_nadomescanje.png" title="Nadomeščanje"></td>
+                                    </tr>
+                                    </tbody></table>
+                                    <div class="text11">
+                                        B. Pregelj, E34                        </div>
+
+                                </div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-3-2019-04-17" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;">                        <table class="w100 collapse">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold"><span title="Slovenščina">SLO</span>                            </td>
+                                        <td style="border:none;" align="right"></td>
+                                    </tr>
+                                    </tbody></table>
+                                    <div class="text11">
+                                        M. Figelj, E18                        </div>
+
+                                </div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-3-2019-04-18" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;">                        <table class="w100 collapse">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold"><span title="Izdelava osnovnih vezij">IOV</span>                            </td>
+                                        <td style="border:none;" align="right"></td>
+                                    </tr>
+                                    </tbody></table>
+                                    <div class="text11">
+                                        E. Ipavec, E31                        </div>
+
+                                </div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-3-2019-04-19" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;">                        <table class="w100 collapse">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold"><span title="Slovenščina">SLO</span>                            </td>
+                                        <td style="border:none;" align="right"></td>
+                                    </tr>
+                                    </tbody></table>
+                                    <div class="text11">
+                                        M. Figelj, E18                        </div>
+
+                                </div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-3-2019-04-20" class="ednevnik-seznam_ur_teden-td ">
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-3-2019-04-21" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik ednevnik-seznam_ur_teden-td-dogodek " style="color:#444;">					<table class="w100 collapse" title="Šolski koledar">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold">
+                                            Praznik						</td>
+                                        <td style="border:none;" align="right"><img src="https://www.easistent.com/images/icons/ednevnik_seznam_ur_dogodek.png" title="Šolski koledar"></td>
+                                    </tr>
+                                    </tbody></table>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="9%" class="ednevnik-seznam_ur_teden-td ednevnik-seznam_ur_teden-ura">
+
+                                <div class="black bold text14" style="padding-bottom:0px;">4. ura</div>
+                                <div class="text10 gray">10:15 - 11:00</div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-4-2019-04-15" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;">                        <table class="w100 collapse">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold"><span title="Upravljanje s programirljivimi napravami">UPN</span>                            </td>
+                                        <td style="border:none;" align="right"></td>
+                                    </tr>
+                                    </tbody></table>
+                                    <div class="text11">
+                                        G. Milič, E21                        </div>
+
+                                </div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-4-2019-04-16" class="ednevnik-seznam_ur_teden-td ">
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-4-2019-04-17" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;">                        <table class="w100 collapse">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold"><span title="Slovenščina">SLO</span>                            </td>
+                                        <td style="border:none;" align="right"></td>
+                                    </tr>
+                                    </tbody></table>
+                                    <div class="text11">
+                                        M. Figelj, E18                        </div>
+
+                                </div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-4-2019-04-18" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;">                        <table class="w100 collapse">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold"><span title="Matematika">MAT</span>                            </td>
+                                        <td style="border:none;" align="right"></td>
+                                    </tr>
+                                    </tbody></table>
+                                    <div class="text11">
+                                        U. Komel, E34                        </div>
+
+                                </div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-4-2019-04-19" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;">                        <table class="w100 collapse">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold"><span title="Športna vzgoja">ŠVZ</span>                            </td>
+                                        <td style="border:none;" align="right"></td>
+                                    </tr>
+                                    </tbody></table>
+                                    <div class="text11">
+                                        I. Čehovin, TVB                        </div>
+
+                                </div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-4-2019-04-20" class="ednevnik-seznam_ur_teden-td ">
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-4-2019-04-21" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik ednevnik-seznam_ur_teden-td-dogodek " style="color:#444;">					<table class="w100 collapse" title="Šolski koledar">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold">
+                                            Praznik						</td>
+                                        <td style="border:none;" align="right"><img src="https://www.easistent.com/images/icons/ednevnik_seznam_ur_dogodek.png" title="Šolski koledar"></td>
+                                    </tr>
+                                    </tbody></table>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="9%" class="ednevnik-seznam_ur_teden-td ednevnik-seznam_ur_teden-ura">
+
+                                <div class="black bold text14" style="padding-bottom:0px;">5. ura</div>
+                                <div class="text10 gray">11:00 - 11:45</div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-5-2019-04-15" class="ednevnik-seznam_ur_teden-td ">
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-5-2019-04-16" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;">                        <table class="w100 collapse">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold"><span title="Geografija">GEO</span>                            </td>
+                                        <td style="border:none;" align="right"></td>
+                                    </tr>
+                                    </tbody></table>
+                                    <div class="text11">
+                                        T. Stanič, D32                        </div>
+
+                                </div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-5-2019-04-17" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik ednevnik-seznam_ur_teden-td-dogodek " style="color:#444;">					<table class="w100 collapse">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold">
+                                            Spletno nasilje in ustrahovanje						</td>
+                                        <td style="border:none;" align="right"><img src="https://www.easistent.com/images/icons/ednevnik_seznam_ur_dogodek.png" title="Dogodek"></td>
+                                    </tr>
+                                    </tbody></table>
+                                    <strong>Učilnice:</strong>
+                                    &nbsp;
+                                    E24										</div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-5-2019-04-18" class="ednevnik-seznam_ur_teden-td ">
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-5-2019-04-19" class="ednevnik-seznam_ur_teden-td ">
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-5-2019-04-20" class="ednevnik-seznam_ur_teden-td ">
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-5-2019-04-21" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik ednevnik-seznam_ur_teden-td-dogodek " style="color:#444;">					<table class="w100 collapse" title="Šolski koledar">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold">
+                                            Praznik						</td>
+                                        <td style="border:none;" align="right"><img src="https://www.easistent.com/images/icons/ednevnik_seznam_ur_dogodek.png" title="Šolski koledar"></td>
+                                    </tr>
+                                    </tbody></table>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="9%" class="ednevnik-seznam_ur_teden-td ednevnik-seznam_ur_teden-ura">
+
+                                <div class="black bold text14" style="padding-bottom:0px;">6. ura</div>
+                                <div class="text10 gray">11:50 - 12:35</div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-6-2019-04-15" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;">                        <table class="w100 collapse">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold"><span title="Izdelava osnovnih vezij">IOV</span>                            </td>
+                                        <td style="border:none;" align="right"></td>
+                                    </tr>
+                                    </tbody></table>
+                                    <div class="text11">
+                                        E. Ipavec, E31                        </div>
+
+                                </div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-6-2019-04-16" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;">                        <table class="w100 collapse">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold"><span title="Kemija">KEM</span>                            </td>
+                                        <td style="border:none;" align="right"></td>
+                                    </tr>
+                                    </tbody></table>
+                                    <div class="text11">
+                                        I. Rutar, A22                        </div>
+
+                                </div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-6-2019-04-17" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik ednevnik-seznam_ur_teden-td-dogodek " style="color:#444;">					<table class="w100 collapse">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold">
+                                            Spletno nasilje in ustrahovanje						</td>
+                                        <td style="border:none;" align="right"><img src="https://www.easistent.com/images/icons/ednevnik_seznam_ur_dogodek.png" title="Dogodek"></td>
+                                    </tr>
+                                    </tbody></table>
+                                    <strong>Učilnice:</strong>
+                                    &nbsp;
+                                    E24										</div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-6-2019-04-18" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;">                        <table class="w100 collapse">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold"><span title="Izdelava osnovnih vezij">IOV</span>                            </td>
+                                        <td style="border:none;" align="right"></td>
+                                    </tr>
+                                    </tbody></table>
+                                    <div class="text11">
+                                        E. Ipavec, E31                        </div>
+
+                                </div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-6-2019-04-19" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;">                        <table class="w100 collapse">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold"><span title="Informatika s tehniškim komuniciranjem">ITK</span>                            </td>
+                                        <td style="border:none;" align="right"></td>
+                                    </tr>
+                                    </tbody></table>
+                                    <div class="text11">
+                                        I. Brecelj, E11                        </div>
+
+                                </div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-6-2019-04-20" class="ednevnik-seznam_ur_teden-td ">
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-6-2019-04-21" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik ednevnik-seznam_ur_teden-td-dogodek " style="color:#444;">					<table class="w100 collapse" title="Šolski koledar">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold">
+                                            Praznik						</td>
+                                        <td style="border:none;" align="right"><img src="https://www.easistent.com/images/icons/ednevnik_seznam_ur_dogodek.png" title="Šolski koledar"></td>
+                                    </tr>
+                                    </tbody></table>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="9%" class="ednevnik-seznam_ur_teden-td ednevnik-seznam_ur_teden-ura">
+
+                                <div class="black bold text14" style="padding-bottom:0px;">7. ura</div>
+                                <div class="text10 gray">12:40 - 13:25</div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-7-2019-04-15" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;">                        <table class="w100 collapse">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold"><span title="Športna vzgoja">ŠVZ</span>                            </td>
+                                        <td style="border:none;" align="right"></td>
+                                    </tr>
+                                    </tbody></table>
+                                    <div class="text11">
+                                        I. Čehovin, TVB                        </div>
+
+                                </div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-7-2019-04-16" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;">                        <table class="w100 collapse">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold"><span title="Vzdrževanje računalniške opreme - praksa">VROp</span>                            </td>
+                                        <td style="border:none;" align="right"></td>
+                                    </tr>
+                                    </tbody></table>
+                                    <div class="text11">
+                                        E. Bizaj, P12                        </div>
+                                    <div class="text11 gray bold">Skupina 2</div>
+                                </div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-7-2019-04-17" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;">                        <table class="w100 collapse">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold"><span title="Informatika s tehniškim komuniciranjem - praksa">ITKp</span>                            </td>
+                                        <td style="border:none;" align="right"><a href="javascript:;" onclick="$('#ednevnik-seznam_ur_teden-blok-177889-2019-04-17').toggle();stop_propagation(event);" class="ednevnik-seznam_ur_teden-vec_ur" title="Več skupin">2</a></td>
+                                    </tr>
+                                    </tbody></table>
+                                    <div class="text11">
+                                        I. Brecelj, E22                        </div>
+                                    <div class="text11 gray bold">Skupina 1</div>
+                                </div>
+                                <div id="ednevnik-seznam_ur_teden-blok-177889-2019-04-17" class="ni_prvi">
+                                    <div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;border-top:1px solid #E6E6E6;">                        <table class="w100 collapse">
+                                        <tbody><tr>
+                                            <td style="border:none;" class="text14 bold"><span title="Informatika s tehniškim komuniciranjem - praksa">ITKp</span>                            </td>
+                                            <td style="border:none;" align="right"></td>
+                                        </tr>
+                                        </tbody></table>
+                                        <div class="text11">
+                                            G. Vodopivec, A23                        </div>
+                                        <div class="text11 gray bold">Skupina 2</div>
+                                    </div>
+                                </div>			</td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-7-2019-04-18" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;">                        <table class="w100 collapse">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold"><span title="Angleščina">ANG</span>                            </td>
+                                        <td style="border:none;" align="right"></td>
+                                    </tr>
+                                    </tbody></table>
+                                    <div class="text11">
+                                        R. Češčut, E36                        </div>
+
+                                </div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-7-2019-04-19" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;">                        <table class="w100 collapse">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold"><span title="Informatika s tehniškim komuniciranjem">ITK</span>                            </td>
+                                        <td style="border:none;" align="right"></td>
+                                    </tr>
+                                    </tbody></table>
+                                    <div class="text11">
+                                        I. Brecelj, E11                        </div>
+
+                                </div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-7-2019-04-20" class="ednevnik-seznam_ur_teden-td ">
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-7-2019-04-21" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik ednevnik-seznam_ur_teden-td-dogodek " style="color:#444;">					<table class="w100 collapse" title="Šolski koledar">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold">
+                                            Praznik						</td>
+                                        <td style="border:none;" align="right"><img src="https://www.easistent.com/images/icons/ednevnik_seznam_ur_dogodek.png" title="Šolski koledar"></td>
+                                    </tr>
+                                    </tbody></table>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="9%" class="ednevnik-seznam_ur_teden-td ednevnik-seznam_ur_teden-ura">
+
+                                <div class="black bold text14" style="padding-bottom:0px;">8. ura</div>
+                                <div class="text10 gray">13:30 - 14:15</div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-8-2019-04-15" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;">                        <table class="w100 collapse">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold"><span title="Vzdrževanje računalniške opreme">VRO</span>                            </td>
+                                        <td style="border:none;" align="right"></td>
+                                    </tr>
+                                    </tbody></table>
+                                    <div class="text11">
+                                        E. Bizaj, P12                        </div>
+
+                                </div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-8-2019-04-16" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;">                        <table class="w100 collapse">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold"><span title="Vzdrževanje računalniške opreme - praksa">VROp</span>                            </td>
+                                        <td style="border:none;" align="right"></td>
+                                    </tr>
+                                    </tbody></table>
+                                    <div class="text11">
+                                        E. Bizaj, P12                        </div>
+                                    <div class="text11 gray bold">Skupina 2</div>
+                                </div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-8-2019-04-17" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;">                        <table class="w100 collapse">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold"><span title="Informatika s tehniškim komuniciranjem - praksa">ITKp</span>                            </td>
+                                        <td style="border:none;" align="right"><a href="javascript:;" onclick="$('#ednevnik-seznam_ur_teden-blok-177894-2019-04-17').toggle();stop_propagation(event);" class="ednevnik-seznam_ur_teden-vec_ur" title="Več skupin">2</a></td>
+                                    </tr>
+                                    </tbody></table>
+                                    <div class="text11">
+                                        I. Brecelj, E22                        </div>
+                                    <div class="text11 gray bold">Skupina 1</div>
+                                </div>
+                                <div id="ednevnik-seznam_ur_teden-blok-177894-2019-04-17" class="ni_prvi">
+                                    <div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;border-top:1px solid #E6E6E6;">                        <table class="w100 collapse">
+                                        <tbody><tr>
+                                            <td style="border:none;" class="text14 bold"><span title="Informatika s tehniškim komuniciranjem - praksa">ITKp</span>                            </td>
+                                            <td style="border:none;" align="right"></td>
+                                        </tr>
+                                        </tbody></table>
+                                        <div class="text11">
+                                            G. Vodopivec, A23                        </div>
+                                        <div class="text11 gray bold">Skupina 2</div>
+                                    </div>
+                                </div>			</td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-8-2019-04-18" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;">                        <table class="w100 collapse">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold"><span title="Razredna ura">RU</span>                            </td>
+                                        <td style="border:none;" align="right"></td>
+                                    </tr>
+                                    </tbody></table>
+                                    <div class="text11">
+                                        E. Ipavec, E31                        </div>
+
+                                </div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-8-2019-04-19" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;">                        <table class="w100 collapse">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold"><span title="Izdelava osnovnih vezij">IOV</span>                            </td>
+                                        <td style="border:none;" align="right"></td>
+                                    </tr>
+                                    </tbody></table>
+                                    <div class="text11">
+                                        E. Ipavec, E31                        </div>
+
+                                </div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-8-2019-04-20" class="ednevnik-seznam_ur_teden-td ">
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-8-2019-04-21" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik ednevnik-seznam_ur_teden-td-dogodek " style="color:#444;">					<table class="w100 collapse" title="Šolski koledar">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold">
+                                            Praznik						</td>
+                                        <td style="border:none;" align="right"><img src="https://www.easistent.com/images/icons/ednevnik_seznam_ur_dogodek.png" title="Šolski koledar"></td>
+                                    </tr>
+                                    </tbody></table>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="9%" class="ednevnik-seznam_ur_teden-td ednevnik-seznam_ur_teden-ura">
+
+                                <div class="black bold text14" style="padding-bottom:0px;">9. ura</div>
+                                <div class="text10 gray">14:20 - 15:05</div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-9-2019-04-15" class="ednevnik-seznam_ur_teden-td ">
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-9-2019-04-16" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;">                        <table class="w100 collapse">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold"><span title="Kemija">KEM</span>                            </td>
+                                        <td style="border:none;" align="right"></td>
+                                    </tr>
+                                    </tbody></table>
+                                    <div class="text11">
+                                        I. Rutar, M1-06                        </div>
+
+                                </div>
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-9-2019-04-17" class="ednevnik-seznam_ur_teden-td ">
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-9-2019-04-18" class="ednevnik-seznam_ur_teden-td ">
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-9-2019-04-19" class="ednevnik-seznam_ur_teden-td ">
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-9-2019-04-20" class="ednevnik-seznam_ur_teden-td ">
+                            </td>
+                            <td width="13%" id="ednevnik-seznam_ur_teden-td-9-2019-04-21" class="ednevnik-seznam_ur_teden-td ">
+                                <div class="ednevnik-seznam_ur_teden-urnik ednevnik-seznam_ur_teden-td-dogodek " style="color:#444;">					<table class="w100 collapse" title="Šolski koledar">
+                                    <tbody><tr>
+                                        <td style="border:none;" class="text14 bold">
+                                            Praznik						</td>
+                                        <td style="border:none;" align="right"><img src="https://www.easistent.com/images/icons/ednevnik_seznam_ur_dogodek.png" title="Šolski koledar"></td>
+                                    </tr>
+                                    </tbody></table>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody></table>
+                </div>
+                <br>
+
+                <table>
+                    <tbody><tr>
+                        <td class="text14 bold" style="padding-right:20px;">Legenda:</td>
+                        <td class="text11 bold black" style="padding-right:20px;"><img src="https://www.easistent.com/images/icons/ednevnik_seznam_ur_nadomescanje.png"> Nadomeščanje
+                        </td>
+                        <td class="text11 bold black" style="padding-right:20px;"><img src="https://www.easistent.com/images/icons/ednevnik_seznam_ur_zaposlitev.png"> Zaposlitev
+                        </td>
+                        <td class="text11 bold black" style="padding-right:20px;"><img src="https://www.easistent.com/images/icons/ednevnik_seznam_ur_odpadlo.png"> Odpadla ura
+                        </td>
+                        <td class="text11 bold black" style="padding-right:20px;"><img src="https://www.easistent.com/images/icons/ednevnik_seznam_ur_neopravljeno.png"> Neopravljena ura
+                        </td>
+                        <td class="text11 bold black" style="padding-right:20px;"><img src="https://www.easistent.com/images/icons/ednevnik_seznam_ur_vec_ur.png"> Več skupin
+                        </td>
+                        <td class="text11 bold black" style="padding-right:20px;"><img src="https://www.easistent.com/images/icons/ednevnik_seznam_ur_dogodek.png"> Dogodek
+                        </td>
+
+                        <td class="text11 bold black" style="padding-right:20px;"><img src="https://www.easistent.com/images/icons/ednevnik_seznam_ur_govorilne.png"> Govorilne ure
+                        </td>
+                        <td class="text11 bold black" style="padding-right:20px;"><img src="https://www.easistent.com/images/icons/ednevnik_seznam_ur_polovicna_ura.png"> Polovična ura
+                        </td>
+                        <td class="text11 bold black" style="padding-right:20px;">
+                            <img src="https://www.easistent.com/images/icons/ednevnik_seznam_ur_id.png"> Interesna dejavnost
+                        </td>
+                    </tr>
+                    </tbody></table>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+          var id_sola = '224';
+          var id_razred = '343294';
+          var id_profesor = '0';
+          var id_ucilnica = '0';
+          var id_dijak = '0';
+          var teden = '46';
+          var qversion = 0;
+
+          function ajax_urnik(smer) {
+            if (smer == 'naprej')
+              teden++;
+            if (smer == 'nazaj')
+              teden--;
+
+            //če ne obstaja ta teden v selectu, resetiramo teden in ne nadaljujemo
+            if ($('#seznam_ur_teden-teden option[value=' + teden + ']').length == 0) {
+              if (smer == 'naprej')
+                teden--;
+              if (smer == 'nazaj')
+                teden++;
+
+              return;
+            }
+
+            qversion++;
+
+            $('#seznam_ur_teden-teden').val(teden);
+
+            var loading = '<div style="border-top:5px solid #e6e6e6;margin-bottom:5px;"><\/div><div class="padding5">Nalaganje urnika <img src="https://www.easistent.com/images/icons/loader.gif" /><\/div>';
+
+            var height = $('#seznam_ur_teden').height();
+            $('#seznam_ur_teden').html(loading).css('height', height + 'px');
+
+            $.ajax({
+              cache: false,
+              type: "POST",
+              url: 'https://www.easistent.com/urniki/ajax_urnik',
+              data: ({
+                id_sola: id_sola,
+                id_razred: id_razred,
+                id_profesor: id_profesor,
+                id_dijak: id_dijak,
+                id_ucilnica: id_ucilnica,
+                teden: teden,
+                qversion: qversion
+              }),
+              timeout: "60000",
+              success: function (rsp) {
+                if (rsp == '{"status":"logout"}') {
+                  ajax_odpri_prijavo();
+                }
+                else {
+                  var rsp = rsp.split(String.fromCharCode(31));
+
+                  if (qversion == rsp[4]) {
+                    //nalozimo urnik samo ce je najnovejsi qversion
+                    $('#seznam_ur_teden').html(rsp[3]).css('height', 'auto');
+
+                    teden = rsp[0];
+                  }
+                }
+              },
+              error: function () {
+                alert('Prosimo vas, da osvežite stran in poskusite znova.');
+              },
+              dataType: "html"
+            });
+          }
+
+          function spremeni_urnik(spremeni_dijaka) {
+            $('.urnik-filter').attr('disabled', true);
+            var loading = '<div style="border-top:5px solid #e6e6e6;margin-bottom:5px;"><\/div><div class="padding5">Nalaganje urnika <img src="https://www.easistent.com/images/icons/loader.gif" /><\/div>';
+            var height = $('#seznam_ur_teden').height();
+            $('#seznam_ur_teden').html(loading).css('height', height + 'px');
+
+            var prikaz = $('#prikaz').val();
+            var id_parameter = $('#id_parameter').val();
+            var id_dijak = $('#id_dijak').val();
+
+            if (spremeni_dijaka && id_dijak != 0) {
+              window.location = 'https://www.easistent.com/urniki/e29aeb36cd1efde89c2b2c28e33209813ec32756/' + prikaz + '/' + id_parameter + '/dijak/' + id_dijak;
+            } else {
+              window.location = 'https://www.easistent.com/urniki/e29aeb36cd1efde89c2b2c28e33209813ec32756/' + prikaz + '/' + id_parameter;
+            }
+          }
+
+          function ajax_izpis() {
+            printer('https://www.easistent.com/urniki/izpis/e29aeb36cd1efde89c2b2c28e33209813ec32756/343294/0/0/0/' + teden + '/' + id_dijak);
+          }
+        </script>
+    </div>
+</div>
