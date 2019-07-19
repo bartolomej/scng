@@ -3,8 +3,18 @@ const axios = require('axios');
 const path = require('path');
 const fs = require('fs');
 
+module.exports.postRequest = function (url, body, encoding) {
+  return new Promise((resolve, reject) => {
+    axios.post(url, body, {
+      headers: {
+        'Content-Type': `application/${encoding === 'json' ? 'json' : 'x-www-form-urlencoded'}`
+      }
+    }).then(res =>
+      resolve(res.data)).catch(reject);
+  })
+};
 
-module.exports.request = async function (url) {
+module.exports.getRequest = function (url) {
   return new Promise((resolve, reject) => {
     axios.get(url).then(res => resolve(res.data)).catch(reject);
   })
