@@ -51,6 +51,11 @@ module.exports.getHtml = function (element, html) {
   return $(element).html();
 };
 
+module.exports.getElements = function (element, html) {
+  const $ = cheerio.load(html);
+  return $(element);
+};
+
 module.exports.readFile = async function (filePath) {
   return new Promise((resolve, reject) => {
     fs.readFile(path.join(__dirname, filePath),
