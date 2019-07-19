@@ -1,0 +1,24 @@
+{
+  "name": "scng-api-service",
+  "version": "1.0.0",
+  "description": "A restfull api service",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bartolomej/scng.git"
+  },
+  "author": "Bartolomej Kozorog",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bartolomej/scng/issues"
+  },
+  "homepage": "https://github.com/bartolomej/scng#readme",
+  "dependencies": {
+    "axios": "^0.19.0",
+    "cheerio": "^1.0.0-rc.3",
+    "jest": "^24.8.0"
+  }
+}
