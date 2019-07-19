@@ -1,6 +1,6 @@
-const tools = require('./tools');
-const {readFile} = require('./tools');
-const {getClasses} = require('./scraper');
+const tools = require('../tools');
+const {readFile} = require('../tools');
+const {getClasses} = require('../scraper');
 
 
 describe('Scraping tools test', function () {
@@ -47,7 +47,7 @@ const SCNG_ID = 'e29aeb36cd1efde89c2b2c28e33209813ec32756';
 describe('Scraping functionality test', function () {
 
   it('should return classes object {name, id}', async function () {
-    let html = await readFile('./testUrnik.html');
+    let html = await readFile('tests/res/razrediSelect.html');
     let classes = await getClasses(html);
 
     expect(classes).toEqual([
