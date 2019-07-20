@@ -1,5 +1,16 @@
 const $ = require('cheerio');
 
+function parseScheduleTable(html) {
+  let parsedRows = [];
+  $('tr', html).each((i, ele) => {
+    let row = [];
+    if (i === 0) row = parseScheduleTopRow(ele);
+    else row = parseScheduleRow(ele);
+    if (row.length !== 0) parsedRows.push(row);
+  });
+  return parsedRows;
+}
+
 function parseScheduleTopRow(trNode) {
   return $('th', trNode).map((i, ele) => {
     if (i === 0) return null;
@@ -60,6 +71,7 @@ function parseLessonTableData(node) {
 }
 
 module.exports = {
+  parseScheduleTable,
   parseScheduleTopRow,
   parseScheduleRow,
   parseLessonTableData,
