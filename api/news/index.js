@@ -1,4 +1,4 @@
-const {parseHomePage, parseArticlePage} = require('./news-parser');
+const {parseHomePage, parseArticlePage} = require('./parser');
 const schedule = require('node-schedule');
 const fileDb = require('../utils/filedb');
 const crypto = require('crypto');
