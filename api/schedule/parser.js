@@ -47,7 +47,7 @@ function parseLessonTableData(node) {
       const details = $('.text11', ele).text()
         .replace(/[\t\n]/g, '')
         .split(', ');
-      const group = details[1].split(' Skupina ')[1]
+      const group = details[1].split(' Skupina ')[1];
       const classRoom = details[1].split(' Skupina ')[0];
       return {
         type: 'lesson',
