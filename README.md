@@ -4,7 +4,7 @@ Repository for SCNG (Solski Center Nova Gorica) API service and
 native mobile application.
 
 
-#### Running api-service
+#### Running api-service tests
 
 1. Install node modules
 `npm install`
