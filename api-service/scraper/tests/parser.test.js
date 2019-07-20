@@ -39,6 +39,7 @@ describe('Parse table elements', function () {
 
     expect(parseLessonTableData(td)).toEqual([
       {
+        type: 'lesson',
         fullName: 'Angleščina',
         shortName: 'ANG',
         teacher: 'R. Češčut',
@@ -83,6 +84,7 @@ describe('Parse table elements', function () {
 
     expect(parseLessonTableData(td)).toEqual([
       {
+        type: 'lesson',
         fullName: 'Izdelava osnovnih vezij - praksa',
         shortName: 'IOVp',
         teacher: 'V. Jug',
@@ -90,11 +92,39 @@ describe('Parse table elements', function () {
         group: '1'
       },
       {
+        type: 'lesson',
         fullName: 'Izdelava osnovnih vezij - praksa',
         shortName: 'IOVp',
         teacher: 'B. Pregelj',
         classRoom: 'P15',
         group: '2'
+      }
+    ])
+  });
+
+  it('should parse table row with no lectures', function () {
+    const td =
+      `<td width="18%" id="ednevnik-seznam_ur_teden-td-1-2019-06-24" class="ednevnik-seznam_ur_teden-td ">
+			<div class="ednevnik-seznam_ur_teden-urnik ednevnik-seznam_ur_teden-td-dogodek " style="color:#444;">
+				<table class="w100 collapse">
+					<tr>
+						<td style="border:none;" class="text14 bold">
+							Kulturni dogodek ob koncu pouka </td>
+						<td style="border:none;" align="right">
+							<img src="https://www.easistent.com/images/icons/ednevnik_seznam_ur_dogodek.png" title="Dogodek" /></td>
+					</tr>
+				</table>
+			</div>
+		</td>`;
+
+    expect(parseLessonTableData(td)).toEqual([
+      {
+        type: 'other',
+        fullName: 'Kulturni dogodek ob koncu pouka ',
+        shortName: '',
+        teacher: '',
+        group: '',
+        classRoom: '',
       }
     ])
   });
@@ -157,9 +187,151 @@ describe('Parse html tree data structure', function () {
     ]);
   });
 
-  /* TODO: write tests for parsing full components
-  it('should parse table row with no lectures', function () {
-    const div =
+  it('should parse table row with lectures', function () {
+    const tableRow =
+      `<tr>
+
+		<td width="10%" class="ednevnik-seznam_ur_teden-td ednevnik-seznam_ur_teden-ura">
+			<div class="black bold text14" style="padding-bottom:0px;">1. ura</div>
+			<div class="text10 gray">7:45 - 8:30</div>
+		</td>
+		
+		<td width="18%" id="ednevnik-seznam_ur_teden-td-1-2019-05-27" class="ednevnik-seznam_ur_teden-td ">
+			<div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;">
+				<table class="w100 collapse">
+					<tr>
+						<td style="border:none;" class="text14 bold"><span title="Angleščina">ANG</span> </td>
+						<td style="border:none;" align="right"></td>
+					</tr>
+				</table>
+				<div class="text11">
+					R. Češčut, E36 </div>
+			</div>
+		</td>
+		
+		<td width="18%" id="ednevnik-seznam_ur_teden-td-1-2019-05-28" class="ednevnik-seznam_ur_teden-td ">
+			<div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;">
+				<table class="w100 collapse">
+					<tr>
+						<td style="border:none;" class="text14 bold"><span title="Umetnost">UME</span> </td>
+						<td style="border:none;" align="right"></td>
+					</tr>
+				</table>
+				<div class="text11">
+					S. Peršolja Bučinel, E33 </div>
+			</div>
+		</td>
+		
+		<td width="18%" id="ednevnik-seznam_ur_teden-td-1-2019-05-29" class="ednevnik-seznam_ur_teden-td ">
+		</td>
+		
+		<td width="18%" id="ednevnik-seznam_ur_teden-td-1-2019-05-30" class="ednevnik-seznam_ur_teden-td ">
+			<div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;">
+				<table class="w100 collapse">
+					<tr>
+						<td style="border:none;" class="text14 bold"><span title="Umetnost">UME</span> </td>
+						<td style="border:none;" align="right"></td>
+					</tr>
+				</table>
+				<div class="text11">
+					S. Peršolja Bučinel, E31 </div>
+			</div>
+		</td>
+		
+		<td width="18%" id="ednevnik-seznam_ur_teden-td-1-2019-05-31" class="ednevnik-seznam_ur_teden-td ">
+			<div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;">
+				<table class="w100 collapse">
+					<tr>
+						<td style="border:none;" class="text14 bold">
+							<span title="Izdelava osnovnih vezij - praksa">IOVp</span> </td>
+						<td style="border:none;" align="right"><a href="javascript:;"
+								onclick="$('#ednevnik-seznam_ur_teden-blok-177824-2019-05-31').toggle();stop_propagation(event);"
+								class="ednevnik-seznam_ur_teden-vec_ur" title="Več skupin">2</a></td>
+					</tr>
+				</table>
+				<div class="text11">
+					V. Jug, M1-07 </div>
+				<div class="text11 gray bold">Skupina 1</div>
+			</div>
+			<div id="ednevnik-seznam_ur_teden-blok-177824-2019-05-31" class="ni_prvi">
+				<div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;border-top:1px solid #E6E6E6;">
+					<table class="w100 collapse">
+						<tr>
+							<td style="border:none;" class="text14 bold">
+								<span title="Izdelava osnovnih vezij - praksa">IOVp</span> </td>
+							<td style="border:none;" align="right"></td>
+						</tr>
+					</table>
+					<div class="text11">
+						B. Pregelj, P15 </div>
+					<div class="text11 gray bold">Skupina 2</div>
+          </div>
+        </div>
+      </td>
+      
+    </tr>`;
+
+    expect(parseScheduleRow(tableRow)).toEqual([
+      {
+        index: '1. ura',
+        period: '7:45 - 8:30'
+      },
+      [
+        {
+          type: 'lesson',
+          fullName: 'Angleščina',
+          shortName: 'ANG',
+          teacher: 'R. Češčut',
+          classRoom: 'E36 ',
+          group: ''
+        }
+      ],
+      [
+        {
+          type: 'lesson',
+          fullName: 'Umetnost',
+          shortName: 'UME',
+          teacher: 'S. Peršolja Bučinel',
+          classRoom: 'E33 ',
+          group: ''
+        }
+      ],
+      [
+
+      ],
+      [
+        {
+          type: 'lesson',
+          fullName: 'Umetnost',
+          shortName: 'UME',
+          teacher: 'S. Peršolja Bučinel',
+          classRoom: 'E31 ',
+          group: ''
+        }
+      ],
+      [
+        {
+          type: 'lesson',
+          fullName: 'Izdelava osnovnih vezij - praksa',
+          shortName: 'IOVp',
+          teacher: 'V. Jug',
+          classRoom: 'M1-07',
+          group: '1'
+        },
+        {
+          type: 'lesson',
+          fullName: 'Izdelava osnovnih vezij - praksa',
+          shortName: 'IOVp',
+          teacher: 'B. Pregelj',
+          classRoom: 'P15',
+          group: '2'
+        }
+      ]
+    ])
+  });
+
+  it('should parse table row without lectures', function () {
+    const tr =
       `<tr>
 		<td width="10%" class="ednevnik-seznam_ur_teden-td ednevnik-seznam_ur_teden-ura">
 
@@ -197,88 +369,42 @@ describe('Parse html tree data structure', function () {
 		<td width="18%" id="ednevnik-seznam_ur_teden-td-1-2019-06-28" class="ednevnik-seznam_ur_teden-td ">
 		</td>
 	</tr>`;
+
+    expect(parseScheduleRow(tr)).toEqual([
+      {
+        index: '1. ura',
+        period: '7:45 - 8:30'
+      },
+      [
+        {
+          type: 'other',
+          fullName: 'Kulturni dogodek ob koncu pouka ',
+          shortName: '',
+          teacher: '',
+          group: '',
+          classRoom: '',
+        }
+      ],
+      [
+        {
+          type: 'other',
+          fullName: 'Praznik ',
+          shortName: '',
+          teacher: '',
+          group: '',
+          classRoom: '',
+        }
+      ],
+      [
+
+      ],
+      [
+
+      ],
+      [
+
+      ]
+    ])
   });
 
-  it('should parse table row with lectures', function () {
-    const tableRow =
-      `<tr>
-		<td width="10%" class="ednevnik-seznam_ur_teden-td ednevnik-seznam_ur_teden-ura">
-
-			<div class="black bold text14" style="padding-bottom:0px;">1. ura</div>
-			<div class="text10 gray">7:45 - 8:30</div>
-		</td>
-		<td width="18%" id="ednevnik-seznam_ur_teden-td-1-2019-05-27" class="ednevnik-seznam_ur_teden-td ">
-			<div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;">
-				<table class="w100 collapse">
-					<tr>
-						<td style="border:none;" class="text14 bold"><span title="Angleščina">ANG</span> </td>
-						<td style="border:none;" align="right"></td>
-					</tr>
-				</table>
-				<div class="text11">
-					R. Češčut, E36 </div>
-
-			</div>
-		</td>
-		<td width="18%" id="ednevnik-seznam_ur_teden-td-1-2019-05-28" class="ednevnik-seznam_ur_teden-td ">
-			<div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;">
-				<table class="w100 collapse">
-					<tr>
-						<td style="border:none;" class="text14 bold"><span title="Umetnost">UME</span> </td>
-						<td style="border:none;" align="right"></td>
-					</tr>
-				</table>
-				<div class="text11">
-					S. Peršolja Bučinel, E33 </div>
-
-			</div>
-		</td>
-		<td width="18%" id="ednevnik-seznam_ur_teden-td-1-2019-05-29" class="ednevnik-seznam_ur_teden-td ">
-		</td>
-		<td width="18%" id="ednevnik-seznam_ur_teden-td-1-2019-05-30" class="ednevnik-seznam_ur_teden-td ">
-			<div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;">
-				<table class="w100 collapse">
-					<tr>
-						<td style="border:none;" class="text14 bold"><span title="Umetnost">UME</span> </td>
-						<td style="border:none;" align="right"></td>
-					</tr>
-				</table>
-				<div class="text11">
-					S. Peršolja Bučinel, E31 </div>
-
-			</div>
-		</td>
-		<td width="18%" id="ednevnik-seznam_ur_teden-td-1-2019-05-31" class="ednevnik-seznam_ur_teden-td ">
-			<div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;">
-				<table class="w100 collapse">
-					<tr>
-						<td style="border:none;" class="text14 bold">
-							<span title="Izdelava osnovnih vezij - praksa">IOVp</span> </td>
-						<td style="border:none;" align="right"><a href="javascript:;"
-								onclick="$('#ednevnik-seznam_ur_teden-blok-177824-2019-05-31').toggle();stop_propagation(event);"
-								class="ednevnik-seznam_ur_teden-vec_ur" title="Več skupin">2</a></td>
-					</tr>
-				</table>
-				<div class="text11">
-					V. Jug, M1-07 </div>
-				<div class="text11 gray bold">Skupina 1</div>
-			</div>
-			<div id="ednevnik-seznam_ur_teden-blok-177824-2019-05-31" class="ni_prvi">
-				<div class="ednevnik-seznam_ur_teden-urnik  " style="color:#444;border-top:1px solid #E6E6E6;">
-					<table class="w100 collapse">
-						<tr>
-							<td style="border:none;" class="text14 bold">
-								<span title="Izdelava osnovnih vezij - praksa">IOVp</span> </td>
-							<td style="border:none;" align="right"></td>
-						</tr>
-					</table>
-					<div class="text11">
-						B. Pregelj, P15 </div>
-					<div class="text11 gray bold">Skupina 2</div>
-          </div>
-        </div>
-      </td>
-    </tr>`
-  });
-  */
 });

@@ -11,9 +11,15 @@ function parseScheduleTopRow(trNode) {
 }
 
 function parseScheduleRow(trNode) {
-  return $('td', trNode).map((i, ele) => {
-
-  }).get();
+  let tableRow = [];
+  $('td.ednevnik-seznam_ur_teden-td', trNode).each((i, ele) => {
+    if (i === 0) {
+      tableRow.push(parseTimeTableData(ele));
+    } else {
+      tableRow.push(parseLessonTableData(ele));
+    }
+  });
+  return tableRow;
 }
 
 function parseTimeTableData(node) {
@@ -26,17 +32,29 @@ function parseTimeTableData(node) {
 function parseLessonTableData(node) {
   const groups = $('.ednevnik-seznam_ur_teden-urnik', node);
   return groups.map((i, ele) => {
-    const details = $('.text11', ele).text()
-      .replace(/[\t\n]/g, '')
-      .split(', ');
-    const group = details[1].split(' Skupina ')[1]
-    const classRoom = details[1].split(' Skupina ')[0];
-    return {
-      fullName: $('span', ele).attr('title'),
-      shortName: $('span', ele).text(),
-      teacher: details[0],
-      group: group === undefined ? '' : group,
-      classRoom,
+    if ($('span', ele).length !== 0) {
+      const details = $('.text11', ele).text()
+        .replace(/[\t\n]/g, '')
+        .split(', ');
+      const group = details[1].split(' Skupina ')[1]
+      const classRoom = details[1].split(' Skupina ')[0];
+      return {
+        type: 'lesson',
+        fullName: $('span', ele).attr('title'),
+        shortName: $('span', ele).text(),
+        teacher: details[0],
+        group: group === undefined ? '' : group,
+        classRoom,
+      }
+    } else {
+      return {
+        type: 'other',
+        fullName: $($(ele)[0].children).text().replace(/[\t\n]/g, ''),
+        shortName: '',
+        teacher: '',
+        group: '',
+        classRoom: '',
+      }
     }
   }).get();
 }
