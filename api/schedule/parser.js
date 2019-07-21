@@ -1,5 +1,18 @@
 const $ = require('cheerio');
 
+
+function parseClasses(html) {
+  let parsedClasses = [];
+  let selectionBox = $('#id_parameter', html);
+  $('option', selectionBox).each((i, ele) => {
+    parsedClasses.push({
+      name: $(ele).text(),
+      id: $(ele).attr('value')
+    })
+  });
+  return parsedClasses;
+}
+
 function parseScheduleTable(html) {
   let parsedRows = [];
   $('tr', html).each((i, ele) => {
@@ -71,6 +84,12 @@ function parseLessonTableData(node) {
 }
 
 module.exports = {
+  parseClasses,
+  parseScheduleTable
+};
+
+module.exports.test = {
+  parseClasses,
   parseScheduleTable,
   parseScheduleTopRow,
   parseScheduleRow,
