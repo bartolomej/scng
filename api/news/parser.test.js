@@ -1,4 +1,4 @@
-const {parseHomePage, parseArticlePage} = require('../parser');
+const {parseHomePage, parseArticlePage} = require('./parser');
 const moment = require('moment');
 
 

@@ -1,7 +1,12 @@
 const app = require('express').Router();
+const news = require('./index');
 
-app.get('/', (req, res, next) => {
-  res.send('News root')
+(async function () {
+  await news.init();
+})();
+
+app.get('/', async (req, res, next) => {
+  res.send(await news.getArticles());
 });
 
 module.exports = app;

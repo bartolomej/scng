@@ -23,7 +23,7 @@ module.exports.parseArticlePage = function (html) {
   const content = $('div.row', html);
   return {
     title: formatText($('h1.title', content).text()),
-    text: formatText($('div.main-content', content).text()),
+    content: formatText($('div.main-content', content).text()),
   }
 };
 
