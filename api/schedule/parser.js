@@ -1,5 +1,6 @@
 const $ = require('cheerio');
 
+// TODO: remove whitespaces
 
 function parseClasses(html) {
   let parsedClasses = [];
