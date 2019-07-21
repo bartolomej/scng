@@ -4,6 +4,7 @@
   "description": "A restfull api service",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "test": "jest"
   },
   "repository": {
@@ -17,6 +18,7 @@
   },
   "homepage": "https://github.com/bartolomej/scng#readme",
   "dependencies": {
+    "@hapi/hapi": "^18.3.1",
     "axios": "^0.19.0",
     "cheerio": "^1.0.0-rc.3",
     "express": "^4.17.1",
