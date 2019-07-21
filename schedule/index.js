@@ -62,21 +62,28 @@ async function fetchSchedule(schoolId, classId, week, studentId = 0) {
 }
 
 async function fetchClasses() {
-  let schools = require('./schools');
+  let schools;
+  try {
+    schools = require('./schools.json');
+  } catch (e) {
+    console.error('schools.json configuration file not found!');
+    return;
+  }
   schools.forEach(async school => {
     let response = await request.get(school.url);
     let parsed = parseClasses(response);
     try {
       await fs.mkdir(path.join(SCHEDULE_PATH, school.id));
-      await fileDb.write(
-        path.join(SCHOOLS_PATH, `${school.name}.json`), {
-          id: school.id,
-          name: school.name,
-          fullName: school.fullName,
-          classes: parsed
-        })
+    } catch (e) {}
+    try {
+      await fileDb.write(path.join(SCHOOLS_PATH, `${school.name}.json`), {
+        id: school.id,
+        name: school.name,
+        fullName: school.fullName,
+        classes: parsed
+      })
     } catch (e) {
-      console.error('failed writing class ', e);
+
     }
   });
 }

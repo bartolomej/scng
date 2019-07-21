@@ -1,6 +1,5 @@
 const $ = require('cheerio');
 
-// TODO: remove whitespaces
 
 function parseClasses(html) {
   let parsedClasses = [];
@@ -65,11 +64,11 @@ function parseLessonTableData(node) {
       const classRoom = details[1].split(' Skupina ')[0];
       return {
         type: 'lesson',
-        fullName: $('span', ele).attr('title'),
-        shortName: $('span', ele).text(),
-        teacher: details[0],
-        group: group === undefined ? '' : group,
-        classRoom,
+        fullName: formatText($('span', ele).attr('title')),
+        shortName: formatText($('span', ele).text()),
+        teacher: formatText(details[0]),
+        group: group === undefined ? '' : formatText(group),
+        classRoom: formatText(classRoom),
       }
     } else {
       return {
@@ -82,6 +81,13 @@ function parseLessonTableData(node) {
       }
     }
   }).get();
+}
+
+function formatText(text) {
+  return text
+    .replace(/\n/g, ' ')
+    .replace(/\t/g, '')
+    .replace(/^\s+|\s+$|\s+(?=\s)/g, '');
 }
 
 module.exports = {
