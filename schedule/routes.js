@@ -17,17 +17,10 @@ app.get('/:schoolId', async (req, res, next) => {
   } catch (e) { next(e) }
 });
 
-app.get('/table/:classId', async (req, res, next) => {
-  let {start, end} = parseDates(req.query);
+app.get('/timetable/:classId/:date', async (req, res, next) => {
+  let date = moment(req.params.date).toDate();
   try {
-    res.send(await getSchedule(req.params.classId, start.toDate(), end.toDate()));
-  } catch (e) { next(e) }
-});
-
-app.get('/test/:classId', async (req, res, next) => {
-  let {start, end} = parseDates(req.query);
-  try {
-    res.send(await getSchedule(req.params.classId, start.toDate(), end.toDate()));
+    res.send(await getSchedule(req.params.classId, date));
   } catch (e) { next(e) }
 });
 
@@ -41,18 +34,6 @@ async function getSchedule(classId, date) {
     timetable.lessons.push({index, groups});
   }
   return timetable;
-}
-
-function parseDates(query) {
-  let start, end;
-  if (query.start || query.end) {
-    start = moment(query.start);
-    end = moment(query.end);
-  } else {
-    start = moment().day(0);
-    end = moment().day(7);
-  }
-  return {start, end};
 }
 
 module.exports = app;

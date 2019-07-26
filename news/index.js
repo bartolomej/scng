@@ -1,7 +1,7 @@
 require('reflect-metadata');
 const createConnection = require('typeorm').createConnection;
 
-const {parseHomePage, parseArticlePage} = require('./parser');
+const {parseHomePage, parseArticlePage} = require('./htmlParser');
 const schedule = require('node-schedule');
 const {get} = require('../utils/request');
 const {save} = require('./db/index');

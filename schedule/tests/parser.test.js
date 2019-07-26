@@ -6,7 +6,7 @@ const {
   parseScheduleRow,
   parseScheduleTable,
   parseClasses
-} = require('../parser').test;
+} = require('../htmlParser').test;
 
 
 describe('Parse classes selection box', function () {

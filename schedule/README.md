@@ -6,7 +6,7 @@ This module handles schedule updates, parsing and exposes external REST api.
  +-- store          -> where data is stored (generated folder)
  +-- tests          -> all tests
  +-- index.js       -> main service
- +-- parser.js      -> all the html parsing logic
+ +-- htmlParser.js      -> all the html parsing logic
  +-- schools.json   -> config file that tells server which schedule to fetch
  ``` 
  
