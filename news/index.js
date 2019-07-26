@@ -1,24 +1,13 @@
 require('reflect-metadata');
 const createConnection = require('typeorm').createConnection;
-const crypto = require('crypto');
-const fs = require('fs').promises;
-const moment = require('moment');
-const path = require('path');
 
 const {parseHomePage, parseArticlePage} = require('./parser');
 const schedule = require('node-schedule');
-const fileDb = require('../utils/filedb');
 const {get} = require('../utils/request');
 const {save} = require('./db/index');
 
-const STORE_PATH = path.join(__dirname, './store');
-
 
 async function init() {
-  try {
-    await fs.mkdir(STORE_PATH);
-  } catch (e) {}
-
   createConnection()
     .then(() => console.log("News DB connection created!"))
     .catch(error => console.log(error));
