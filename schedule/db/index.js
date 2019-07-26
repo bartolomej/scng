@@ -13,8 +13,8 @@ module.exports.saveTimetable = async function (id, date, hourIndex, classId) {
   await getRepository("Timetable").save({id, date, hourIndex, 'class': classId});
 };
 
-module.exports.saveLesson = async function (id, type, start, end, fullName, shortName, teacher, classRoom, group) {
-  await getRepository("Lesson").save({id, type, start, end, fullName, shortName, teacher, classRoom, group});
+module.exports.saveLesson = async function (id, timetable, type, start, end, fullName, shortName, teacher, classRoom, group) {
+  await getRepository("Lesson").save({id, timetable, type, start, end, fullName, shortName, teacher, classRoom, group});
 };
 
 module.exports.getSchools = async function () {
@@ -39,20 +39,18 @@ module.exports.getClasses = async function (schoolId) {
     .getMany();
 };
 
-module.exports.getSchedule = async function (classId, startDate, endDate) {
-  return await getRepository("Lesson")
-    .createQueryBuilder("lesson")
-    .leftJoinAndSelect('lesson.timetable', 'timetable')
-    .where('timetable.classId = :classId', {classId})
-    .andWhere('timetable.date > :startDate', {startDate})
-    .andWhere('timetable.date < :endDate', {endDate})
-    .orderBy('timetable.date', 'ASC')
-    .getMany();
-  /*return await getRepository("Timetable")
+module.exports.getTimetableByDay = async function (classId, date) {
+  return await getRepository("Timetable")
     .createQueryBuilder("timetable")
     .where('timetable.classId = :classId', {classId})
-    .andWhere('timetable.date > :startDate', {startDate})
-    .andWhere('timetable.date < :endDate', {endDate})
-    .orderBy('timetable.date', 'ASC')
-    .getMany();*/
+    .andWhere('timetable.date = :date', {date})
+    .addOrderBy('timetable.hourIndex', 'ASC')
+    .getMany();
+};
+
+module.exports.getLessonByTimetable = async function (timetableId) {
+  return await getRepository("Lesson")
+    .createQueryBuilder("lesson")
+    .where('lesson.timetable = :timetableId', {timetableId})
+    .getMany();
 };

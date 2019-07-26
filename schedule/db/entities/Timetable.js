@@ -17,14 +17,14 @@ module.exports = new EntitySchema({
     }
   },
   relations: {
-    lesson: {
-      target: "Lesson",
-      type: "one-to-many",
-      joinColumn: true,
-    },
     class: {
       target: "Class",
       type: "many-to-one",
+      joinColumn: true,
+    },
+    lessons: {
+      target: "Lesson",
+      type: "one-to-many",
       joinColumn: true,
     }
   }

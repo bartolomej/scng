@@ -1,6 +1,7 @@
 require('reflect-metadata');
 const moment = require('moment');
 const uuid = require('uuid/v4');
+const crypto = require('crypto');
 const schedule = require('node-schedule');
 const createConnection = require('typeorm').createConnection;
 
@@ -41,15 +42,6 @@ async function fetchClasses() {
   schools.forEach(async school => {
     let response = await request.get(school.url);
     let classes = parseClasses(response);
-    try {
-      await saveSchool(
-        school.id,
-        school.name,
-        school.fullName
-      );
-    } catch (e) {
-      console.error('failed to save school ', e.message);
-    }
     classes.forEach(async schoolClass => {
       try {
         await saveClass(
@@ -70,10 +62,14 @@ async function parseTimetable(table, classId) {
     for (let l = 1; l < table.length; l++) {
       let {start, end} = parsePeriod(table[l][0].period, date);
       let lessons = table[l][d+1];
-      await saveTimetable(uuid(), date.toDate(), l - 1, classId);
+      let timetableId = hash(date.format('DD-MM-YYYY') + (l - 1) + classId);
+      await saveTimetable(timetableId, date.toDate(), l - 1, classId);
       lessons.forEach(async lesson => {
+        let lessonId = hash(timetableId + lesson.shortName);
         await saveLesson(
-          uuid(), lesson.type,
+          lessonId,
+          timetableId,
+          lesson.type,
           start.toDate(), end.toDate(),
           lesson.fullName,
           lesson.shortName,
@@ -117,6 +113,11 @@ function parseDate(date) {
   m.date(Number.parseInt(parsed[0]));
   m.month(Number.parseInt(parsed[1]));
   return m;
+}
+
+function hash(string) {
+  return crypto.createHash('md5')
+    .update(string).digest('hex');
 }
 
 module.exports = {
