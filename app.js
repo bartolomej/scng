@@ -1,6 +1,7 @@
 const express = require('express');
 const logger = require('morgan');
 const app = express();
+require("reflect-metadata");
 
 app.use(logger('dev'));
 

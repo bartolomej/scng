@@ -1,0 +1,14 @@
+{
+  "type": "mysql",
+  "host": "localhost",
+  "port": 3306,
+  "username": "root",
+  "password": "rootPass",
+  "database": "scng",
+  "synchronize": true,
+  "logging": false,
+  "entities": [
+    "news/db/entities/*.js",
+    "schedule/db/entities/*.js"
+  ]
+}

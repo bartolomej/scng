@@ -1,12 +1,11 @@
 const app = require('express').Router();
-const news = require('./index');
+const {getLatest} = require('./db/index');
+const {init} = require('./index');
 
-(async function () {
-  await news.init();
-})();
+(async () => {await init()})();
 
 app.get('/', async (req, res, next) => {
-  res.send(await news.getArticles());
+  res.send(await getLatest(10));
 });
 
 module.exports = app;
