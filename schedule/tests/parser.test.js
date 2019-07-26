@@ -53,7 +53,7 @@ describe('Parse table elements', function () {
 
     expect(parseLessonTableData(td)).toEqual([
       {
-        type: 'lesson',
+        type: 'normal',
         fullName: 'Angleščina',
         shortName: 'ANG',
         teacher: 'R. Češčut',
@@ -98,7 +98,7 @@ describe('Parse table elements', function () {
 
     expect(parseLessonTableData(td)).toEqual([
       {
-        type: 'lesson',
+        type: 'normal',
         fullName: 'Izdelava osnovnih vezij - praksa',
         shortName: 'IOVp',
         teacher: 'V. Jug',
@@ -106,7 +106,7 @@ describe('Parse table elements', function () {
         group: '1'
       },
       {
-        type: 'lesson',
+        type: 'normal',
         fullName: 'Izdelava osnovnih vezij - praksa',
         shortName: 'IOVp',
         teacher: 'B. Pregelj',
@@ -292,21 +292,21 @@ describe('Parse html tree data structure', function () {
       },
       [
         {
-          type: 'lesson',
+          type: 'normal',
           fullName: 'Angleščina',
           shortName: 'ANG',
           teacher: 'R. Češčut',
-          classRoom: 'E36 ',
+          classRoom: 'E36',
           group: ''
         }
       ],
       [
         {
-          type: 'lesson',
+          type: 'normal',
           fullName: 'Umetnost',
           shortName: 'UME',
           teacher: 'S. Peršolja Bučinel',
-          classRoom: 'E33 ',
+          classRoom: 'E33',
           group: ''
         }
       ],
@@ -315,17 +315,17 @@ describe('Parse html tree data structure', function () {
       ],
       [
         {
-          type: 'lesson',
+          type: 'normal',
           fullName: 'Umetnost',
           shortName: 'UME',
           teacher: 'S. Peršolja Bučinel',
-          classRoom: 'E31 ',
+          classRoom: 'E31',
           group: ''
         }
       ],
       [
         {
-          type: 'lesson',
+          type: 'normal',
           fullName: 'Izdelava osnovnih vezij - praksa',
           shortName: 'IOVp',
           teacher: 'V. Jug',
@@ -333,7 +333,7 @@ describe('Parse html tree data structure', function () {
           group: '1'
         },
         {
-          type: 'lesson',
+          type: 'normal',
           fullName: 'Izdelava osnovnih vezij - praksa',
           shortName: 'IOVp',
           teacher: 'B. Pregelj',
@@ -427,8 +427,8 @@ describe('Tests with network request data', function () {
 
     const parsed = parseScheduleTable(table);
 
-    expect(parsed.length).toEqual(10);
-    parsed.forEach(row => expect(row.length).toEqual(6));
+    expect(parsed.length).toEqual(11);
+    parsed.forEach((row, i) => i > 0 ? expect(row.length).toEqual(6) : null);
   });
 
   it('should parse full schedule table with lessons', async function () {
@@ -438,8 +438,8 @@ describe('Tests with network request data', function () {
 
     const parsed = parseScheduleTable(table);
 
-    expect(parsed.length).toEqual(10);
-    parsed.forEach(row => expect(row.length).toEqual(6));
+    expect(parsed.length).toEqual(11);
+    parsed.forEach((row, i) => i > 0 ? expect(row.length).toEqual(6) : null);
   });
 
 });

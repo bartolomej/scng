@@ -8,9 +8,8 @@ const {save} = require('./db/index');
 
 
 async function init() {
-  createConnection()
-    .then(() => console.log("News DB connection created!"))
-    .catch(error => console.log(error));
+  const connection = await createConnection();
+  await connection.synchronize();
 
   schedule.scheduleJob({
     hour: 20,

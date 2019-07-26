@@ -1,21 +1,17 @@
+require('reflect-metadata');
+const moment = require('moment');
+const uuid = require('uuid/v4');
+const schedule = require('node-schedule');
+const createConnection = require('typeorm').createConnection;
+
 const {parseScheduleTable, parseClasses} = require('./parser');
 const request = require('../utils/request');
-const moment = require('moment');
-const fileDb = require('../utils/filedb');
-const schedule = require('node-schedule');
-const path = require('path');
-const fs = require('fs').promises;
-
-
-const STORE_PATH = path.join(__dirname, 'store');
-const SCHEDULE_PATH = path.join(STORE_PATH, 'schedule');
-const SCHOOLS_PATH = path.join(STORE_PATH, 'schools');
+const {getSchools, saveClass, getAllClasses, saveSchool, saveLesson, saveTimetable} = require('./db/index');
 
 
 async function init() {
-  try {await fs.mkdir(STORE_PATH)} catch (e) {}
-  try {await fs.mkdir(SCHEDULE_PATH)} catch (e) {}
-  try {await fs.mkdir(SCHOOLS_PATH)} catch (e) {}
+  const connection = await createConnection();
+  await connection.synchronize();
 
   schedule.scheduleJob({
     hour: 20,
@@ -26,27 +22,68 @@ async function init() {
   await fetchNewSchedule();
 }
 
-async function getSchedule(schoolId, classId) {
-  let PATH = path.join(SCHEDULE_PATH, schoolId, classId);
-  let files = await fileDb.readAll(PATH);
-  return files;
+async function fetchNewSchedule() {
+  let classes = await getAllClasses();
+  classes.forEach(async cl => {
+    let week = moment().week();
+    let schedule = await fetchSchedule(cl.school.id, cl.id, week);
+    try {
+      await parseTimetable(schedule, cl.id);
+    } catch (e) {
+      console.error('timetable parse failed ', e.message);
+      console.log(e)
+    }
+  })
 }
 
-async function fetchNewSchedule() {
-  let schools = await fileDb.readAll(SCHOOLS_PATH);
-  schools.forEach(school => {
-    school.classes.forEach(async cl => {
-      let week = moment().week();
-      let schedule = await fetchSchedule(school.id, cl.id, week);
-      let PATH = path.join(SCHEDULE_PATH, school.id, cl.id);
+async function fetchClasses() {
+  let schools = await getSchools();
+  schools.forEach(async school => {
+    let response = await request.get(school.url);
+    let classes = parseClasses(response);
+    try {
+      await saveSchool(
+        school.id,
+        school.name,
+        school.fullName
+      );
+    } catch (e) {
+      console.error('failed to save school ', e.message);
+    }
+    classes.forEach(async schoolClass => {
       try {
-        await fs.mkdir(PATH);
+        await saveClass(
+          schoolClass.id,
+          schoolClass.name,
+          school.id
+        )
       } catch (e) {
-        console.error('failed to create folder for schedule update ', e);
+        console.error('failed to save class ', e.message);
       }
-      await fileDb.write(path.join(PATH, moment().unix() + '.json'), schedule);
     })
-  })
+  });
+}
+
+async function parseTimetable(table, classId) {
+  for (let d = 0; d < 5; d++) {
+    let date = parseDate(table[0][d].date);
+    for (let l = 1; l < table.length; l++) {
+      let {start, end} = parsePeriod(table[l][0].period, date);
+      let lessons = table[l][d+1];
+      await saveTimetable(uuid(), date.toDate(), l - 1, classId);
+      lessons.forEach(async lesson => {
+        await saveLesson(
+          uuid(), lesson.type,
+          start.toDate(), end.toDate(),
+          lesson.fullName,
+          lesson.shortName,
+          lesson.teacher,
+          lesson.classRoom,
+          lesson.group
+        );
+      });
+    }
+  }
 }
 
 async function fetchSchedule(schoolId, classId, week, studentId = 0) {
@@ -61,34 +98,27 @@ async function fetchSchedule(schoolId, classId, week, studentId = 0) {
     await request.post(SCHEDULE_API_ENDPOINT, REQUEST_BODY, 'form'));
 }
 
-async function fetchClasses() {
-  let schools;
-  try {
-    schools = require('./schools.json');
-  } catch (e) {
-    console.error('schools.json configuration file not found!');
-    return;
-  }
-  schools.forEach(async school => {
-    let response = await request.get(school.url);
-    let parsed = parseClasses(response);
-    try {
-      await fs.mkdir(path.join(SCHEDULE_PATH, school.id));
-    } catch (e) {}
-    try {
-      await fileDb.write(path.join(SCHOOLS_PATH, `${school.name}.json`), {
-        id: school.id,
-        name: school.name,
-        fullName: school.fullName,
-        classes: parsed
-      })
-    } catch (e) {
+function parsePeriod(period, date) {
+  let p = period.split(' - ').map(t => t.split(':'));
+  let start = moment(date);
+  start.hours(Number.parseInt(p[0][0]));
+  start.minutes(Number.parseInt(p[0][1]));
+  start.seconds(0);
+  let end = moment(date);
+  end.hours(Number.parseInt(p[1][0]));
+  end.minutes(Number.parseInt(p[1][1]));
+  end.seconds(0);
+  return {start, end};
+}
 
-    }
-  });
+function parseDate(date) {
+  let parsed = date.replace(' ', '').split('.');
+  let m = moment();
+  m.date(Number.parseInt(parsed[0]));
+  m.month(Number.parseInt(parsed[1]));
+  return m;
 }
 
 module.exports = {
   init,
-  getSchedule
 };

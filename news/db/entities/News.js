@@ -1,6 +1,5 @@
 const EntitySchema = require("typeorm").EntitySchema;
 
-
 module.exports = new EntitySchema({
   name: "News",
   columns: {
