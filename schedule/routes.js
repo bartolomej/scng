@@ -6,7 +6,14 @@ const schedule = require('./index');
 })();
 
 app.get('/', async (req, res, next) => {
-  res.send(await schedule.getSchedule('224', '343294'));
+  try {
+    res.send(await schedule.getSchedule('224', '343294'));
+  } catch (e) {
+    res.send({
+      code: 400,
+      error: e.message
+    })
+  }
 });
 
 module.exports = app;
