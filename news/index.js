@@ -32,7 +32,7 @@ async function fetchNewArticles() {
     let content = parseArticlePage(
       await get(article.href)).content;
     try {
-      await save(article.title, content, article.date);
+      await save(article.title, content, article.href, article.date);
     } catch (e) {
       console.log('article save failed ', e.message);
     }

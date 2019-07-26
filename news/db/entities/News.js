@@ -11,6 +11,9 @@ module.exports = new EntitySchema({
     content: {
       type: 'text'
     },
+    href: {
+      type: 'varchar'
+    },
     date: {
       type: "datetime"
     }
