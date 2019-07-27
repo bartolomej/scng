@@ -2,19 +2,23 @@ const getRepository = require('typeorm').getRepository;
 
 
 module.exports.saveSchool = async function (id, name, fullName) {
-  await getRepository("School").save({id, name, fullName, added: new Date()});
+  return await getRepository("School")
+    .save({id, name, fullName, added: new Date()});
 };
 
 module.exports.saveClass = async function (id, name, school) {
-  await getRepository("Class").save({id, name, school});
+  return await getRepository("Class")
+    .save({id, name, school});
 };
 
 module.exports.saveTimetable = async function (id, date, hourIndex, classId) {
-  await getRepository("Timetable").save({id, date, hourIndex, 'class': classId});
+  return await getRepository("Timetable")
+    .save({id, date, hourIndex, 'class': classId});
 };
 
 module.exports.saveLesson = async function (id, timetable, type, start, end, fullName, shortName, teacher, classRoom, group) {
-  await getRepository("Lesson").save({id, timetable, type, start, end, fullName, shortName, teacher, classRoom, group});
+  return await getRepository("Lesson")
+    .save({id, timetable, type, start, end, fullName, shortName, teacher, classRoom, group});
 };
 
 module.exports.getSchools = async function () {

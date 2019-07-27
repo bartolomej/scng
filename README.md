@@ -15,7 +15,7 @@ Each module is responsive only for its own logic and processes and exposes only 
 
 
 ## TODO LIST
-- [ ] implement convenient error handling system (handling, response error message,..)
+- [x] implement convenient error handling system (handling, response error message,..)
 - [ ] implement logger
 - [ ] implement 'solska malica' module
 - [ ] implement logging endpoints for front end system (for analytics purposes)

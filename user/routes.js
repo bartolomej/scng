@@ -1,18 +1,15 @@
 const app = require('express').Router();
 const {saveNotification, saveReview, getLatestReviews, getLatestNotification} = require('./db/index');
+const {ValidationError, NotFoundError, ConflictError} = require('../utils/errors');
 const {init} = require('./index');
 
 (async () => await init())();
 
 app.post('/review', async (req, res, next) => {
-  console.log(req.body);
   if (req.body && req.body.title && req.body.description && req.body.classId) {
     res.send(await saveReview(req.body.title, req.body.description, req.body.classId));
   } else {
-    res.send({
-      status: 'error',
-      message: 'Invalid message body'
-    })
+    next(new ValidationError("Request body parameters invalid"))
   }
 });
 
@@ -20,10 +17,7 @@ app.post('/notification', async (req, res, next) => {
   if (req.body && req.body.title && req.body.description && req.body.shortDescription) {
     res.send(await saveNotification(req.body.title, req.body.description, req.body.shortDescription));
   } else {
-    res.send({
-      status: 'error',
-      message: 'Invalid message body'
-    })
+    next(new ValidationError("Request body parameters invalid"))
   }
 });
 
