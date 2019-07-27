@@ -1,11 +1,32 @@
 const express = require('express');
-const logger = require('morgan');
+const morgan = require('morgan');
+const path = require('path');
 const bodyParser = require('body-parser');
+const rfs = require('rotating-file-stream');
+const {env} = require('./app.json');
 const app = express();
 require("reflect-metadata");
 
-app.use(logger('dev'));
+const accessLogStream = rfs('access.log', {
+  interval: '1d', // rotate daily
+  path: path.join(__dirname, 'log')
+});
+
+app.use(require('express-request-id')());
 app.use(bodyParser.json());
+app.enable("trust proxy");
+
+morgan.token('id', req => req.id);
+morgan.token('ip', req => req.headers['x-forwarded-for'] || req.connection.remoteAddress);
+
+app.use(morgan(':id [:date[web]] :ip ":method :url" :status :response-time', {
+  skip: () => env === 'development',
+  stream: accessLogStream
+}));
+
+app.use(morgan('dev', {
+  skip: () => env !== 'development',
+}));
 
 app.use('/news', require('./news/routes'));
 app.use('/schedule', require('./schedule/routes'));
