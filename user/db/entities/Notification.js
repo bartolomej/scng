@@ -11,8 +11,15 @@ module.exports = new EntitySchema({
     title: {
       type: 'varchar'
     },
+    shortDescription: {
+      type: 'varchar'
+    },
     description: {
       type: 'text'
+    },
+    visible: {
+      type: 'bool',
+      default: '1'
     },
     date: {
       type: 'date'

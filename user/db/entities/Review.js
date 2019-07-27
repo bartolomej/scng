@@ -1,7 +1,7 @@
 const EntitySchema = require("typeorm").EntitySchema;
 
 module.exports = new EntitySchema({
-  name: "Feedback",
+  name: "Review",
   columns: {
     id: {
       primary: true,
@@ -13,6 +13,9 @@ module.exports = new EntitySchema({
     },
     description: {
       type: 'text'
+    },
+    date: {
+      type: 'date'
     },
     classId: {
       type: 'varchar'

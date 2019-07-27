@@ -8,3 +8,7 @@ async function init() {
   const connection = await createConnection();
   await connection.synchronize();
 }
+
+module.exports = {
+  init,
+};
