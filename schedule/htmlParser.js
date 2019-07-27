@@ -1,5 +1,5 @@
 const $ = require('cheerio');
-
+const moment = require('moment');
 
 function parseClasses(html) {
   let parsedClasses = [];
@@ -17,7 +17,7 @@ function parseScheduleTable(html) {
   let parsedRows = [];
   $('tr', html).each((i, ele) => {
     let row = [];
-    if (i === 0) row = parseScheduleTopRow(ele);
+    if (i === 1) row = parseScheduleTopRow(ele);
     else row = parseScheduleRow(ele);
     if (row.length !== 0) parsedRows.push(row);
   });
@@ -63,7 +63,7 @@ function parseLessonTableData(node) {
       const group = details[1].split(' Skupina ')[1];
       const classRoom = details[1].split(' Skupina ')[0];
       return {
-        type: 'lesson',
+        type: 'normal',
         fullName: formatText($('span', ele).attr('title')),
         shortName: formatText($('span', ele).text()),
         teacher: formatText(details[0]),

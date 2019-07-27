@@ -1,19 +1,15 @@
-const {parseHomePage, parseArticlePage} = require('./parser');
-const schedule = require('node-schedule');
-const fileDb = require('../utils/filedb');
-const crypto = require('crypto');
-const {get} = require('../utils/request');
-const fs = require('fs').promises;
-const moment = require('moment');
-const path = require('path');
+require('reflect-metadata');
+const createConnection = require('typeorm').createConnection;
 
-const STORE_PATH = path.join(__dirname, './store');
+const {parseHomePage, parseArticlePage} = require('./htmlParser');
+const schedule = require('node-schedule');
+const {get} = require('../utils/request');
+const {save} = require('./db/index');
 
 
 async function init() {
-  try {
-    await fs.mkdir(STORE_PATH);
-  } catch (e) {}
+  const connection = await createConnection();
+  await connection.synchronize();
 
   schedule.scheduleJob({
     hour: 20,
@@ -23,46 +19,27 @@ async function init() {
   await fetchNewArticles();
 }
 
-async function getArticles(limit) {
-  return await fileDb.readAll(STORE_PATH, JSON.parse);
-}
-
 async function fetchNewArticles() {
   let articles;
   try {
     let homePage = await get('https://www.scng.si/');
     articles = parseHomePage(homePage);
   } catch (e) {
-    console.error('fetch failed ', e);
+    console.error('fetch failed ', e.message);
   }
+
   articles.forEach(async article => {
-    let fullArticle = parseArticlePage(await get(article.href));
-    let fileName = path.join(STORE_PATH,
-      `${moment(article.date).unix()}_${hash(article.title)}.json`);
+    let content = parseArticlePage(
+      await get(article.href)).content;
     try {
-      await fileDb.write(fileName, {
-        title: article.title,
-        date: article.date,
-        content: fullArticle.content
-      });
+      await save(article.title, content, article.href, article.date);
     } catch (e) {
-      console.error('error on save article ', e);
+      console.log('article save failed ', e.message);
     }
   });
 }
 
-function hash(text) {
-  let formatted = text
-    .replace(/ /g, '-')
-    .replace('.', '')
-    .toLowerCase();
-  return crypto.createHash('md5')
-    .update(formatted)
-    .digest('hex');
-}
-
 module.exports = {
   init,
-  getArticles,
   fetchNewArticles
 };
