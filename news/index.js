@@ -26,6 +26,7 @@ async function fetchNewArticles() {
     articles = parseHomePage(homePage);
   } catch (e) {
     console.error('fetch failed ', e.message);
+    return;
   }
 
   articles.forEach(async article => {
