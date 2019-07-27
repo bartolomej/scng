@@ -23,7 +23,7 @@ async function init() {
 async function fetchNewSchedule() {
   let classes = await getAllClasses();
   classes.forEach(async cl => {
-    let week = moment().week();
+    let week = moment().week() + 17;
     let schedule = await fetchSchedule(cl.school.id, cl.id, week);
     try {
       await serializeTimetable(schedule, cl.id);
@@ -65,4 +65,5 @@ async function fetchSchedule(schoolId, classId, week, studentId = 0) {
 
 module.exports = {
   init,
+  fetchSchedule
 };
