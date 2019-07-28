@@ -5,7 +5,7 @@ const {init} = require('./index');
 
 (async () => await init())();
 
-app.post('/review', async (req, res, next) => {
+app.post('/feedback', async (req, res, next) => {
   if (req.body && req.body.title && req.body.description && req.body.classId) {
     res.send(await saveReview(req.body.title, req.body.description, req.body.classId));
   } else {
