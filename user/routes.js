@@ -14,8 +14,8 @@ app.post('/feedback', async (req, res, next) => {
 });
 
 app.post('/notification', async (req, res, next) => {
-  if (req.body && req.body.title && req.body.description && req.body.shortDescription) {
-    res.send(await saveNotification(req.body.title, req.body.description, req.body.shortDescription));
+  if (req.body && req.body.title && req.body.description) {
+    res.send(await saveNotification(req.body.title, req.body.description));
   } else {
     next(new ValidationError("Request body parameters invalid"))
   }

@@ -6,9 +6,9 @@ module.exports.saveReview = async function (title, description, classId) {
     .save({id: uuid(), title, description, classId, date: new Date()})
 };
 
-module.exports.saveNotification = async function (title, description, shortDescription) {
+module.exports.saveNotification = async function (title, description) {
   return await getRepository("Notification")
-    .save({id: uuid(), title, description, shortDescription, date: new Date()})
+    .save({id: uuid(), title, description, date: new Date()})
 };
 
 module.exports.getLatestNotification = async function () {
