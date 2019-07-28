@@ -11,8 +11,8 @@ describe('Scraper module integration tests', function () {
 
     let parsed = await fetchSchedule(SCNG_ID, CLASS_ID, WEEK_INDEX);
 
-    expect(parsed.length).toEqual(10);
-    parsed.forEach(row => expect(row.length).toEqual(6));
+    expect(parsed.length).toEqual(11);
+    parsed.forEach((row, i) => i > 0 ? expect(row.length).toEqual(6) : null);
   });
 
 });

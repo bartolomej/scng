@@ -1,6 +1,7 @@
 const fileDb = require('./filedb');
 const path = require('path');
 const fs = require('fs').promises;
+const rmdir = require('fs').rmdir;
 
 
 describe('File db tests', function () {
@@ -20,7 +21,9 @@ describe('File db tests', function () {
     await fileDb.write(path.join(__dirname, 'test', 'test2.json'), {key: 'value2'});
 
     let files = await fileDb.readAll(path.join(__dirname, 'test'));
-    await fileDb.remove(path.join(__dirname, 'test'));
+    await fileDb.remove(path.join(__dirname, 'test', 'test1.json'));
+    await fileDb.remove(path.join(__dirname, 'test', 'test2.json'));
+    rmdir(path.join(__dirname, 'test'), err => err);
 
     expect(files).toEqual([
       {key: 'value1'},
