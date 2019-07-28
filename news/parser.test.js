@@ -1,4 +1,4 @@
-const {parseHomePage, parseArticlePage} = require('./htmlParser');
+const {parseHomePageV1, parseArticlePageV1} = require('./htmlParser');
 const moment = require('moment');
 
 
@@ -66,7 +66,7 @@ describe('News components parser', function () {
     </div>
 </div></div></div>`;
 
-    const result = parseHomePage(newsDiv);
+    const result = parseHomePageV1(newsDiv);
 
     expect(result).toEqual([
       {
@@ -154,7 +154,7 @@ describe('News components parser', function () {
 			</div>
 		</div></div>`;
 
-    expect(parseArticlePage(contentDiv)).toEqual({
+    expect(parseArticlePageV1(contentDiv)).toEqual({
       title: 'Srečanje Upravnega odbora evropskega združenja poklicnih in strokovnih šol',
       content: 'V Poriju na Finskem je od 15. 7. do 17. 7. 2019 potekalo srečanje Upravnega odbora evropskega združenja poklicnih in strokovnih šol, EUproVET-a, katerega član je, v imenu Konzorcija šolskih centrov, tudi Šolski center Nova Gorica. Glavne teme srečanja so bile: sistem poklicnega in strokovnega izobraževanja v prihodnjih desetih letih, odličnost v poklicnem in strokovnem šolstvu, šole kot vseživljenjski centri znanja, izobraževalni računi za odrasle ter umetna inteligenca v izobraževanju. Srečanja se je udeležil tudi predstavnik Evropske Komisije g. Joao Santos, pomočnik direktorice Direktorata za poklicno in strokovno izobraževanje v Bruslju. Adrijana Hodak'
     })

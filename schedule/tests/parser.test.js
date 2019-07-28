@@ -57,7 +57,7 @@ describe('Parse table elements', function () {
         fullName: 'Angleščina',
         shortName: 'ANG',
         teacher: 'R. Češčut',
-        classRoom: 'E36 ',
+        classRoom: 'E36',
         group: ''
       }
     ]);

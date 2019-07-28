@@ -1,7 +1,7 @@
 const EntitySchema = require("typeorm").EntitySchema;
 
 module.exports = new EntitySchema({
-  name: "News",
+  name: "Article",
   columns: {
     title: {
       primary: true,
@@ -17,5 +17,12 @@ module.exports = new EntitySchema({
     date: {
       type: "datetime"
     }
+  },
+  relations: {
+    school: {
+      target: "School",
+      type: "many-to-one",
+      joinColumn: true,
+    },
   }
 });

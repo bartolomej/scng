@@ -1,38 +1,63 @@
 require('reflect-metadata');
 const createConnection = require('typeorm').createConnection;
 
-const {parseHomePage, parseArticlePage} = require('./htmlParser');
+const {parseHomePageV1, parseArticlePageV1} = require('./htmlParser');
 const schedule = require('node-schedule');
 const {get} = require('../utils/request');
-const {save} = require('./db/index');
+const {save, getSchools} = require('./db/index');
+const {env} = require('../app.json');
 
 
 async function init() {
   const connection = await createConnection();
   await connection.synchronize();
 
-  schedule.scheduleJob({
-    hour: 20,
-    minute: 0,
-  }, async () => await fetchNewArticles());
+  if (env === 'production') {
+    schedule.scheduleJob({
+      hour: 20,
+      minute: 0,
+    }, async () => await processUpdates());
+  }
 
-  await fetchNewArticles();
+  await processUpdates();
 }
 
-async function fetchNewArticles() {
+async function processUpdates() {
+  let schools = await getSchools();
+  schools.forEach(async school => {
+    await updateArticles(
+      school.id, school.homeUrl, school.siteVersion);
+  });
+}
+
+async function updateArticles(schoolId, schoolPageLink, pageVersion) {
   let articles;
+  let homePage;
+
+  if (pageVersion !== 'v1') {
+    throw new Error('v2 site not supported');
+  }
+
   try {
-    let homePage = await get('https://www.scng.si/');
-    articles = parseHomePage(homePage);
+    homePage = await get(schoolPageLink);
   } catch (e) {
     console.error('fetch failed ', e.message);
+    return;
+  }
+
+  try {
+    articles = parseHomePageV1(homePage);
+  } catch (e) {
+    console.error('parsing failed ', e.message);
+    return;
   }
 
   articles.forEach(async article => {
-    let content = parseArticlePage(
-      await get(article.href)).content;
+    let html = await get(article.href);
+    let content = parseArticlePageV1(html).content;
+
     try {
-      await save(article.title, content, article.href, article.date);
+      await save(schoolId, article.title, content, article.href, article.date);
     } catch (e) {
       console.log('article save failed ', e.message);
     }
@@ -41,5 +66,5 @@ async function fetchNewArticles() {
 
 module.exports = {
   init,
-  fetchNewArticles
+  processUpdates
 };
