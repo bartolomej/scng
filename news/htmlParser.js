@@ -1,7 +1,11 @@
 const $ = require('cheerio');
 const moment = require('moment');
 
-module.exports.parseHomePage = function (html) {
+/**
+ * home page parsing support for
+ * scng.si, ers.scng.si like websites
+ */
+module.exports.parseHomePageV1 = function (html) {
   let articles = [];
   const exists = title => {
     articles.forEach(ele => {
@@ -19,7 +23,11 @@ module.exports.parseHomePage = function (html) {
   return articles;
 };
 
-module.exports.parseArticlePage = function (html) {
+/**
+ * article page parsing support for
+ * scng.si, ers.scng.si like websites
+ */
+module.exports.parseArticlePageV1 = function (html) {
   const content = $('div.row', html);
   return {
     title: formatText($('h1.title', content).text()),

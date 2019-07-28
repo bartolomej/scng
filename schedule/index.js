@@ -7,15 +7,20 @@ const {parseScheduleTable, parseClasses} = require('./htmlParser');
 const request = require('../utils/request');
 const {getSchools, saveClass, getAllClasses} = require('./db/index');
 const {serializeTimetable} = require('./tableParser');
+const {env} = require('../app.json');
 
 
 async function init() {
   const connection = await createConnection();
   await connection.synchronize();
-  schedule.scheduleJob({
-    hour: 20,
-    minute: 0,
-  }, async () => await fetchNewSchedule());
+
+  if (env === 'production') {
+    schedule.scheduleJob({
+      hour: 20,
+      minute: 0,
+    }, async () => await fetchNewSchedule());
+  }
+
   await fetchClasses();
   await fetchNewSchedule();
 }
@@ -36,7 +41,7 @@ async function fetchNewSchedule() {
 async function fetchClasses() {
   let schools = await getSchools();
   schools.forEach(async school => {
-    let response = await request.get(school.url);
+    let response = await request.get(school.timetableUrl);
     let classes = parseClasses(response);
     classes.forEach(async schoolClass => {
       try {

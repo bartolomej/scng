@@ -14,18 +14,27 @@ module.exports = new EntitySchema({
     fullName: {
       type: 'varchar'
     },
-    url: {
+    homeUrl: {
       type: 'varchar'
+    },
+    timetableUrl: {
+      type: 'varchar',
     },
     added: {
       type: 'date'
     },
+    logo: {
+      type: 'varchar'
+    },
+    siteVersion: {
+      type: 'varchar'
+    }
   },
   relations: {
     'class': {
       target: "Class",
       type: "one-to-many",
       joinColumn: true,
-    }
+    },
   }
 });

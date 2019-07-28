@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const path = require('path');
 const bodyParser = require('body-parser');
 const rfs = require('rotating-file-stream');
+const log = require('why-is-node-running');
 const {env} = require('./app.json');
 const app = express();
 require("reflect-metadata");
@@ -11,6 +12,12 @@ const accessLogStream = rfs('access.log', {
   interval: '1d', // rotate daily
   path: path.join(__dirname, 'log')
 });
+
+if (env === 'development') {
+  setTimeout(() => {
+    log() // logs out active handles that are keeping node running
+  }, 100)
+}
 
 app.use(require('express-request-id')());
 app.use(bodyParser.json());
