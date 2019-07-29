@@ -16,7 +16,7 @@ module.exports.parseHomePageV1 = function (html) {
   $('div.widget-article', articleContainer).each((i, article) => {
     const content = $('div.content', article);
     const title = formatText($('h4.title', content).text());
-    const date = formatDate($('div.date', content).text());
+    const date = removeWhitespace($('div.date', content).text());
     const href = formatText($('a.main-button', article).attr('href'));
     if (!exists(title)) articles.push({date, title, href});
   });
@@ -35,6 +35,42 @@ module.exports.parseArticlePageV1 = function (html) {
   }
 };
 
+/**
+ * pares date format 15.4.2018
+ * found in scng.si
+ */
+module.exports.parseDateV1 = function (dateString) {
+  let date = dateString.replace(/ /g, '');
+  return moment(date, 'DD.MM.YYYY');
+};
+
+/**
+ * parses date format 15.april,2019
+ * found in ers.scng.si
+ */
+module.exports.parseDateV2 = function (dateString) {
+  const months = [
+    'januar',
+    'februar',
+    'marec',
+    'april',
+    'maj',
+    'junij',
+    'julij',
+    'avgust',
+    'september',
+    'oktober',
+    'november',
+    'december'
+  ];
+  let dateParts = dateString.split(/[,.]/);
+  return moment({
+    year: Number.parseInt(dateParts[2]),
+    month: months.indexOf(dateParts[1])+1,
+    day: Number.parseInt(dateParts[0])
+  });
+};
+
 function formatText(text) {
   return text
     .replace(/\n/g, ' ')
@@ -42,7 +78,6 @@ function formatText(text) {
     .replace(/^\s+|\s+$|\s+(?=\s)/g, '');
 }
 
-function formatDate(dateString) {
-  let date = dateString.replace(/ /g, '');
-  return moment(date, 'DD.MM.YYYY');
+function removeWhitespace(text) {
+  return text.replace(/ */g, '');
 }

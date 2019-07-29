@@ -1,8 +1,22 @@
-const {parseHomePageV1, parseArticlePageV1} = require('./htmlParser');
+const {parseHomePageV1, parseArticlePageV1, parseDateV1, parseDateV2} = require('./htmlParser');
 const moment = require('moment');
 
 
 describe('News components parser', function () {
+
+  it('should parse dates v1', function () {
+    let dateString = '6.7.2019';
+
+    expect(parseDateV1(dateString).isValid()).toEqual(true);
+    expect(parseDateV1(dateString).format('DD.MM.YYYY')).toEqual('06.07.2019');
+  });
+
+  it('should parse dates v2', function () {
+    let dateString = '15.april,2019';
+
+    expect(parseDateV2(dateString).isValid()).toEqual(true);
+    expect(parseDateV2(dateString).format('DD.MM.YYYY')).toEqual('15.05.2019');
+  });
 
   it('should parse single news box (div)', function () {
     const newsDiv =
@@ -70,25 +84,19 @@ describe('News components parser', function () {
 
     expect(result).toEqual([
       {
-        date: expect.any(moment),
+        date: '19.7.2019',
         title: 'Srečanje Upravnega odbora evropskega združenja poklicnih in strokovnih šol',
         href: 'http://mic.scng.si/srecanje-upravnega-odbora-evropskega-zdruzenja-poklicnih-in-strokovnih-sol/'
       },
       {
-        date: expect.any(moment),
+        date: '16.7.2019',
         title: 'Bivanje v študentskem domu',
         href: 'http://www.scng.si/bivanje-v-studentskem-domu-2/'
       }
     ]);
-
-    expect(result[0].date.toISOString())
-      .toEqual(moment('19.7.2019', 'DD.MM.YYYY').toISOString());
-
-    expect(result[1].date.toISOString())
-      .toEqual(moment('16.7.2019', 'DD.MM.YYYY').toISOString());
   });
 
-  it('should parse full article page', function () {
+  it('should parse full scng article page', function () {
     const contentDiv =
       `<div><div id="main-content-container" class="container content-default has-breadcrumbs bt">
 			<div class="row">
