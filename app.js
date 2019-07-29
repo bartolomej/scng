@@ -35,6 +35,9 @@ app.use(morgan('dev', {
   skip: () => env !== 'development',
 }));
 
+// TODO: use /api prefix for api routes
+// TODO: add website
+// TODO: add admin module
 app.use('/news', require('./news/routes'));
 app.use('/schedule', require('./schedule/routes'));
 app.use('/user', require('./user/routes'));

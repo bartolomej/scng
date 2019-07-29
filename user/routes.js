@@ -1,23 +1,40 @@
 const app = require('express').Router();
-const {saveNotification, saveReview, getLatestReviews, getLatestNotification} = require('./db/index');
+const {saveNotification, saveReview, getLatestReviews, getLatestNotification, saveMobileLog} = require('./db/index');
 const {ValidationError, NotFoundError, ConflictError} = require('../utils/errors');
 const {init} = require('./index');
 
 (async () => await init())();
 
 app.post('/feedback', async (req, res, next) => {
-  if (req.body && req.body.title && req.body.description && req.body.classId) {
-    res.send(await saveReview(req.body.title, req.body.description, req.body.classId));
-  } else {
-    next(new ValidationError("Request body parameters invalid"))
+  if (!req.body || !req.body.title || !req.body.description || !req.body.classId) {
+    return next(new ValidationError("Request body parameters invalid"))
+  }
+  try {
+    res.send(await saveReview(req.body.type, req.body.description, req.body.classId));
+  } catch (e) {
+    return next(e);
   }
 });
 
 app.post('/notification', async (req, res, next) => {
-  if (req.body && req.body.title && req.body.description) {
+  if (!req.body || !req.body.title || !req.body.description) {
+    return next(new ValidationError("Request body parameters invalid"))
+  }
+  try {
     res.send(await saveNotification(req.body.title, req.body.description));
-  } else {
-    next(new ValidationError("Request body parameters invalid"))
+  } catch (e) {
+    return next(e);
+  }
+});
+
+app.post('/log', async (req, res, next) => {
+  if (!req.body || !req.body.type || !req.body.description || !req.body.date || !req.body.user) {
+    return next(new ValidationError("Request body parameters invalid"))
+  }
+  try {
+    res.send(await saveMobileLog(req.body.type, req.body.description, req.body.date, req.body.user));
+  } catch (e) {
+    return next(e);
   }
 });
 
