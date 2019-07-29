@@ -1,4 +1,5 @@
 const {parseHomePageV1, parseArticlePageV1, parseDateV1, parseDateV2} = require('./htmlParser');
+const {formatTitle} = require('./htmlParser').test;
 const moment = require('moment');
 
 
@@ -16,6 +17,22 @@ describe('News components parser', function () {
 
     expect(parseDateV2(dateString).isValid()).toEqual(true);
     expect(parseDateV2(dateString).format('DD.MM.YYYY')).toEqual('15.05.2019');
+  });
+
+  it('should format title 1', function () {
+    const title = 'DRŽAVNO TEKMOVANJE IZ ZNANJA ANGLEŠČINE POLIGLOT';
+
+    expect(formatTitle(title)).toEqual(
+      'Državno tekmovanje iz znanja angleščine poliglot'
+    )
+  });
+
+  it('should format title with dots', function () {
+    const title = 'VPIS V 1. LETNIK in URNIK REFERATA ZA ŠTUDIJSKE ZADEVE';
+
+    expect(formatTitle(title)).toEqual(
+      'Vpis v 1. letnik in urnik referata za študijske zadeve'
+    )
   });
 
   it('should parse single news box (div)', function () {
@@ -85,7 +102,7 @@ describe('News components parser', function () {
     expect(result).toEqual([
       {
         date: '19.7.2019',
-        title: 'Srečanje Upravnega odbora evropskega združenja poklicnih in strokovnih šol',
+        title: 'Srečanje upravnega odbora evropskega združenja poklicnih in strokovnih šol',
         href: 'http://mic.scng.si/srecanje-upravnega-odbora-evropskega-zdruzenja-poklicnih-in-strokovnih-sol/'
       },
       {

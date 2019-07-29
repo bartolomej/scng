@@ -11,9 +11,7 @@ app.post('/feedback', async (req, res, next) => {
   }
   try {
     res.send(await saveReview(req.body.type, req.body.description, req.body.classId));
-  } catch (e) {
-    return next(e);
-  }
+  } catch (e) { next(e) }
 });
 
 app.post('/notification', async (req, res, next) => {
@@ -22,9 +20,7 @@ app.post('/notification', async (req, res, next) => {
   }
   try {
     res.send(await saveNotification(req.body.title, req.body.description));
-  } catch (e) {
-    return next(e);
-  }
+  } catch (e) { next(e) }
 });
 
 app.post('/log', async (req, res, next) => {
@@ -33,9 +29,7 @@ app.post('/log', async (req, res, next) => {
   }
   try {
     res.send(await saveMobileLog(req.body.type, req.body.description, req.body.date, req.body.user));
-  } catch (e) {
-    return next(e);
-  }
+  } catch (e) { next(e) }
 });
 
 app.get('/review', async (req, res, next) => {

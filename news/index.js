@@ -67,7 +67,6 @@ async function updateArticles(schoolId, schoolPageLink, pageVersion) {
       await save(schoolId, article.title, content, article.href, date);
     } catch (e) {
       console.log('article save failed ', e.message);
-      console.log(e);
     }
   });
 }

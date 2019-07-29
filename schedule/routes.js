@@ -20,24 +20,22 @@ app.get('/:schoolId', async (req, res, next) => {
 
 app.get('/:classId', async (req, res, next) => {
   let date = moment(req.params.date);
-  if (date.isValid()) {
-    try {
-      res.send(await getSchedule(req.params.classId, date.toDate()));
-    } catch (e) { next(e) }
-  } else {
-    next(new ValidationError("Invalid date format"))
+  if (!date.isValid()) {
+    return next(new ValidationError("Invalid date format"));
   }
+  try {
+    res.send(await getSchedule(req.params.classId, date.toDate()));
+  } catch (e) { next(e) }
 });
 
 app.get('/timetable/:classId/:date', async (req, res, next) => {
   let date = moment(req.params.date, 'DD-MM-YYYY');
-  if (date.isValid()) {
-    try {
-      res.send(await getSchedule(req.params.classId, date.toDate()));
-    } catch (e) { next(e) }
-  } else {
-    next(new ValidationError("Invalid date format"))
+  if (!date.isValid()) {
+    return next(new ValidationError("Invalid date format"));
   }
+  try {
+    res.send(await getSchedule(req.params.classId, date.toDate()));
+  } catch (e) { next(e) }
 });
 
 app.get('/timetable/:classId', async (req, res, next) => {

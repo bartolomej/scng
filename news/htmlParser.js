@@ -15,7 +15,7 @@ module.exports.parseHomePageV1 = function (html) {
   const articleContainer = $('div.row', html);
   $('div.widget-article', articleContainer).each((i, article) => {
     const content = $('div.content', article);
-    const title = formatText($('h4.title', content).text());
+    const title = formatTitle($('h4.title', content).text()); // TODO: test formatTitle before commit v1
     const date = removeWhitespace($('div.date', content).text());
     const href = formatText($('a.main-button', article).attr('href'));
     if (!exists(title)) articles.push({date, title, href});
@@ -78,6 +78,26 @@ function formatText(text) {
     .replace(/^\s+|\s+$|\s+(?=\s)/g, '');
 }
 
+function formatTitle(title) {
+  let parts = formatText(title).split(/\s+/);
+  for (let i = 0; i < parts.length; i++) {
+    parts[i] = parts[i].toLowerCase();
+    if (i === 0) {
+      parts[i] = parts[i].charAt(0).toUpperCase() +
+        parts[i].substring(1, parts[i].length);
+    }
+  }
+  let result = '';
+  for (let i = 0; i < parts.length; i++) {
+    result += `${i === 0 ? '' : ' '}${parts[i]}`;
+  }
+  return result;
+}
+
 function removeWhitespace(text) {
   return text.replace(/ */g, '');
 }
+
+module.exports.test = {
+  formatTitle
+};
