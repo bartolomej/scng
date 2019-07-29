@@ -1,13 +1,9 @@
 const getRepository = require('typeorm').getRepository;
+const moment = require('moment');
 
 module.exports.save = async function (school, title, content, href, date) {
-  return await getRepository("Article").save({
-    school,
-    title,
-    content,
-    href,
-    date: date.toString()
-  });
+  return await getRepository("Article")
+    .save({school, title, content, href, date: moment(date).format("YYYY-MM-DD HH:mm:ss")});
 };
 
 module.exports.getLatest = async function (limit = 20) {

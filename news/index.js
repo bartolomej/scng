@@ -1,7 +1,7 @@
 require('reflect-metadata');
 const createConnection = require('typeorm').createConnection;
 
-const {parseHomePageV1, parseArticlePageV1} = require('./htmlParser');
+const {parseHomePageV1, parseArticlePageV1, parseDateV1, parseDateV2} = require('./htmlParser');
 const schedule = require('node-schedule');
 const {get} = require('../utils/request');
 const {save, getSchools} = require('./db/index');
@@ -56,8 +56,15 @@ async function updateArticles(schoolId, schoolPageLink, pageVersion) {
     let html = await get(article.href);
     let content = parseArticlePageV1(html).content;
 
+    let date;
+    if (schoolPageLink.includes('ers')) {
+      date = parseDateV2(article.date);
+    } else {
+      date = parseDateV1(article.date);
+    }
+
     try {
-      await save(schoolId, article.title, content, article.href, article.date);
+      await save(schoolId, article.title, content, article.href, date);
     } catch (e) {
       console.log('article save failed ', e.message);
     }
