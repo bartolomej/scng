@@ -1,5 +1,4 @@
 require('reflect-metadata');
-
 const {parseHomePageV1, parseArticlePageV1, parseDateV1, parseDateV2} = require('./htmlParser');
 const schedule = require('node-schedule');
 const {get} = require('../utils/request');
@@ -8,8 +7,6 @@ const {env} = require('../app.json');
 
 
 async function init() {
-
-
   if (env === 'production') {
     schedule.scheduleJob({
       hour: 20,
