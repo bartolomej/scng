@@ -30,13 +30,21 @@ createConnection().then(async connection => {
   morgan.token('id', req => req.id);
   morgan.token('ip', req => req.headers['x-forwarded-for'] || req.connection.remoteAddress);
 
-  app.use(morgan(':id [:date[web]] :ip ":method :url" :status :response-time', {
+  app.use(morgan((tokens, req, res) => {
+    return JSON.stringify({
+      'id': tokens['id'](req, res),
+      'date': tokens['date'](req, res, 'iso'),
+      'method': tokens['method'](req, res),
+      'url': tokens['url'](req, res),
+      'ip': tokens['ip'](req, res),
+      'status': tokens['status'](req, res),
+      'response-time': tokens['response-time'](req, res),
+    })}, {
     skip: () => env === 'development',
     stream: accessLogStream
   }));
 
   app.use(morgan('dev', {
-
     skip: () => env !== 'development',
   }));
 

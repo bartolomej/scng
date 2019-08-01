@@ -1,4 +1,4 @@
 {
-  "env": "development",
+  "env": "production",
   "port": "3000"
 }

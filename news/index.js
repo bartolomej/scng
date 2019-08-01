@@ -1,10 +1,13 @@
 require('reflect-metadata');
 const {parseHomePageV1, parseArticlePageV1, parseDateV1, parseDateV2} = require('./htmlParser');
 const schedule = require('node-schedule');
+const winston = require('winston');
 const {get} = require('../utils/request');
 const {save, getSchools} = require('./db/index');
 const {env} = require('../app.json');
 
+
+let logger;
 
 async function init() {
   if (env === 'production') {
@@ -13,6 +16,20 @@ async function init() {
       minute: 0,
     }, async () => await processUpdates());
   }
+
+  logger = winston.createLogger({
+    level: 'info',
+    format: winston.format.json(),
+    defaultMeta: { service: 'news-service' },
+    transports: [
+      //
+      // - Write to all logs with level `info` and below to `combined.log`
+      // - Write all logs error (and below) to `error.log`.
+      //
+      new winston.transports.File({ filename: 'log/error.log', level: 'error' }),
+      new winston.transports.File({ filename: 'log/combined.log' })
+    ]
+  });
 
   await processUpdates();
 }
@@ -29,6 +46,11 @@ async function updateArticles(schoolId, schoolPageLink, pageVersion) {
   let articles;
   let homePage;
 
+  logger.log({
+    level: 'info',
+    message: `Updating articles for school ${schoolId} (${schoolPageLink})`
+  });
+
   if (pageVersion !== 'v1') {
     throw new Error('v2 site not supported');
   }
@@ -36,14 +58,22 @@ async function updateArticles(schoolId, schoolPageLink, pageVersion) {
   try {
     homePage = await get(schoolPageLink);
   } catch (e) {
-    console.error('fetch failed ', e.message);
+    console.error(`Fetching article from ${schoolPageLink} failed ${e.message}`);
+    logger.log({
+      level: 'error',
+      message: `Fetching article from ${schoolPageLink} failed ${e.message}`
+    });
     return;
   }
 
   try {
     articles = parseHomePageV1(homePage);
   } catch (e) {
-    console.error('parsing failed ', e.message);
+    console.error(`Parsing article from ${schoolPageLink} failed ${e.message}`);
+    logger.log({
+      level: 'error',
+      message: `Parsing article from ${schoolPageLink} failed ${e.message}`
+    });
     return;
   }
 
@@ -61,9 +91,11 @@ async function updateArticles(schoolId, schoolPageLink, pageVersion) {
     try {
       await save(schoolId, article.title, content, article.href, date);
     } catch (e) {
-      console.error('article save failed ', e.message);
-      console.log(article);
-      console.log(content);
+      console.error(`Saving article ${article.title} failed ${e.message}`);
+      logger.log({
+        level: 'error',
+        message: `Saving article ${article.title} failed ${e.message}`
+      });
     }
   });
 }

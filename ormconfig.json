@@ -5,7 +5,6 @@
   "username": "root",
   "password": "rootPass",
   "database": "scng",
-  "charset": "latin1_swedish_ci",
   "synchronize": true,
   "logging": false,
   "entities": [

@@ -33,7 +33,8 @@
       "rotating-file-stream": "^1.4.3",
       "typeorm": "0.2.18",
       "uuid": "latest",
-      "why-is-node-running": "^2.1.0"
+      "why-is-node-running": "^2.1.0",
+      "winston": "^3.2.1"
    },
    "devDependencies": {
       "ts-node": "3.3.0",
