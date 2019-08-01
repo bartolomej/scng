@@ -1,8 +1,6 @@
 require('reflect-metadata');
 const moment = require('moment');
 const schedule = require('node-schedule');
-const createConnection = require('typeorm').createConnection;
-
 const {parseScheduleTable, parseClasses} = require('./htmlParser');
 const request = require('../utils/request');
 const {getSchools, saveClass, getAllClasses} = require('./db/index');
@@ -11,9 +9,6 @@ const {env} = require('../app.json');
 
 
 async function init() {
-  const connection = await createConnection();
-  await connection.synchronize();
-
   if (env === 'production') {
     schedule.scheduleJob({
       hour: 20,

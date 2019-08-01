@@ -1,3 +1,4 @@
+const createConnection = require('typeorm').createConnection;
 const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
@@ -7,6 +8,16 @@ const log = require('why-is-node-running');
 const {env, port} = require('./app.json');
 const app = express();
 require("reflect-metadata");
+
+(async () => {
+  try {
+    const connection = await createConnection();
+    await connection.synchronize();
+  } catch (e) {
+    console.error(e);
+    process.exit();
+  }
+})();
 
 const accessLogStream = rfs('access.log', {
   interval: '1d', // rotate daily

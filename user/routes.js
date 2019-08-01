@@ -1,9 +1,7 @@
 const app = require('express').Router();
 const {saveNotification, saveReview, getLatestReviews, getLatestNotification, saveMobileLog} = require('./db/index');
 const {ValidationError, NotFoundError, ConflictError} = require('../utils/errors');
-const {init} = require('./index');
 
-(async () => await init())();
 
 app.post('/feedback', async (req, res, next) => {
   if (!req.body || !req.body.title || !req.body.description || !req.body.classId) {

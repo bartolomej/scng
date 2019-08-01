@@ -1,5 +1,4 @@
 require('reflect-metadata');
-const createConnection = require('typeorm').createConnection;
 
 const {parseHomePageV1, parseArticlePageV1, parseDateV1, parseDateV2} = require('./htmlParser');
 const schedule = require('node-schedule');
@@ -9,8 +8,7 @@ const {env} = require('../app.json');
 
 
 async function init() {
-  const connection = await createConnection();
-  await connection.synchronize();
+
 
   if (env === 'production') {
     schedule.scheduleJob({
