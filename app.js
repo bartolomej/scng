@@ -36,6 +36,7 @@ createConnection().then(async connection => {
   }));
 
   app.use(morgan('dev', {
+
     skip: () => env !== 'development',
   }));
 
