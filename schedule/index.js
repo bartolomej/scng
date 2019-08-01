@@ -40,6 +40,11 @@ async function init() {
 async function fetchNewSchedule() {
   let classes = await getAllClasses();
 
+  logger.log({
+    level: 'info',
+    message: `Fetching schedules for ${classes.length} classes`
+  });
+
   classes.forEach(async cl => {
     let week = moment().week() + 17;
     let schedule = await fetchSchedule(cl.school.id, cl.id, week);
@@ -53,13 +58,18 @@ async function fetchNewSchedule() {
         message: `Parse timetable for class ${cl.id} failed ${e.message}`
       });
     }
-  })
+  });
 }
 
 async function fetchClasses() {
   let schools = await getSchools();
   schools.forEach(async school => {
     if (school.timetableUrl === '') return;
+
+    logger.log({
+      level: 'info',
+      message: `Fetching class for ${school.timetableUrl}`
+    });
 
     let response;
     try {
@@ -87,7 +97,7 @@ async function fetchClasses() {
           message: `Saving class ${schoolClass.id} save failed ${e.message}`
         });
       }
-    })
+    });
   });
 }
 
