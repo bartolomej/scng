@@ -54,7 +54,7 @@ async function updateArticles(schoolId, schoolPageLink, pageVersion) {
 
   articles.forEach(async article => {
     let html = await get(article.href);
-    let content = parseArticlePageV1(html).content;
+    let {content} = parseArticlePageV1(html);
 
     let date;
     if (schoolPageLink.includes('ers')) {
@@ -66,7 +66,9 @@ async function updateArticles(schoolId, schoolPageLink, pageVersion) {
     try {
       await save(schoolId, article.title, content, article.href, date);
     } catch (e) {
-      console.log('article save failed ', e.message);
+      console.error('article save failed ', e.message);
+      console.log(article);
+      console.log(content);
     }
   });
 }

@@ -41,15 +41,16 @@ async function fetchNewSchedule() {
 async function fetchClasses() {
   let schools = await getSchools();
   schools.forEach(async school => {
+    if (school.timetableUrl === '') return;
     let response;
     try {
       response = await request.get(school.timetableUrl);
     } catch (e) {
-      console.log('school timetable fetch failed ', e.message);
+      console.error('school timetable fetch failed ', e.message);
+      console.log(school);
       return;
     }
-    let classes = parseClasses(response);
-    classes.forEach(async schoolClass => {
+    parseClasses(response).forEach(async schoolClass => {
       try {
         await saveClass(
           schoolClass.id,

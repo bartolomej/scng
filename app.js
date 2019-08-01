@@ -4,7 +4,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const rfs = require('rotating-file-stream');
 const log = require('why-is-node-running');
-const {env} = require('./app.json');
+const {env, port} = require('./app.json');
 const app = express();
 require("reflect-metadata");
 
@@ -49,6 +49,6 @@ app.use((err, req, res, next) => {
   })
 });
 
-app.listen(3000, () => console.log(`App running on port 3000`));
+app.listen(port, () => console.log(`App running on port ${port}`));
 
 module.exports = app;
