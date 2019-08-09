@@ -3,30 +3,32 @@
 Repository for SCNG (Solski Center Nova Gorica) API service and 
 native mobile application.
 
-### Setup
+### Project setup
 1. Clone repo locally `git clone https://github.com/bartolomej/scng-api.git`
 2. Install external node modules `npm i`
-3. Configure `ormconfig.json` file with database credentials
+3. Configure `ormconfig.env` file with database credentials
 4. Run application with `npm start`
 5. Run all tests with `jest test`
 
-### Project structure
+
+### Enviroment variables
+
 ```
- +-- news               -> news module
- |   +-- ...            
- +-- user               -> user module
- |   +-- ...            
- +-- schedule           -> schedule module
- |   +-- db             -> database integration
- |   +-- tests          -> all tests for module context
- |   +-- ...            -> more modules
- |   +-- README.md      -> documentation file
- |   +-- routes.js      -> exposes external REST API
- |   +-- index.js       -> main 'service' file - exposes interface for API layer (routes.js)
- ``` 
- 
-This application is structured into modules ('by feature').
-Each module is responsive only for its own logic and processes and exposes only an external REST api.
+// .env file in root
+
+NAME = scng
+PORT = <port>
+MODE = <development/production>
+CONNECTION = mysql
+HOST = localhost
+USERNAME = <user>
+PASSWORD = <password>
+DATABASE = scng
+PORT = 3306
+SYNCHRONIZE = true
+LOGGING = false
+```
+
 
 #### Running api-service tests
 

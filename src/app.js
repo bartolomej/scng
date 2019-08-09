@@ -5,19 +5,20 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const rfs = require('rotating-file-stream');
 const log = require('why-is-node-running');
-const {env, port} = require('./app.json');
+require('dotenv').config({path: path.join(__dirname, '..', '.env')});
+const ormconfig = require('../ormconfig');
 const app = express();
 require("reflect-metadata");
 
 
-createConnection().then(async connection => {
+createConnection(ormconfig).then(async connection => {
 
   const accessLogStream = rfs('access.log', {
     interval: '1d', // rotate daily
     path: path.join(__dirname, 'log')
   });
 
-  if (env === 'development') {
+  if (process.env.MODE === 'development') {
     setTimeout(() => {
       log() // logs out active handles that are keeping node running
     }, 100)
@@ -40,12 +41,12 @@ createConnection().then(async connection => {
       'status': tokens['status'](req, res),
       'response-time': tokens['response-time'](req, res),
     })}, {
-    skip: () => env === 'development',
+    skip: () => process.env.MODE === 'development',
     stream: accessLogStream
   }));
 
   app.use(morgan('dev', {
-    skip: () => env !== 'development',
+    skip: () => process.env.MODE !== 'development',
   }));
 
   // TODO: use /api prefix for api routes
@@ -62,5 +63,5 @@ createConnection().then(async connection => {
     })
   });
 
-  app.listen(port, () => console.log(`App running on port ${port}`));
+  app.listen(process.env.PORT, () => console.log(`App running on port ${process.env.PORT}`));
 });

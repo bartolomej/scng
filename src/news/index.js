@@ -4,13 +4,12 @@ const schedule = require('node-schedule');
 const winston = require('winston');
 const {get} = require('../utils/request');
 const {save, getSchools} = require('./db/index');
-const {env} = require('../app.json');
 
 
 let logger;
 
 async function init() {
-  if (env === 'production') {
+  if (process.env.MODE === 'production') {
     schedule.scheduleJob({
       hour: 20,
       minute: 0,

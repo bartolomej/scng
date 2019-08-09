@@ -6,13 +6,12 @@ const {parseScheduleTable, parseClasses} = require('./htmlParser');
 const request = require('../utils/request');
 const {getSchools, saveClass, getAllClasses} = require('./db/index');
 const {serializeTimetable} = require('./tableParser');
-const {env} = require('../app.json');
 
 
 let logger;
 
 async function init() {
-  if (env === 'production') {
+  if (process.env.MODE === 'production') {
     schedule.scheduleJob({
       hour: 20,
       minute: 0,
