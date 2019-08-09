@@ -42,7 +42,8 @@ LOGGING = false
 - [x] implement logger
 - [ ] implement 'solska malica' module
 - [ ] implement logging endpoints for front end system (for analytics purposes)
-- [ ] add extensive code guides
+- [ ] add code guides
 - [ ] add git workflow guides
 - [ ] add admin (analytics) endpoints
 - [ ] add website module (download page, guides,..)
+- [ ] deployment to heroku / google cloud / digital ocean 

@@ -15,7 +15,7 @@ createConnection(ormconfig).then(async connection => {
 
   const accessLogStream = rfs('access.log', {
     interval: '1d', // rotate daily
-    path: path.join(__dirname, 'log')
+    path: path.join(__dirname, '..', 'log')
   });
 
   if (process.env.MODE === 'development') {
