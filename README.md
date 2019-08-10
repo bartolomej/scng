@@ -46,4 +46,5 @@ LOGGING = false
 - [ ] add git workflow guides
 - [ ] add admin (analytics) endpoints
 - [ ] add website module (download page, guides,..)
-- [ ] deployment to heroku / google cloud / digital ocean 
+- [ ] deployment to dokku
+- [ ] load test server - [artillery](https://artillery.io/)

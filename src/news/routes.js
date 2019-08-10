@@ -1,6 +1,6 @@
 const app = require('express').Router();
 const {getLatest, getSchools} = require('./db/index');
-const {ValidationError, NotFoundError, ConflictError} = require('../utils/errors');
+const {NotFoundError} = require('../utils/errors');
 const {init} = require('./index');
 const fs = require('fs');
 const path = require('path');

@@ -9,7 +9,7 @@ const {save, getSchools} = require('./db/index');
 let logger;
 
 async function init() {
-  if (process.env.MODE === 'production') {
+  if (process.env.NODE_ENV === 'production') {
     schedule.scheduleJob({
       hour: 20,
       minute: 0,
@@ -21,12 +21,7 @@ async function init() {
     format: winston.format.json(),
     defaultMeta: { service: 'news-service' },
     transports: [
-      //
-      // - Write to all logs with level `info` and below to `combined.log`
-      // - Write all logs error (and below) to `error.log`.
-      //
-      new winston.transports.File({ filename: '../log/error.log', level: 'error' }),
-      new winston.transports.File({ filename: '../log/combined.log' })
+      new winston.transports.Console
     ]
   });
 

@@ -6,19 +6,32 @@ const bodyParser = require('body-parser');
 const rfs = require('rotating-file-stream');
 const log = require('why-is-node-running');
 require('dotenv').config({path: path.join(__dirname, '..', '.env')});
+const {ConnectionStringParser} = require("connection-string-parser");
 const ormconfig = require('../ormconfig');
 const app = express();
 require("reflect-metadata");
 
+const connectionStringParser = new ConnectionStringParser({
+  scheme: "mysql",
+  hosts: []
+});
 
-createConnection(ormconfig).then(async connection => {
+let connectionObject;
+if (process.env.DATABASE_URL) {
+  connectionObject = connectionStringParser.parse(process.env.DATABASE_URL);
+}
+
+createConnection(process.env.DATABASE_URL ?
+  ormconfig.connectionString(connectionObject) :
+  ormconfig.normal
+).then(async connection => {
 
   const accessLogStream = rfs('access.log', {
     interval: '1d', // rotate daily
     path: path.join(__dirname, '..', 'log')
   });
 
-  if (process.env.MODE === 'development') {
+  if (process.env.NODE_ENV === 'development') {
     setTimeout(() => {
       log() // logs out active handles that are keeping node running
     }, 100)
@@ -41,12 +54,12 @@ createConnection(ormconfig).then(async connection => {
       'status': tokens['status'](req, res),
       'response-time': tokens['response-time'](req, res),
     })}, {
-    skip: () => process.env.MODE === 'development',
+    skip: () => process.env.NODE_ENV === 'development',
     stream: accessLogStream
   }));
 
   app.use(morgan('dev', {
-    skip: () => process.env.MODE !== 'development',
+    skip: () => process.env.NODE_ENV !== 'development',
   }));
 
   // TODO: use /api prefix for api routes
