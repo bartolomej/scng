@@ -18,7 +18,7 @@ native mobile application.
 
 NAME = scng
 PORT = <port>
-MODE = <development/production>
+NODE_ENV = <development/production>
 CONNECTION = mysql
 HOST = localhost
 USERNAME = <user>
@@ -30,11 +30,14 @@ LOGGING = false
 ```
 
 
-#### Running api-service tests
+### REST API docs
+1. News API
+```
+/news
+/news/logo/:id
+```
+2. Schedule API
 
-1. Install node modules
-`npm install`
-2. Run all tests (must have jest installed globally) `npm test`
 
 
 ## TODO LIST
