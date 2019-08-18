@@ -29,32 +29,6 @@ LOGGING = false
 ```
 
 
-### School object examples
-```json
-{
-  "id": "0",
-  "name": "SCNG",
-  "fullName": "Šolski center Nova Gorica",
-  "homeUrl": "https://www.scng.si",
-  "timetableUrl": "",
-  "siteVersion": "v1",
-  "logo": "/news/logo/scng.png"
-}
-```
-
-```json
-{
-  "id": "224",
-  "name": "ERS",
-  "fullName": "Elektrotehniška in računalniška šola",
-  "homeUrl": "http://ers.scng.si",
-  "timetableUrl": "https://www.easistent.com/urniki/e29aeb36cd1efde89c2b2c28e33209813ec32756",
-  "siteVersion": "v1",
-  "logo": "/news/logo/ers-scng.png"
-}
-```
-
-
 
 ## TODO LIST
 - [ ] refactor to simpler non-module structure

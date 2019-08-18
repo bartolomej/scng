@@ -11,6 +11,8 @@ const ormconfig = require('../ormconfig');
 const app = express();
 require("reflect-metadata");
 
+
+// parse connection string if present
 const connectionStringParser = new ConnectionStringParser({
   scheme: "mysql",
   hosts: []
@@ -21,22 +23,26 @@ if (process.env.DATABASE_URL) {
   connectionObject = connectionStringParser.parse(process.env.DATABASE_URL);
 }
 
+// create assets folder if not found
 if (!fs.existsSync(path.join(__dirname, '..', 'assets'))) {
   fs.mkdirSync(path.join(__dirname, '..', 'assets'));
 }
 
+// initialize typeorm connection
 createConnection(process.env.DATABASE_URL ?
   ormconfig.connectionString(connectionObject) :
   ormconfig.normal
 ).then(async () => {
 
-
+  // initialize db and register job workers
   await require('./jobs')();
 
+  // configure middleware
+  app.enable("trust proxy");
   app.use(bodyParser.json());
   app.use(fileUpload());
-  app.enable("trust proxy");
 
+  // register routes
   app.use('/api/admin', require('./api/admin'));
   app.use('/api/user', require('./api/user'));
   app.use('/api/news', require('./api/news'));
@@ -49,6 +55,7 @@ createConnection(process.env.DATABASE_URL ?
     })
   });
 
+  // handle errors in routes
   app.use((err, req, res) => {
     res.status(err.statusCode ? err.statusCode : 400).send({
       status: 'error',
@@ -57,6 +64,7 @@ createConnection(process.env.DATABASE_URL ?
     })
   });
 
+  // start server
   app.listen(process.env.PORT || 3000, error => {
     if (error) {
       console.error(error);

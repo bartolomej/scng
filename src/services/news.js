@@ -60,7 +60,7 @@ async function updateArticles(schoolId, schoolPageLink, pageVersion) {
   }
 
   articles.forEach(async article => {
-    let response = await fetch(article.href)
+    let response = await fetch(article.href);
     let html = await response.text();
     let {content} = parseArticlePageV1(html);
 
@@ -76,7 +76,7 @@ async function updateArticles(schoolId, schoolPageLink, pageVersion) {
     } catch (e) {
       logger.log({
         level: 'error',
-        message: `Saving article ${article.title} failed`,
+        message: `Saving article "${article.title}" failed`,
         description: e.message
       });
     }

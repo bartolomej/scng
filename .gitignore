@@ -7,4 +7,3 @@ temp/
 log/
 ormconfig.env
 .env
-assets
