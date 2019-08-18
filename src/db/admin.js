@@ -16,6 +16,22 @@ module.exports.saveMobileLog = async function (type, description, date, user) {
     .save({id: uuid(), type, description, date, user})
 };
 
+module.exports.updateSchool = async function (id, name, fullName, homeUrl, timetableUrl, logo, siteVersion) {
+  return await getRepository("School")
+    .createQueryBuilder()
+    .update("School")
+    .set({
+      name,
+      fullName,
+      homeUrl,
+      timetableUrl,
+      logo,
+      siteVersion
+    })
+    .where("id = :id", {id})
+    .execute();
+};
+
 module.exports.getLatestNotification = async function () {
   return await getRepository("Notification")
     .createQueryBuilder("n")

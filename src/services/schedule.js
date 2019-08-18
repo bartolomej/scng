@@ -31,7 +31,6 @@ async function fetchNewSchedule() {
     try {
       await serializeTimetable(schedule, cl.id);
     } catch (e) {
-      console.error(`Parse timetable for class ${cl.id} failed ${e.message}`);
       logger.log({
         level: 'error',
         message: `Parse timetable for class ${cl.id} failed ${e.message}`
@@ -43,27 +42,28 @@ async function fetchNewSchedule() {
 async function fetchClasses() {
   let schools = await getSchools();
   schools.forEach(async school => {
-    if (school.timetableUrl === '') return;
-
+    if (school.timetableUrl === '') {
+      return;
+    }
     logger.log({
       level: 'info',
-      message: `Fetching class for ${school.timetableUrl}`
+      message: `Fetching class for ${school.timetableUrl}`,
     });
 
-    let response;
+    let schedulePage;
     try {
-      response = await fetch(school.timetableUrl)
-        .then(res => res.text());
+      let response = await fetch(school.timetableUrl);
+      schedulePage = await response.text();
     } catch (e) {
-      console.error(`Fetching school ${school.id} timetable failed ${e.message}`);
       logger.log({
         level: 'error',
-        message: `Fetching school ${school.id} timetable failed ${e.message}`
+        message: `Fetching school ${school.id} timetable failed`,
+        description: e.message
       });
       return;
     }
 
-    parseClasses(response).forEach(async schoolClass => {
+    parseClasses(schedulePage).forEach(async schoolClass => {
       try {
         await saveClass(
           schoolClass.id,
@@ -71,10 +71,10 @@ async function fetchClasses() {
           school.id
         )
       } catch (e) {
-        console.error(`Saving class ${schoolClass.id} save failed ${e.message}`);
         logger.log({
           level: 'error',
-          message: `Saving class ${schoolClass.id} save failed ${e.message}`
+          message: `Saving ${schoolClass.id} class failed`,
+          description: e.message
         });
       }
     });
@@ -84,11 +84,13 @@ async function fetchClasses() {
 async function fetchSchedule(schoolId, classId, week, studentId = 0) {
   const response = await fetch('https://www.easistent.com/urniki/ajax_urnik', {
     method: 'POST',
-    body: `id_sola=${schoolId}&` + `id_razred=${classId}&` +
-          `id_dijak=${studentId}&` + `teden=${week}&qversion=17`,
+    body: `id_sola=${schoolId}&` +
+          `id_razred=${classId}&` +
+          `id_dijak=${studentId}&` +
+          `teden=${week}&qversion=17`,
     headers: {'Content-Type': `application/x-www-form-urlencoded`}
-  }).then(res => res.text());
-  return parseScheduleTable(response);
+  });
+  return parseScheduleTable(await response.text());
 }
 
 module.exports = {

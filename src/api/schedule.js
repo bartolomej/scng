@@ -26,6 +26,14 @@ app.get('/:classId', async (req, res, next) => {
   } catch (e) { next(e) }
 });
 
+app.get('/:schoolId/:classId', async (req, res, next) => {
+  let startWeekDay = moment().day(0);
+  let endWeekDay = moment().day(5);
+  try {
+    res.send(await getMultipleSchedule(req.params.classId, startWeekDay, endWeekDay));
+  } catch (e) { next(e) }
+});
+
 app.get('/timetable/:classId/:date', async (req, res, next) => {
   let date = moment(req.params.date, 'DD-MM-YYYY');
   if (!date.isValid()) {
@@ -34,18 +42,6 @@ app.get('/timetable/:classId/:date', async (req, res, next) => {
   try {
     res.send(await getSchedule(req.params.classId, date.toDate()));
   } catch (e) { next(e) }
-});
-
-app.get('/timetable/:classId', async (req, res, next) => {
-  let startDate = moment(req.query.startDate, 'DD-MM-YYYY');
-  let endDate = moment(req.query.endDate, 'DD-MM-YYYY');
-  if (startDate.isValid() && endDate.isValid()) {
-    try {
-      res.send(await getMultipleSchedule(req.params.classId, startDate, endDate));
-    } catch (e) { next(e) }
-  } else {
-    next(new ValidationError("Invalid date format in url"))
-  }
 });
 
 async function getMultipleSchedule(classId, startDate, endDate) {

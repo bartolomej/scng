@@ -2,24 +2,29 @@ const app = require('express').Router();
 const basicAuth = require('express-basic-auth');
 const path = require('path');
 const {ConflictError, InternalError} = require('../errors');
-const {saveNotification, getLatestReviews, getLatestNotification, getLatestMobileLog} = require('../db/admin');
 const {saveSchool, getSchools} = require('../db/schedule');
 const {getLatest} = require('../db/news');
-const { celebrate, Joi, errors } = require('celebrate');
+const {celebrate, Joi, errors} = require('celebrate');
+const {
+  saveNotification,
+  getLatestReviews,
+  getLatestNotification,
+  getLatestMobileLog,
+  updateSchool
+} = require('../db/admin');
 
 
 app.use(basicAuth({
   users: {
     'admin': 'password123',
   },
-  unauthorizedResponse: req => {
-    return {
-      status: 'error',
-      name: 'UnauthorizedError',
-      message: req.auth ? `Credentials ${req.auth.user} : ${req.auth.password} rejected`
-        : 'No credentials provided'
-    }
-  }
+  unauthorizedResponse: req => ({
+    status: 'error',
+    name: 'UnauthorizedError',
+    message: req.auth ?
+      `Credentials ${req.auth.user} : ${req.auth.password} rejected` :
+      'No credentials provided'
+  })
 }));
 
 app.get('/school', async (req, res) => {
@@ -42,6 +47,25 @@ app.get('/reviews', async (req, res) => {
   res.send(await getLatestReviews());
 });
 
+app.put('/school/:schoolId', celebrate({
+  body: Joi.object().keys({
+    id: Joi.string(),
+    name: Joi.string(),
+    fullName: Joi.string(),
+    homeUrl: Joi.string(),
+    timetableUrl: Joi.string().allow(''),
+    siteVersion: Joi.string(),
+    logo: Joi.string()
+  })
+}), async (req, res, next) => {
+  try {
+    res.send(await updateSchool(
+      req.params.schoolId, req.body.name, req.body.fullName, req.body.homeUrl,
+      req.body.timetableUrl, req.body.logo, req.body.siteVersion
+    ));
+  } catch (e) { next(e) }
+});
+
 app.post('/school', celebrate({
   body: Joi.object().keys({
     id: Joi.string(),
@@ -55,7 +79,7 @@ app.post('/school', celebrate({
 }), async (req, res, next) => {
   try {
     res.send(await saveSchool(
-      req.body.id, req.body.name, req.body.homeUrl,
+      req.body.id, req.body.name, req.body.fullName, req.body.homeUrl,
       req.body.timetableUrl, req.body.logo, req.body.siteVersion
     ));
   } catch (e) { next(e) }

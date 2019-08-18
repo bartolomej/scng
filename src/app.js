@@ -1,5 +1,4 @@
 const createConnection = require('typeorm').createConnection;
-const cool = require('cool-ascii-faces');
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
@@ -37,10 +36,6 @@ createConnection(process.env.DATABASE_URL ?
   app.use(fileUpload());
   app.enable("trust proxy");
 
-  // TODO: add website
-  // TODO: add admin module
-  app.get('/', (req, res) => res.send(cool()));
-  app.get('/api', (req, res) => res.send('SCNG REST API'));
   app.use('/api/admin', require('./api/admin'));
   app.use('/api/user', require('./api/user'));
   app.use('/api/news', require('./api/news'));
@@ -63,11 +58,7 @@ createConnection(process.env.DATABASE_URL ?
       process.exit(1);
       return;
     }
-    console.log(`
-    #######################################################
-      🛡️  Server listening on port: ${process.env.PORT || 3000} 🛡️ 
-    #######################################################
-    `)
+    console.log(`Server listening on port: ${process.env.PORT || 3000}`)
   });
 }).catch(error => {
   console.error(error);

@@ -1,8 +1,8 @@
 const schedule = require('node-schedule');
 const {fetchNewSchedule, fetchClasses} = require('./services/schedule');
-const {processUpdates} = require('./services/news');
+const {processNewsUpdates} = require('./services/news');
 
-module.exports = function () {
+module.exports = async function () {
 
   if (process.env.NODE_ENV === 'production') {
     schedule.scheduleJob({
@@ -15,7 +15,10 @@ module.exports = function () {
     schedule.scheduleJob({
       hour: 20,
       minute: 0,
-    }, async () => await processUpdates());
+    }, async () => await processNewsUpdates());
   }
 
+  await fetchClasses();
+  await fetchNewSchedule();
+  await processNewsUpdates();
 };

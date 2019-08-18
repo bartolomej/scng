@@ -1,6 +1,6 @@
 const app = require('express').Router();
 const {saveReview, getLatestReviews, getLatestNotification, saveMobileLog} = require('../db/admin');
-const { celebrate, Joi, errors } = require('celebrate');
+const {celebrate, Joi, errors} = require('celebrate');
 
 
 app.post('/feedback', celebrate({

@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 
 
-app.get('/', async (req, res, next) => {
+app.get('/', async (req, res) => {
   res.send(await getLatest(10));
 });
 

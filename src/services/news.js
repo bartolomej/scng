@@ -28,7 +28,8 @@ async function updateArticles(schoolId, schoolPageLink, pageVersion) {
 
   logger.log({
     level: 'info',
-    message: `Updating articles for school ${schoolId} (${schoolPageLink})`
+    message: `Updating articles for school ${schoolId}`,
+    description: `School href: ${schoolPageLink}`
   });
 
   if (pageVersion !== 'v1') {
@@ -36,13 +37,13 @@ async function updateArticles(schoolId, schoolPageLink, pageVersion) {
   }
 
   try {
-    homePage = await fetch(schoolPageLink)
-      .then(res => res.text())
+    let response = await fetch(schoolPageLink);
+    homePage = await response.text();
   } catch (e) {
-    console.error(`Fetching article from ${schoolPageLink} failed ${e.message}`);
     logger.log({
       level: 'error',
-      message: `Fetching article from ${schoolPageLink} failed ${e.message}`
+      message: `Fetching article from ${schoolPageLink} failed`,
+      description: e.message
     });
     return;
   }
@@ -50,17 +51,17 @@ async function updateArticles(schoolId, schoolPageLink, pageVersion) {
   try {
     articles = parseHomePageV1(homePage);
   } catch (e) {
-    console.error(`Parsing article from ${schoolPageLink} failed ${e.message}`);
     logger.log({
       level: 'error',
-      message: `Parsing article from ${schoolPageLink} failed ${e.message}`
+      message: `Parsing article from ${schoolPageLink} failed`,
+      description: e.message
     });
     return;
   }
 
   articles.forEach(async article => {
-    let html = await fetch(article.href)
-      .then(res => res.text());
+    let response = await fetch(article.href)
+    let html = await response.text();
     let {content} = parseArticlePageV1(html);
 
     let date;
@@ -73,15 +74,15 @@ async function updateArticles(schoolId, schoolPageLink, pageVersion) {
     try {
       await save(schoolId, article.title, content, article.href, date);
     } catch (e) {
-      console.error(`Saving article ${article.title} failed ${e.message}`);
       logger.log({
         level: 'error',
-        message: `Saving article ${article.title} failed ${e.message}`
+        message: `Saving article ${article.title} failed`,
+        description: e.message
       });
     }
   });
 }
 
 module.exports = {
-  processUpdates
+  processNewsUpdates: processUpdates
 };
