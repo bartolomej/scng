@@ -6,12 +6,12 @@ native mobile application.
 ### Project setup
 1. Clone repo locally `git clone https://github.com/bartolomej/scng-api.git`
 2. Install external node modules `npm i`
-3. Configure `ormconfig.env` file with database credentials
-4. Run application with `npm start`
-5. Run all tests with `jest test`
+3. Configure `.env` environment file
+4. Run all tests with `jest test`
+5. Run application with `npm start`
 
 
-### Enviroment variables
+### Environment file
 
 ```
 // .env file in root
@@ -30,12 +30,11 @@ LOGGING = false
 
 
 
-## TODO LIST
-- [ ] refactor to simpler non-module structure
-- [ ] implement 'solska malica' module
+## TODOs
+- [ ] implement 'solska malica'
 - [ ] implement logging endpoints for front end system (for analytics purposes)
 - [ ] add code guides
 - [ ] add git workflow guides
-- [ ] add admin (analytics) endpoints
+- [x] add admin (analytics) endpoints
 - [ ] add website module (download page, guides,..)
 - [ ] load test server - [artillery](https://artillery.io/)

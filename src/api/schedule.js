@@ -3,19 +3,19 @@ const moment = require('moment');
 const {getSchools, getClasses, getLessonByTimetable, getTimetableByDay} = require('../db/schedule');
 
 
-app.get('/', async (req, res, next) => {
+app.get('/school', async (req, res, next) => {
   try {
     res.send(await getSchools());
   } catch (e) { next(e) }
 });
 
-app.get('/:schoolId', async (req, res, next) => {
+app.get('/school/:schoolId', async (req, res, next) => {
   try {
     res.send(await getClasses(req.params.schoolId));
   } catch (e) { next(e) }
 });
 
-app.get('/:schoolId/:classId', async (req, res, next) => {
+app.get('/schedule/:classId', async (req, res, next) => {
   let startWeekDay = moment().day(0);
   let endWeekDay = moment().day(5);
   try {

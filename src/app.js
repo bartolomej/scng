@@ -43,10 +43,10 @@ createConnection(process.env.DATABASE_URL ?
   app.use(fileUpload());
 
   // register routes
+  app.use('/api', require('./api/schedule'));
   app.use('/api/admin', require('./api/admin'));
   app.use('/api/user', require('./api/user'));
   app.use('/api/news', require('./api/news'));
-  app.use('/api/schedule', require('./api/schedule'));
   app.all('*', (req, res) => {
     res.status(404).send({
       status: 'error',
