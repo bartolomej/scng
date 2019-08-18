@@ -2,10 +2,12 @@ const createConnection = require('typeorm').createConnection;
 const cool = require('cool-ascii-faces');
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 const bodyParser = require('body-parser');
+const fileUpload = require('express-fileupload');
 require('dotenv').config({path: path.join(__dirname, '..', '.env')});
 const {ConnectionStringParser} = require("connection-string-parser");
-const {NotFoundError} = require('./utils/errors');
+const {NotFoundError} = require('./errors');
 const ormconfig = require('../ormconfig');
 const app = express();
 require("reflect-metadata");
@@ -20,12 +22,19 @@ if (process.env.DATABASE_URL) {
   connectionObject = connectionStringParser.parse(process.env.DATABASE_URL);
 }
 
+if (!fs.existsSync(path.join(__dirname, '..', 'assets'))) {
+  fs.mkdirSync(path.join(__dirname, '..', 'assets'));
+}
+
 createConnection(process.env.DATABASE_URL ?
   ormconfig.connectionString(connectionObject) :
   ormconfig.normal
 ).then(async () => {
 
+  require('./jobs')();
+
   app.use(bodyParser.json());
+  app.use(fileUpload());
   app.enable("trust proxy");
 
   // TODO: add website
@@ -40,7 +49,7 @@ createConnection(process.env.DATABASE_URL ?
     next(new NotFoundError('Endpoint not found'))
   });
 
-  app.use((err, req, res, next) => {
+  app.use((err, req, res) => {
     res.status(err.statusCode ? err.statusCode : 400).send({
       status: 'error',
       name: err.name,

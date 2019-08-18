@@ -1,4 +1,4 @@
-const request = require('../utils/request');
+const fetch = require('node-fetch');
 const {
   parseScheduleTopRow,
   parseTimeTableData,
@@ -12,7 +12,8 @@ const {
 describe('Parse classes selection box', function () {
 
   it('should parse class names and ids', async function () {
-    let schedulePage = await request.get('https://www.easistent.com/urniki/e29aeb36cd1efde89c2b2c28e33209813ec32756');
+    let schedulePage = await fetch('https://www.easistent.com/urniki/e29aeb36cd1efde89c2b2c28e33209813ec32756')
+      .then(res => res.text());
 
     expect(parseClasses(schedulePage).length).toEqual(22)
   });
@@ -420,10 +421,12 @@ describe('Parse html tree data structure', function () {
 
 describe('Tests with network request data', function () {
 
-  it('should parse full schedule table without lessons', async function () {
-    const table = await request.post(
-      'https://www.easistent.com/urniki/ajax_urnik',
-      'id_sola=224&id_razred=343294&id_dijak=0&teden=43&qversion=17', 'form');
+  it('should table full schedule table without lessons', async function () {
+    const table = await fetch('https://www.easistent.com/urniki/ajax_urnik', {
+      method: 'POST',
+      body: 'id_sola=224&id_razred=343294&id_dijak=0&teden=43&qversion=17',
+      headers: {'Content-Type': `application/x-www-form-urlencoded`}
+    }).then(res => res.text());
 
     const parsed = parseScheduleTable(table);
 
@@ -432,9 +435,11 @@ describe('Tests with network request data', function () {
   });
 
   it('should parse full schedule table with lessons', async function () {
-    const table = await request.post(
-      'https://www.easistent.com/urniki/ajax_urnik',
-      'id_sola=224&id_razred=343294&id_dijak=0&teden=39&qversion=17', 'form');
+    const table = await fetch('https://www.easistent.com/urniki/ajax_urnik', {
+      method: 'POST',
+      body: 'id_sola=224&id_razred=343294&id_dijak=0&teden=39&qversion=17\'',
+      headers: {'Content-Type': `application/x-www-form-urlencoded`}
+    }).then(res => res.text());
 
     const parsed = parseScheduleTable(table);
 

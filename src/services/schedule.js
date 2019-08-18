@@ -1,35 +1,20 @@
 require('reflect-metadata');
+const fetch = require('node-fetch');
 const moment = require('moment');
 const winston = require('winston');
-const schedule = require('node-schedule');
 const {parseScheduleTable, parseClasses} = require('../parsers/schedule-parser');
-const request = require('../utils/request');
 const {getSchools, saveClass, getAllClasses} = require('../db/schedule');
 const {serializeTimetable} = require('../parsers/table-parser');
 
 
-let logger;
-
-async function init() {
-  if (process.env.NODE_ENV === 'production') {
-    schedule.scheduleJob({
-      hour: 20,
-      minute: 0,
-    }, async () => await fetchNewSchedule());
-  }
-
-  logger = winston.createLogger({
-    level: 'info',
-    format: winston.format.json(),
-    defaultMeta: { service: 'schedule-service' },
-    transports: [
-      new winston.transports.Console
-    ]
-  });
-
-  await fetchClasses();
-  await fetchNewSchedule();
-}
+let logger = winston.createLogger({
+  level: 'info',
+  format: winston.format.json(),
+  defaultMeta: { service: 'schedule-service' },
+  transports: [
+    new winston.transports.Console
+  ]
+});
 
 async function fetchNewSchedule() {
   let classes = await getAllClasses();
@@ -67,7 +52,8 @@ async function fetchClasses() {
 
     let response;
     try {
-      response = await request.get(school.timetableUrl);
+      response = await fetch(school.timetableUrl)
+        .then(res => res.text());
     } catch (e) {
       console.error(`Fetching school ${school.id} timetable failed ${e.message}`);
       logger.log({
@@ -96,15 +82,17 @@ async function fetchClasses() {
 }
 
 async function fetchSchedule(schoolId, classId, week, studentId = 0) {
-  const SCHEDULE_API_ENDPOINT = 'https://www.easistent.com/urniki/ajax_urnik';
-  const REQUEST_BODY =
-    `id_sola=${schoolId}&` + `id_razred=${classId}&` +
-    `id_dijak=${studentId}&` + `teden=${week}&qversion=17`;
-  return parseScheduleTable(
-    await request.post(SCHEDULE_API_ENDPOINT, REQUEST_BODY, 'form'));
+  const response = await fetch('https://www.easistent.com/urniki/ajax_urnik', {
+    method: 'POST',
+    body: `id_sola=${schoolId}&` + `id_razred=${classId}&` +
+          `id_dijak=${studentId}&` + `teden=${week}&qversion=17`,
+    headers: {'Content-Type': `application/x-www-form-urlencoded`}
+  }).then(res => res.text());
+  return parseScheduleTable(response);
 }
 
 module.exports = {
-  init,
-  fetchSchedule
+  fetchSchedule,
+  fetchClasses,
+  fetchNewSchedule
 };

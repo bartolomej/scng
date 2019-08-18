@@ -1,32 +1,18 @@
 require('reflect-metadata');
+const fetch = require('node-fetch');
 const {parseHomePageV1, parseArticlePageV1, parseDateV1, parseDateV2} = require('../parsers/news-parser');
-const schedule = require('node-schedule');
 const winston = require('winston');
-const {get} = require('../utils/request');
 const {save, getSchools} = require('../db/news');
 
 
-let logger;
-
-async function init() {
-  if (process.env.NODE_ENV === 'production') {
-    schedule.scheduleJob({
-      hour: 20,
-      minute: 0,
-    }, async () => await processUpdates());
-  }
-
-  logger = winston.createLogger({
-    level: 'info',
-    format: winston.format.json(),
-    defaultMeta: { service: 'news-service' },
-    transports: [
-      new winston.transports.Console
-    ]
-  });
-
-  await processUpdates();
-}
+let logger = winston.createLogger({
+  level: 'info',
+  format: winston.format.json(),
+  defaultMeta: { service: 'news-service' },
+  transports: [
+    new winston.transports.Console
+  ]
+});
 
 async function processUpdates() {
   let schools = await getSchools();
@@ -50,7 +36,8 @@ async function updateArticles(schoolId, schoolPageLink, pageVersion) {
   }
 
   try {
-    homePage = await get(schoolPageLink);
+    homePage = await fetch(schoolPageLink)
+      .then(res => res.text())
   } catch (e) {
     console.error(`Fetching article from ${schoolPageLink} failed ${e.message}`);
     logger.log({
@@ -72,7 +59,8 @@ async function updateArticles(schoolId, schoolPageLink, pageVersion) {
   }
 
   articles.forEach(async article => {
-    let html = await get(article.href);
+    let html = await fetch(article.href)
+      .then(res => res.text());
     let {content} = parseArticlePageV1(html);
 
     let date;
@@ -95,6 +83,5 @@ async function updateArticles(schoolId, schoolPageLink, pageVersion) {
 }
 
 module.exports = {
-  init,
   processUpdates
 };

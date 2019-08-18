@@ -1,5 +1,7 @@
 const app = require('express').Router();
 const basicAuth = require('express-basic-auth');
+const path = require('path');
+const {ConflictError, InternalError} = require('../errors');
 const {saveNotification, getLatestReviews, getLatestNotification, getLatestMobileLog} = require('../db/admin');
 const {saveSchool, getSchools} = require('../db/schedule');
 const {getLatest} = require('../db/news');
@@ -20,23 +22,23 @@ app.use(basicAuth({
   }
 }));
 
-app.get('/school', async (req, res, next) => {
+app.get('/school', async (req, res) => {
   res.send(await getSchools());
 });
 
-app.get('/news', async (req, res, next) => {
+app.get('/news', async (req, res) => {
   res.send(await getLatest());
 });
 
-app.get('/log', async (req, res, next) => {
+app.get('/log', async (req, res) => {
   res.send(await getLatestMobileLog());
 });
 
-app.get('/notification', async (req, res, next) => {
+app.get('/notification', async (req, res) => {
   res.send(await getLatestNotification());
 });
 
-app.get('/reviews', async (req, res, next) => {
+app.get('/reviews', async (req, res) => {
   res.send(await getLatestReviews());
 });
 
@@ -68,6 +70,26 @@ app.post('/notification', celebrate({
   try {
     res.send(await saveNotification(req.body.title, req.body.description));
   } catch (e) { next(e) }
+});
+
+app.post('/logo', celebrate({
+  body: Joi.object().keys({
+    fileName: Joi.string(),
+  })
+}), async (req, res, next) => {
+  if (Object.keys(req.files).length === 0) {
+    return next(new ConflictError('No files were uploaded'));
+  }
+  let file = req.files.file;
+  file.mv(path.join(__dirname, '..', '..', 'assets', req.body.fileName), error => {
+    if (error) {
+      return next(new InternalError('Error saving files', error.message));
+    }
+    res.send({
+      status: 'ok',
+      message: 'Files uploaded'
+    });
+  });
 });
 
 app.use(errors());

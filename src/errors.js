@@ -39,3 +39,17 @@ module.exports.ConflictError = class ConflictError extends Error {
     this.statusCode = 409;
   }
 };
+
+module.exports.InternalError = class InternalError extends Error {
+  constructor(message, description) {
+    super(message);
+
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, InternalError);
+    }
+
+    this.name = "InternalError";
+    this.description = description;
+    this.statusCode = 409;
+  }
+};
