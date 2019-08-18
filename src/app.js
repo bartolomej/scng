@@ -30,7 +30,8 @@ createConnection(process.env.DATABASE_URL ?
   ormconfig.normal
 ).then(async () => {
 
-  require('./jobs')();
+
+  await require('./jobs')();
 
   app.use(bodyParser.json());
   app.use(fileUpload());
@@ -40,8 +41,12 @@ createConnection(process.env.DATABASE_URL ?
   app.use('/api/user', require('./api/user'));
   app.use('/api/news', require('./api/news'));
   app.use('/api/schedule', require('./api/schedule'));
-  app.all('*', (req, res, next) => {
-    next(new NotFoundError('Endpoint not found'))
+  app.all('*', (req, res) => {
+    res.status(404).send({
+      status: 'error',
+      name: "NotFoundError",
+      message: "API endpoint not found"
+    })
   });
 
   app.use((err, req, res) => {

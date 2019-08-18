@@ -1,6 +1,5 @@
 const app = require('express').Router();
 const moment = require('moment');
-const {ValidationError} = require('../errors');
 const {getSchools, getClasses, getLessonByTimetable, getTimetableByDay} = require('../db/schedule');
 
 
@@ -16,31 +15,11 @@ app.get('/:schoolId', async (req, res, next) => {
   } catch (e) { next(e) }
 });
 
-app.get('/:classId', async (req, res, next) => {
-  let date = moment(req.params.date);
-  if (!date.isValid()) {
-    return next(new ValidationError("Invalid date format"));
-  }
-  try {
-    res.send(await getSchedule(req.params.classId, date.toDate()));
-  } catch (e) { next(e) }
-});
-
 app.get('/:schoolId/:classId', async (req, res, next) => {
   let startWeekDay = moment().day(0);
   let endWeekDay = moment().day(5);
   try {
     res.send(await getMultipleSchedule(req.params.classId, startWeekDay, endWeekDay));
-  } catch (e) { next(e) }
-});
-
-app.get('/timetable/:classId/:date', async (req, res, next) => {
-  let date = moment(req.params.date, 'DD-MM-YYYY');
-  if (!date.isValid()) {
-    return next(new ValidationError("Invalid date format"));
-  }
-  try {
-    res.send(await getSchedule(req.params.classId, date.toDate()));
   } catch (e) { next(e) }
 });
 
