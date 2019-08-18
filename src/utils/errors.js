@@ -1,6 +1,11 @@
 module.exports.ValidationError = class ValidationError extends Error {
   constructor(message, description) {
     super(message);
+
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, ValidationError);
+    }
+
     this.name = "ValidationError";
     this.description = description;
     this.statusCode = 400;
@@ -10,6 +15,11 @@ module.exports.ValidationError = class ValidationError extends Error {
 module.exports.NotFoundError = class NotFoundError extends Error {
   constructor(message, description) {
     super(message);
+
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, NotFoundError);
+    }
+
     this.name = "NotFoundError";
     this.description = description;
     this.statusCode = 404;
@@ -19,6 +29,11 @@ module.exports.NotFoundError = class NotFoundError extends Error {
 module.exports.ConflictError = class ConflictError extends Error {
   constructor(message, description) {
     super(message);
+
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, ConflictError);
+    }
+
     this.name = "ConflictError";
     this.description = description;
     this.statusCode = 409;

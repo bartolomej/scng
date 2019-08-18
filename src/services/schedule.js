@@ -2,10 +2,10 @@ require('reflect-metadata');
 const moment = require('moment');
 const winston = require('winston');
 const schedule = require('node-schedule');
-const {parseScheduleTable, parseClasses} = require('./htmlParser');
+const {parseScheduleTable, parseClasses} = require('../parsers/schedule-parser');
 const request = require('../utils/request');
-const {getSchools, saveClass, getAllClasses} = require('./db/index');
-const {serializeTimetable} = require('./tableParser');
+const {getSchools, saveClass, getAllClasses} = require('../db/schedule');
+const {serializeTimetable} = require('../parsers/table-parser');
 
 
 let logger;

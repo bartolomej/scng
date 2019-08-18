@@ -1,8 +1,8 @@
 const app = require('express').Router();
 const moment = require('moment');
-const {init} = require('./index');
+const {init} = require('../services/schedule');
 const {ValidationError} = require('../utils/errors');
-const {getSchools, getClasses, getLessonByTimetable, getTimetableByDay} = require('./db/index');
+const {getSchools, getClasses, getLessonByTimetable, getTimetableByDay} = require('../db/schedule');
 
 (async () => await init())();
 

@@ -24,30 +24,44 @@ HOST = localhost
 USERNAME = <user>
 PASSWORD = <password>
 DATABASE = scng
-PORT = 3306
-SYNCHRONIZE = true
+DATABASE_PORT = 3306
 LOGGING = false
 ```
 
 
-### REST API docs
-1. News API
+### School object examples
+```json
+{
+  "id": "0",
+  "name": "SCNG",
+  "fullName": "Šolski center Nova Gorica",
+  "homeUrl": "https://www.scng.si",
+  "timetableUrl": "",
+  "siteVersion": "v1",
+  "logo": "/news/logo/scng.png"
+}
 ```
-/news
-/news/logo/:id
+
+```json
+{
+  "id": "224",
+  "name": "ERS",
+  "fullName": "Elektrotehniška in računalniška šola",
+  "homeUrl": "http://ers.scng.si",
+  "timetableUrl": "https://www.easistent.com/urniki/e29aeb36cd1efde89c2b2c28e33209813ec32756",
+  "siteVersion": "v1",
+  "logo": "/news/logo/ers-scng.png"
+}
 ```
-2. Schedule API
 
 
 
 ## TODO LIST
-- [x] implement convenient error handling system (handling, response error message,..)
-- [x] implement logger
+- [ ] refactor to simpler non-module structure
 - [ ] implement 'solska malica' module
 - [ ] implement logging endpoints for front end system (for analytics purposes)
 - [ ] add code guides
 - [ ] add git workflow guides
 - [ ] add admin (analytics) endpoints
 - [ ] add website module (download page, guides,..)
-- [ ] deployment to dokku
 - [ ] load test server - [artillery](https://artillery.io/)

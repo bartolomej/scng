@@ -1,4 +1,4 @@
-const request = require('../../utils/request');
+const request = require('../utils/request');
 const {
   parseScheduleTopRow,
   parseTimeTableData,
@@ -6,7 +6,7 @@ const {
   parseScheduleRow,
   parseScheduleTable,
   parseClasses
-} = require('../htmlParser').test;
+} = require('./schedule-parser').test;
 
 
 describe('Parse classes selection box', function () {

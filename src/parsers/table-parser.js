@@ -1,6 +1,6 @@
 const moment = require('moment');
 const crypto = require('crypto');
-const {saveLesson, saveTimetable} = require('./db/index');
+const {saveLesson, saveTimetable} = require('../db/schedule');
 
 
 module.exports.serializeTimetable = async function (table, classId) {

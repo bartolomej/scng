@@ -1,9 +1,9 @@
 require('reflect-metadata');
-const {parseHomePageV1, parseArticlePageV1, parseDateV1, parseDateV2} = require('./htmlParser');
+const {parseHomePageV1, parseArticlePageV1, parseDateV1, parseDateV2} = require('../parsers/news-parser');
 const schedule = require('node-schedule');
 const winston = require('winston');
 const {get} = require('../utils/request');
-const {save, getSchools} = require('./db/index');
+const {save, getSchools} = require('../db/news');
 
 
 let logger;

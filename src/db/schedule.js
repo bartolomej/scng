@@ -1,9 +1,9 @@
 const getRepository = require('typeorm').getRepository;
 
 
-module.exports.saveSchool = async function (id, name, fullName) {
+module.exports.saveSchool = async function (id, name, fullName, homeUrl, timetableUrl, logo, siteVersion) {
   return await getRepository("School")
-    .save({id, name, fullName, added: new Date()});
+    .save({id, name, fullName, homeUrl, timetableUrl, added: new Date(), logo, siteVersion});
 };
 
 module.exports.saveClass = async function (id, name, school) {

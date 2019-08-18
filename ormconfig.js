@@ -1,15 +1,13 @@
 module.exports.normal = {
   "type": "mysql",
   "host": process.env.HOST,
-  "port": process.env.PORT,
+  "port": process.env.DATABASE_PORT,
   "synchronize": true,
   "username": process.env.USERNAME,
   "password": process.env.PASSWORD,
   "database": process.env.DATABASE,
   "entities": [
-    "src/news/db/entities/*.js",
-    "src/schedule/db/entities/*.js",
-    "src/user/db/entities/*.js"
+    "src/models/*.js"
   ],
 };
 
@@ -22,8 +20,6 @@ module.exports.connectionString = connectionObject => ({
   "database": connectionObject.endpoint,
   "synchronize": true,
   "entities": [
-    "src/news/db/entities/*.js",
-    "src/schedule/db/entities/*.js",
-    "src/user/db/entities/*.js"
+    "src/models/*.js"
   ]
 });

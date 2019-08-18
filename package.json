@@ -3,9 +3,9 @@
    "version": "1.0.0",
    "description": "A restfull scng api service",
    "main": "app.js",
-  "engines": {
-    "node": "10.8.0"
-  },
+   "engines": {
+      "node": "10.8.0"
+   },
    "scripts": {
       "start": "node src/app.js",
       "test": "jest"
@@ -24,11 +24,13 @@
       "@hapi/hapi": "^18.3.1",
       "axios": "^0.19.0",
       "body-parser": "^1.19.0",
+      "celebrate": "10.0.1",
       "cheerio": "^1.0.0-rc.3",
       "connection-string-parser": "1.0.2",
       "cool-ascii-faces": "1.3.4",
       "dotenv": "^8.0.0",
       "express": "^4.17.1",
+      "express-basic-auth": "1.2.0",
       "express-request-id": "^1.4.1",
       "jest": "^24.8.0",
       "moment": "^2.24.0",
@@ -37,7 +39,6 @@
       "reflect-metadata": "^0.1.10",
       "typeorm": "0.2.18",
       "uuid": "latest",
-      "why-is-node-running": "^2.1.0",
       "winston": "^3.2.1"
    },
    "devDependencies": {

@@ -31,7 +31,7 @@ module.exports.getLatestReviews = async function () {
     .getMany();
 };
 
-module.exports.getRecentMobileLog = async function (limit = 20) {
+module.exports.getLatestMobileLog = async function (limit = 20) {
   return await getRepository("MobileLog")
     .createQueryBuilder("l")
     .orderBy("l.date", "ASC")

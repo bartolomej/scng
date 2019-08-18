@@ -1,7 +1,7 @@
 const app = require('express').Router();
-const {getLatest, getSchools} = require('./db/index');
+const {getLatest, getSchools} = require('../db/news');
 const {NotFoundError} = require('../utils/errors');
-const {init} = require('./index');
+const {init} = require('../services/news');
 const fs = require('fs');
 const path = require('path');
 

@@ -1,5 +1,5 @@
-const {parseHomePageV1, parseArticlePageV1, parseDateV1, parseDateV2} = require('./htmlParser');
-const {formatTitle} = require('./htmlParser').test;
+const {parseHomePageV1, parseArticlePageV1, parseDateV1, parseDateV2} = require('./news-parser');
+const {formatTitle} = require('./news-parser').test;
 const moment = require('moment');
 
 
