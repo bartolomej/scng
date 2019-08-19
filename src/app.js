@@ -56,7 +56,7 @@ createConnection(process.env.DATABASE_URL ?
   });
 
   // handle errors in routes
-  app.use((err, req, res) => {
+  app.use((err, req, res, next) => {
     res.status(err.statusCode ? err.statusCode : 400).send({
       status: 'error',
       name: err.name,

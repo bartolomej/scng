@@ -9,7 +9,7 @@ const {
   saveNotification,
   getLatestReviews,
   getLatestNotification,
-  getLatestMobileLog,
+  updateFeature,
   updateSchool
 } = require('../db/admin');
 
@@ -35,16 +35,31 @@ app.get('/news', async (req, res) => {
   res.send(await getLatest());
 });
 
-app.get('/log', async (req, res) => {
-  res.send(await getLatestMobileLog());
-});
-
 app.get('/notification', async (req, res) => {
   res.send(await getLatestNotification());
 });
 
 app.get('/reviews', async (req, res) => {
   res.send(await getLatestReviews());
+});
+
+app.put('/feature/:id', celebrate({
+  body: Joi.object().keys({
+    title: Joi.string(),
+    description: Joi.string(),
+    status: Joi.string(),
+    visible: Joi.number()
+  })
+}), async (req, res, next) => {
+  try {
+    res.send(await updateFeature(
+      req.params.id,
+      req.body.status,
+      req.body.title,
+      req.body.description,
+      req.body.visible
+    ));
+  } catch (e) { next(e) }
 });
 
 app.put('/school/:schoolId', celebrate({
@@ -60,8 +75,13 @@ app.put('/school/:schoolId', celebrate({
 }), async (req, res, next) => {
   try {
     res.send(await updateSchool(
-      req.params.schoolId, req.body.name, req.body.fullName, req.body.homeUrl,
-      req.body.timetableUrl, req.body.logo, req.body.siteVersion
+      req.params.schoolId,
+      req.body.name,
+      req.body.fullName,
+      req.body.homeUrl,
+      req.body.timetableUrl,
+      req.body.logo,
+      req.body.siteVersion
     ));
   } catch (e) { next(e) }
 });
@@ -79,8 +99,13 @@ app.post('/school', celebrate({
 }), async (req, res, next) => {
   try {
     res.send(await saveSchool(
-      req.body.id, req.body.name, req.body.fullName, req.body.homeUrl,
-      req.body.timetableUrl, req.body.logo, req.body.siteVersion
+      req.body.id,
+      req.body.name,
+      req.body.fullName,
+      req.body.homeUrl,
+      req.body.timetableUrl,
+      req.body.logo,
+      req.body.siteVersion
     ));
   } catch (e) { next(e) }
 });
@@ -92,7 +117,9 @@ app.post('/notification', celebrate({
   })
 }), async (req, res, next) => {
   try {
-    res.send(await saveNotification(req.body.title, req.body.description));
+    res.send(await saveNotification(
+      req.body.title,
+      req.body.description));
   } catch (e) { next(e) }
 });
 
