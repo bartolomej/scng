@@ -34,7 +34,6 @@ function parseScheduleTopRow(trNode) {
   }).get();
 }
 
-// TODO: add support for 'Praznik' table data
 function parseScheduleRow(trNode) {
   let tableRow = [];
   $('td.ednevnik-seznam_ur_teden-td', trNode).each((i, ele) => {

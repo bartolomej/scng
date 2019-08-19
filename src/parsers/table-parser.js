@@ -3,7 +3,7 @@ const crypto = require('crypto');
 const {saveLesson, saveTimetable} = require('../db/schedule');
 
 
-module.exports.serializeTimetable = async function (table, classId) {
+module.exports.saveTimetable = async function (table, classId) {
   for (let d = 0; d < 5; d++) {
     let date = parseDate(table[0][d].date);
     for (let l = 1; l < table.length; l++) {

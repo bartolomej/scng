@@ -16,8 +16,8 @@ app.get('/school/:schoolId', async (req, res, next) => {
 });
 
 app.get('/schedule/:classId', async (req, res, next) => {
-  let startWeekDay = moment().day(0);
-  let endWeekDay = moment().day(5);
+  let startWeekDay = moment().add(req.query.week ? req.query.week : 0, 'week').day(0);
+  let endWeekDay = moment().add(req.query.week ? req.query.week : 0, 'week').day(4);
   try {
     res.send(await getMultipleSchedule(req.params.classId, startWeekDay, endWeekDay));
   } catch (e) { next(e) }

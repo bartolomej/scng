@@ -64,6 +64,29 @@ describe('Parse table elements', function () {
     ]);
   });
 
+  it('should lesson table data with "Praznik" content', function () {
+    const td =
+      `<td width="18%" id="ednevnik-seznam_ur_teden-td-0-2019-08-15" class="ednevnik-seznam_ur_teden-td ">
+			<div class="ednevnik-seznam_ur_teden-urnik ednevnik-seznam_ur_teden-td-dogodek " style="color:#444;">					<table class="w100 collapse" title="Šolski koledar">
+					<tbody><tr>
+						<td style="border:none;" class="text14 bold">
+						Praznik						</td>
+						<td style="border:none;" align="right"><img src="https://www.easistent.com/images/icons/ednevnik_seznam_ur_dogodek.png" title="Šolski koledar"></td>
+					</tr>
+					</tbody></table>
+									</div>
+							</td>`;
+
+    expect(parseLessonTableData(td)).toEqual([{
+      type: 'other',
+      fullName: 'Praznik',
+      shortName: '',
+      teacher: '',
+      classRoom: '',
+      group: ''
+    }])
+  });
+
   it('should parse double lesson table data', function () {
     const td =
       `<td width="18%" id="ednevnik-seznam_ur_teden-td-2-2019-05-31" class="ednevnik-seznam_ur_teden-td ">
