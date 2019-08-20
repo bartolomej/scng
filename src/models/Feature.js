@@ -11,9 +11,6 @@ module.exports = new EntitySchema({
     title: {
       type: "varchar"
     },
-    description: {
-      type: "varchar"
-    },
     visible: {
       type: "bool",
       default: '1'
@@ -24,9 +21,6 @@ module.exports = new EntitySchema({
     date: {
       type: "datetime"
     },
-    user: {
-      type: "varchar"
-    }
   },
   relations: {
     vote: {

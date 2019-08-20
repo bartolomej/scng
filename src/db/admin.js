@@ -1,14 +1,19 @@
 const getRepository = require('typeorm').getRepository;
 const uuid = require('uuid/v4');
 
-module.exports.saveReview = async function (type, description, classId) {
+module.exports.saveReview = async function (description, type, user) {
   return await getRepository("Review")
-    .save({id: uuid(), type, description, classId, date: new Date()})
+    .save({id: uuid(), type, description, user, date: new Date()})
 };
 
 module.exports.saveNotification = async function (title, description) {
   return await getRepository("Notification")
     .save({id: uuid(), title, description, date: new Date()})
+};
+
+module.exports.saveFeature = async function (title, status) {
+  return await getRepository("Feature")
+    .save({id: uuid(), title, date: new Date(), status})
 };
 
 module.exports.updateSchool = async function (id, name, fullName, homeUrl, timetableUrl, logo, siteVersion) {

@@ -17,7 +17,7 @@ module.exports = new EntitySchema({
     date: {
       type: 'date'
     },
-    classId: {
+    user: {
       type: 'varchar'
     }
   },

@@ -1,12 +1,6 @@
 const getRepository = require('typeorm').getRepository;
 const {ConflictError} = require('../errors');
-const uuid = require('uuid/v4');
 
-
-module.exports.saveFeatureSuggestion = async function (title, user) {
-  return await getRepository("Feature")
-    .save({id: uuid(), title, date: new Date(), user})
-};
 
 module.exports.saveFeatureVote = async function (featureId, user) {
   let vote = await getRepository("FeatureVote")
@@ -22,12 +16,8 @@ module.exports.saveFeatureVote = async function (featureId, user) {
 };
 
 module.exports.getFeatureSuggestions = async function () {
-  return await getRepository("FeatureVote")
-    .createQueryBuilder("fv")
-    .select("f.id, f.title, f.description, f.status, count(fv.date) as votes")
-    .innerJoin("fv.feature", "f")
-    .where("f.visible = 1")
-    .groupBy('f.id, f.title, f.description, f.status')
-    .orderBy("votes", "ASC")
-    .getRawMany();
+  return await getRepository("Feature").query(
+    `select f.id, f.title, f.status, f.date, count(fv.date) as votes from feature_vote fv 
+    right join feature f on fv.featureId = f.id group by f.id, f.title, f.status, f.date`
+  );
 };

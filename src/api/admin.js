@@ -10,7 +10,8 @@ const {
   getLatestReviews,
   getLatestNotification,
   updateFeature,
-  updateSchool
+  updateSchool,
+  saveFeature
 } = require('../db/admin');
 
 
@@ -39,7 +40,7 @@ app.get('/notification', async (req, res) => {
   res.send(await getLatestNotification());
 });
 
-app.get('/reviews', async (req, res) => {
+app.get('/feedback', async (req, res) => {
   res.send(await getLatestReviews());
 });
 
@@ -82,6 +83,20 @@ app.put('/school/:schoolId', celebrate({
       req.body.timetableUrl,
       req.body.logo,
       req.body.siteVersion
+    ));
+  } catch (e) { next(e) }
+});
+
+app.post('/feature', celebrate({
+  body: Joi.object().keys({
+    title: Joi.string(),
+    status: Joi.string(),
+  })
+}), async (req, res, next) => {
+  try {
+    res.send(await saveFeature(
+      req.body.title,
+      req.body.status
     ));
   } catch (e) { next(e) }
 });
