@@ -11,6 +11,7 @@ module.exports.saveTimetable = async function (table, classId) {
       let lessons = table[l][d+1];
       let timetableId = hash(date.format('DD-MM-YYYY') + (l - 1) + classId);
       await saveTimetable(timetableId, date.toDate(), l - 1, classId);
+
       lessons.forEach(async lesson => {
         let lessonId = hash(timetableId + lesson.shortName);
         await saveLesson(

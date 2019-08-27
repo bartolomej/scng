@@ -28,10 +28,11 @@ async function fetchNewSchedule() {
 
 
   classes.forEach(async cl => {
-    let week = moment().week() + 17;
+    //let week = moment().week() + 17;
+    let week = 28; // TODO: just for developing
     for (let i = 0; i < WEEKS_IN_ADVANCE; i++) {
-      let schedule = await fetchSchedule(cl.school.id, cl.id, week + i);
-
+      let response = await fetchSchedule(cl.school.id, cl.id, week + i);
+      let schedule = parseScheduleTable(response);
       try {
         await saveTimetable(schedule, cl.id);
         logger.log({
@@ -101,7 +102,7 @@ async function fetchSchedule(schoolId, classId, week, studentId = 0) {
           `teden=${week}&qversion=17`,
     headers: {'Content-Type': `application/x-www-form-urlencoded`}
   });
-  return parseScheduleTable(await response.text());
+  return await response.text();
 }
 
 module.exports = {

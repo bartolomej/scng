@@ -3,10 +3,8 @@ const {celebrate, Joi, errors} = require('celebrate');
 const {
   saveReview,
   getLatestReviews,
-  getLatestNotification,
 } = require('../db/admin');
 const {
-  saveFeatureSuggestion,
   saveFeatureVote,
   getFeatureSuggestions
 } = require('../db/user');
@@ -16,15 +14,9 @@ app.get('/review', async (req, res, next) => {
   res.send(await getLatestReviews());
 });
 
-app.get('/notification', async (req, res, next) => {
-  res.send(await getLatestNotification());
-});
-
 app.get('/feature', async (req, res, next) => {
   res.send(await getFeatureSuggestions());
 });
-
-// TODO: features manually added through admin review process
 
 app.post('/feature/:id/vote', celebrate({
   body: Joi.object().keys({

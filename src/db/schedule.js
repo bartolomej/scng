@@ -43,6 +43,21 @@ module.exports.getClasses = async function (schoolId) {
     .getMany();
 };
 
+module.exports.getClassWithSchool = async function (classId) {
+  return await getRepository("Class")
+    .createQueryBuilder("class")
+    .innerJoinAndSelect("class.school", "school")
+    .where('class.id = :classId', {classId})
+    .getOne();
+};
+
+module.exports.getClass = async function (classId) {
+  return await getRepository("Class")
+    .createQueryBuilder("class")
+    .where('class.id = :classId', {classId})
+    .getOne();
+};
+
 module.exports.getTimetableByDay = async function (classId, date) {
   return await getRepository("Timetable")
     .createQueryBuilder("timetable")

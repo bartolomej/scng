@@ -6,11 +6,6 @@ module.exports.saveReview = async function (description, type, user) {
     .save({id: uuid(), type, description, user, date: new Date()})
 };
 
-module.exports.saveNotification = async function (title, description) {
-  return await getRepository("Notification")
-    .save({id: uuid(), title, description, date: new Date()})
-};
-
 module.exports.saveFeature = async function (title, status) {
   return await getRepository("Feature")
     .save({id: uuid(), title, date: new Date(), status})
@@ -20,14 +15,7 @@ module.exports.updateSchool = async function (id, name, fullName, homeUrl, timet
   return await getRepository("School")
     .createQueryBuilder()
     .update("School")
-    .set({
-      name,
-      fullName,
-      homeUrl,
-      timetableUrl,
-      logo,
-      siteVersion
-    })
+    .set({name, fullName, homeUrl, timetableUrl, logo, siteVersion})
     .where("id = :id", {id})
     .execute();
 };
@@ -39,14 +27,6 @@ module.exports.updateFeature = async function (id, status, title, description, v
     .set({status, title, description, visible})
     .where("id = :id", {id})
     .execute();
-};
-
-module.exports.getLatestNotification = async function () {
-  return await getRepository("Notification")
-    .createQueryBuilder("n")
-    .where("visible = 1")
-    .orderBy("date", "ASC")
-    .getMany();
 };
 
 module.exports.getLatestReviews = async function () {

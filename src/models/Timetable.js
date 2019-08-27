@@ -14,7 +14,7 @@ module.exports = new EntitySchema({
     },
     hourIndex: {
       type: 'int'
-    }
+    },
   },
   relations: {
     class: {

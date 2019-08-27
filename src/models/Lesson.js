@@ -37,7 +37,7 @@ module.exports = new EntitySchema({
     group: {
       type: 'varchar',
       default: ''
-    }
+    },
   },
   relations: {
     timetable: {
