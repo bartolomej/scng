@@ -1,12 +1,14 @@
 const app = require('express').Router();
 const {celebrate, Joi, errors} = require('celebrate');
+const {send} = require('../services/mail');
 const {
   saveReview,
   getLatestReviews,
 } = require('../db/admin');
 const {
   saveFeatureVote,
-  getFeatureSuggestions
+  getFeatureSuggestions,
+  saveSubscriber
 } = require('../db/user');
 
 
@@ -16,6 +18,17 @@ app.get('/review', async (req, res, next) => {
 
 app.get('/feature', async (req, res, next) => {
   res.send(await getFeatureSuggestions());
+});
+
+app.post('/subscribe', celebrate({
+  body: Joi.object().keys({
+    mail: Joi.string(),
+    school: Joi.string(),
+  })
+}),async (req, res, next) => {
+  await saveSubscriber(req.body.mail, req.body.school);
+  await send(req.body.mail, 'Test', '', '<div><h1>Hello this is a title</h1><p>This is a paragraph</p></div>');
+  res.send({status: 'ok'})
 });
 
 app.post('/feature/:id/vote', celebrate({

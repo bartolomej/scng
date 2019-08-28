@@ -1,6 +1,7 @@
 const getRepository = require('typeorm').getRepository;
 const uuid = require('uuid/v4');
 
+
 module.exports.saveReview = async function (description, type, user) {
   return await getRepository("Review")
     .save({id: uuid(), type, description, user, date: new Date()})
@@ -31,6 +32,13 @@ module.exports.updateFeature = async function (id, status, title, description, v
 
 module.exports.getLatestReviews = async function () {
   return await getRepository("Review")
+    .createQueryBuilder("r")
+    .orderBy("r.date", "ASC")
+    .getMany();
+};
+
+module.exports.getSubscribers = async function () {
+  return await getRepository("Subscriber")
     .createQueryBuilder("r")
     .orderBy("r.date", "ASC")
     .getMany();

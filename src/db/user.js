@@ -1,6 +1,12 @@
 const getRepository = require('typeorm').getRepository;
+const uuid = require('uuid/v4');
 const {ConflictError} = require('../errors');
 
+
+module.exports.saveSubscriber = async function (mail, school) {
+  return await getRepository("Subscriber")
+    .save({id: uuid(), mail, school, date: new Date()})
+};
 
 module.exports.saveFeatureVote = async function (featureId, user) {
   let vote = await getRepository("FeatureVote")
