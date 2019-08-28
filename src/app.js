@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const bodyParser = require('body-parser');
+const handlebars = require('express-handlebars');
 const fileUpload = require('express-fileupload');
 require('dotenv').config({path: path.join(__dirname, '..', '.env')});
 const {ConnectionStringParser} = require("connection-string-parser");
@@ -38,9 +39,16 @@ createConnection(process.env.DATABASE_URL ?
   await require('./jobs')();
 
   // configure middleware
+  app.engine('handlebars', handlebars());
+  app.set('view engine', 'handlebars');
+  app.set('views', path.join(__dirname, 'views'));
   app.enable("trust proxy");
   app.use(bodyParser.json());
   app.use(fileUpload());
+
+  app.get('/', (req, res) => {
+    res.render('home');
+  });
 
   // register routes
   app.use('/api', require('./api/schedule'));
