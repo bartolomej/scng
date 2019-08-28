@@ -39,6 +39,7 @@ createConnection(process.env.DATABASE_URL ?
   await require('./jobs')();
 
   // configure middleware
+  app.use('/assets', express.static('assets'));
   app.engine('handlebars', handlebars());
   app.set('view engine', 'handlebars');
   app.set('views', path.join(__dirname, 'views'));
@@ -47,7 +48,7 @@ createConnection(process.env.DATABASE_URL ?
   app.use(fileUpload());
 
   app.get('/', (req, res) => {
-    res.render('home');
+    res.render('home', {layout: false});
   });
 
   // register routes
