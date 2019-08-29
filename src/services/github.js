@@ -1,15 +1,39 @@
 const fetch = require('node-fetch');
+const winston = require('winston');
+
+
+let logger = winston.createLogger({
+  level: 'info',
+  format: winston.format.json(),
+  defaultMeta: { service: 'github-service' },
+  transports: [
+    new winston.transports.Console
+  ]
+});
 
 module.exports.getReposDetails = async function () {
   const HOST = 'https://api.github.com';
-  let scngApi = await Promise.all([
-    request(`${HOST}/repos/bartolomej/scng-api/stats/commit_activity`),
-    request(`${HOST}/repos/bartolomej/scng-api/branches`)
-  ]);
-  let scngMobile = await Promise.all([
-    request(`${HOST}/repos/bartolomej/scng-mobile/stats/commit_activity`),
-    request(`${HOST}/repos/bartolomej/scng-mobile/branches`)
-  ]);
+
+  let scngApi;
+  let scngMobile;
+
+  try {
+    scngApi = await Promise.all([
+      request(`${HOST}/repos/bartolomej/scng-api/stats/commit_activity`),
+      request(`${HOST}/repos/bartolomej/scng-api/branches`)
+    ]);
+    scngMobile = await Promise.all([
+      request(`${HOST}/repos/bartolomej/scng-mobile/stats/commit_activity`),
+      request(`${HOST}/repos/bartolomej/scng-mobile/branches`)
+    ]);
+  } catch (e) {
+    logger.log({
+      level: 'error',
+      message: `Subscriber save failed`,
+      description: e.message
+    });
+    return new Promise.reject(new Error("Request to GitHub failed"));
+  }
 
   return {
     api: {
