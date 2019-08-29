@@ -7,9 +7,9 @@ const {
 } = require('../db/admin');
 const {
   saveFeatureVote,
-  getFeatureSuggestions,
-  saveSubscriber
+  getFeatureSuggestions
 } = require('../db/user');
+const {subscribe} = require('../services/user');
 
 
 app.get('/review', async (req, res, next) => {
@@ -22,13 +22,11 @@ app.get('/feature', async (req, res, next) => {
 
 app.post('/subscribe', celebrate({
   body: Joi.object().keys({
-    mail: Joi.string(),
+    email: Joi.string(),
     school: Joi.string(),
   })
-}),async (req, res, next) => {
-  await saveSubscriber(req.body.mail, req.body.school);
-  await send(req.body.mail, 'Test', '', '<div><h1>Hello this is a title</h1><p>This is a paragraph</p></div>');
-  res.send({status: 'ok'})
+}), async (req, res, next) => {
+  res.send(await subscribe(req.body.school, req.body.email))
 });
 
 app.post('/feature/:id/vote', celebrate({

@@ -10,7 +10,6 @@ native mobile application.
 4. Run all tests with `jest test`
 5. Run application with `npm start`
 
-
 ### Environment file
 
 ```
@@ -26,6 +25,8 @@ PASSWORD = <password>
 DATABASE = scng
 DATABASE_PORT = 3306
 LOGGING = false
+MAIL_USER = <mail>
+MAIL_PASS = <mail-password>
 ```
 
 

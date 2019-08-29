@@ -47,11 +47,8 @@ createConnection(process.env.DATABASE_URL ?
   app.use(bodyParser.json());
   app.use(fileUpload());
 
-  app.get('/', (req, res) => {
-    res.render('home', {layout: false});
-  });
-
   // register routes
+  app.use('/', require('./api/website'));
   app.use('/api', require('./api/schedule'));
   app.use('/api/admin', require('./api/admin'));
   app.use('/api/user', require('./api/user'));

@@ -645,8 +645,8 @@ input[type='checkbox'] {
 }
 
 .navbar-custom .navbar-brand.logo-image img {
-    width: 113px;
-	height: 34px;
+    width: 50px;
+	height: 50px;
 	margin-bottom: 1px;
 	-webkit-backface-visibility: hidden;
 }
@@ -1110,8 +1110,8 @@ input[type='checkbox'] {
 /*     07. Details 1     */
 /*************************/
 .basic-2 {
-	padding-top: 8rem;
-	padding-bottom: 3.5rem;
+	padding-top: 7rem;
+	padding-bottom: 7rem;
 	background-color: #262431;
 }
 
