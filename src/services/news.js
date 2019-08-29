@@ -17,8 +17,15 @@ let logger = winston.createLogger({
 async function processUpdates() {
   let schools = await getSchools();
   schools.forEach(async school => {
-    await updateArticles(
-      school.id, school.homeUrl, school.siteVersion);
+    try {
+      await updateArticles(school.id, school.homeUrl, school.siteVersion);
+    } catch (e) {
+      logger.log({
+        level: 'error',
+        message: `Updating articles for school ${school.id} failed`,
+        description: e.message
+      });
+    }
   });
 }
 
@@ -65,7 +72,9 @@ async function updateArticles(schoolId, schoolPageLink, pageVersion) {
     let {content} = parseArticlePageV1(html);
 
     let date;
-    if (schoolPageLink.includes('ers')) {
+    if (schoolPageLink.includes('ers') ||
+      schoolPageLink.includes('sets') ||
+      schoolPageLink.includes('mic')) {
       date = parseDateV2(article.date);
     } else {
       date = parseDateV1(article.date);

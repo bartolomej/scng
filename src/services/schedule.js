@@ -38,12 +38,12 @@ async function fetchNewSchedule() {
         logger.log({
           level: 'info',
           message: `Saved timetable`,
-          description: `class: ${cl.id}, week: ${week + i}`
+          description: `school: ${cl.school.id}, class: ${cl.id}, week: ${week + i}`
         });
       } catch (e) {
         logger.log({
           level: 'error',
-          message: `Parse timetable for class ${cl.id} failed ${e.message}`,
+          message: `Parse timetable for class ${cl.id} failed`,
           description: e.message
         });
       }

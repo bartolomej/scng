@@ -19,9 +19,9 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-module.exports.send = async function (to, subject, text, html) {
+module.exports.send = async function (from, to, subject, text, html) {
   let info = await transporter.sendMail({
-    from: '"SCNG APP 👻" <' + process.env.MAIL_USER + '>',
+    from: '"' + from + '" <' + process.env.MAIL_USER + '>',
     to, subject, text, html
   });
 
@@ -30,4 +30,6 @@ module.exports.send = async function (to, subject, text, html) {
     message: `Message send ${info.messageId}`,
     description: `response: ${info.response}, to: ${info.envelope.to}`
   });
+
+  return info;
 };
