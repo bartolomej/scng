@@ -52,7 +52,7 @@
     <!-- <a class="navbar-brand logo-text page-scroll" href="index.html">Leno</a> -->
 
     <!-- Image Logo -->
-    <a class="navbar-brand logo-image" href="/"><img src="assets/images/logo/scng.png" alt="alternative"></a>
+    <a class="navbar-brand logo-image" href="/"><img src="assets/images/scng-with-title.png" alt="alternative"></a>
 
     <!-- Mobile Menu Toggle Button -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -117,7 +117,7 @@
                 </div> <!-- end of col -->
                 <div class="col-lg-6">
                     <div class="image-container">
-                        <img class="img-fluid" src="assets/images/header-iphone.png" alt="alternative">
+                        <img class="img-fluid" src="assets/images/header-phone.png" alt="alternative">
                     </div> <!-- end of image-container -->
                 </div> <!-- end of col -->
             </div> <!-- end of row -->
@@ -178,7 +178,7 @@
                 <img style="height: 100px" class="img-fluid" src="assets/images/nodejs.png" alt="alternative">
             </div> <!-- end of col -->
             <div class="col-lg-6">
-                <div class="text-container">
+                <div class="text-container details-content">
                     <h3>Pomagaj pri razvoju!</h3>
                     <p>Ta aplikacija je in bo ostala odprtokodne narave.
                         To pomeni, da je izvorna koda na voljo za ogled ali spreminjanje komurkoli.
@@ -198,7 +198,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-6">
-                    <div class="text-container">
+                    <div class="text-container details-content">
                         <h3>Pomagaj pri razsirjanju!</h3>
                         <p>Imas idejo ali vidis pomankljivost v aplikaciji? Pomagaj izboljsati naso aplikacijo.</p>
                         <a class="btn-solid-reg popup-with-move-anim" href="#details-lightbox-2">PRISPEVAJ</a>
@@ -233,6 +233,10 @@
                                 <div style="color: #00c9db;" class="counter-value number-count" data-count="{{stats.api.branches}}">1</div>
                                 <p class="counter-info">Branches</p>
                             </div>
+                            <div class="cell">
+                                <a href="{{stats.api.lastCommit.url}}" class="number-count last-commit">{{stats.api.lastCommit.sha}}</a>
+                                <p class="counter-info">Last commit</p>
+                            </div>
                         </div>
                     </div>
 
@@ -248,6 +252,10 @@
                             <div class="cell">
                                 <div style="color: #00c9db;" class="counter-value number-count" data-count="{{stats.mobile.branches}}">1</div>
                                 <p class="counter-info">Branches</p>
+                            </div>
+                            <div class="cell">
+                                <a href="{{stats.mobile.lastCommit.url}}" class="number-count last-commit">{{stats.mobile.lastCommit.sha}}</a>
+                                <p class="counter-info">Last commit</p>
                             </div>
                         </div>
                     </div>
@@ -266,13 +274,10 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <h2>NAROCI SE NA NOVICE</h2>
-                <!--ul class="list-unstyled li-space-lg">
-                    <li class="address">Don't hesitate to give us a call or just use the contact form below</li>
-                    <li><i class="fas fa-map-marker-alt"></i>22 Innovative, San Francisco, CA 94043, US</li>
-                    <li><i class="fas fa-phone"></i><a class="blue" href="tel:003024630820">+81 720 2212</a></li>
-                    <li><i class="fas fa-envelope"></i><a class="blue" href="mailto:office@leno.com">office@leno.com</a></li>
-                </ul-->
+                <h2 id="subscription-title">NAROCI SE NA NOVICE</h2>
+                <ul class="list-unstyled li-space-lg">
+                    <li class="address">Obvestili te bomo ko bo aplikacija na voljo.</li>
+                </ul>
             </div> <!-- end of col -->
         </div> <!-- end of row -->
         <div class="row">

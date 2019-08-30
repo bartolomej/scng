@@ -20,11 +20,13 @@ module.exports.getReposDetails = async function () {
   try {
     scngApi = await Promise.all([
       request(`${HOST}/repos/bartolomej/scng-api/stats/commit_activity`),
-      request(`${HOST}/repos/bartolomej/scng-api/branches`)
+      request(`${HOST}/repos/bartolomej/scng-api/branches`),
+      request(`${HOST}/repos/bartolomej/scng-api/commits`),
     ]);
     scngMobile = await Promise.all([
       request(`${HOST}/repos/bartolomej/scng-mobile/stats/commit_activity`),
-      request(`${HOST}/repos/bartolomej/scng-mobile/branches`)
+      request(`${HOST}/repos/bartolomej/scng-mobile/branches`),
+      request(`${HOST}/repos/bartolomej/scng-mobile/commits`),
     ]);
   } catch (e) {
     logger.log({
@@ -38,11 +40,23 @@ module.exports.getReposDetails = async function () {
   return {
     api: {
       commits: calculateTotalCommits(scngApi[0]),
-      branches: scngApi[1].length
+      branches: scngApi[1].length,
+      lastCommit: {
+        sha: scngApi[2][0].sha.substring(0, 4),
+        url: scngApi[2][0].html_url,
+        message: scngApi[2][0].commit.message,
+        author: scngApi[2][0].commit.author.name
+      }
     },
     mobile: {
       commits: calculateTotalCommits(scngMobile[0]),
-      branches: scngMobile[1].length
+      branches: scngMobile[1].length,
+      lastCommit: {
+        sha: scngMobile[2][0].sha.substring(0, 4),
+        url: scngMobile[2][0].html_url,
+        message: scngMobile[2][0].commit.message,
+        author: scngMobile[2][0].commit.author.name
+      }
     }
   }
 };

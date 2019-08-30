@@ -4,6 +4,13 @@
 }
 
 #school-select {
+    width: 100%;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 1rem;
+    background-color: #413d52;
+    border: 1px solid #9791ae;
+    border-radius: 0.25rem;
     display: flex;
     justify-content: center;
 }
@@ -21,6 +28,12 @@
 }
 
 .repo-stats {
+}
+
+@media only screen and (max-width: 779px) {
+    .details-content {
+        text-align: center;
+    }
 }
 
 .stats-container {
@@ -42,6 +55,17 @@
 
 #subscription {
     text-align: center;
+}
+
+#subscription-title {
+    margin: 20px;
+}
+
+.last-commit {
+    color: #00c9db;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 30px;
 }
 
 /* Reset Select */

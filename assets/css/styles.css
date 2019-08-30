@@ -645,7 +645,6 @@ input[type='checkbox'] {
 }
 
 .navbar-custom .navbar-brand.logo-image img {
-    width: 50px;
 	height: 50px;
 	margin-bottom: 1px;
 	-webkit-backface-visibility: hidden;
@@ -1338,8 +1337,8 @@ input[type='checkbox'] {
 /*     13. Contact     */
 /***********************/
 .form {
-	padding-top: 6.25rem;
-	padding-bottom: 5.625rem;
+	padding-top: 7.25rem;
+	padding-bottom: 6.625rem;
 	background: url('../images/contact-background.jpg') center bottom no-repeat;
 	background-size: cover; 
 }
@@ -1913,8 +1912,6 @@ a:hover.back-to-top {
 
 	.counter #counter .cell {
 		width: 8rem;
-		margin-right: 2.5rem;
-		margin-left: 2.5rem;
 	}
 	
 	.counter #counter .counter-value {
