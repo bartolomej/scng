@@ -3,9 +3,16 @@ const uuid = require('uuid/v4');
 const {ConflictError} = require('../errors');
 
 
-module.exports.saveSubscriber = async function (mail, school) {
+module.exports.saveSubscriber = async function (email, school) {
   return await getRepository("Subscriber")
-    .save({id: uuid(), mail, school, date: new Date()})
+    .save({id: uuid(), email, school, date: new Date()})
+};
+
+module.exports.getSubscriber = async function (email) {
+  return await getRepository("Subscriber")
+    .createQueryBuilder("s")
+    .where("s.email = :email", {email})
+    .getOne();
 };
 
 module.exports.saveFeatureVote = async function (featureId, user) {

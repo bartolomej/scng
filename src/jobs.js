@@ -6,11 +6,13 @@ const {saveSchool} = require('./db/schedule');
 const {processNewsUpdates} = require('./services/news');
 
 module.exports = async function () {
-  await initializeDb();
-  await fetchClasses();
-  await fetchNewSchedule();
-  await processNewsUpdates();
-  await registerWorkers();
+  if (process.env.NODE_ENV !== 'development') {
+    await initializeDb();
+    await fetchClasses();
+    await fetchNewSchedule();
+    await processNewsUpdates();
+    await registerWorkers();
+  }
 };
 
 async function initializeDb() {

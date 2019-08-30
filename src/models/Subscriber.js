@@ -8,7 +8,7 @@ module.exports = new EntitySchema({
       unique: true,
       type: "varchar"
     },
-    mail: {
+    email: {
       type: 'varchar'
     },
     school: {

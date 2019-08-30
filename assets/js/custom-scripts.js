@@ -1,24 +1,70 @@
 document
-  .getElementById('submit-button')
+  .getElementById('subscribe-submit-button')
   .addEventListener('click', async () => {
 
-    document.getElementById('subscription').innerHTML = '<i class="fab fa-slack fa-stack-1x"></i>';
+    let school = document.getElementById('school-select');
+    let email = document.getElementById('email');
 
-    let e = document.getElementById('school-select');
+    document.getElementById('subscription').innerHTML = `<div class="loader"></div>`;
 
     try {
-      let response = await fetch('http://localhost:3000/api/user/subscribe', {
+      let rawResponse = await fetch('http://localhost:3000/api/user/subscribe', {
         method: 'POST',
-        body: {
-          school: e.options[e.selectedIndex].value,
-          email: document.getElementById('cemail').value
-        }
-      }).then(async res => await res.json());
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          school: school.options[school.selectedIndex].value,
+          email: email.value
+        })
+      });
 
-      if (response.status === 'ok') {
-        document.getElementById('subscription').innerHTML = '<h2>USPESNO STE NAROCENI NA NOVICE</h2>'
+      let response = await rawResponse.json();
+
+      if (rawResponse.status === 200) {
+        document.getElementById('subscription').innerHTML = `<h3>USPESNO STE NAROCENI NA NOVICE: ${response.email} 😇</h3>`
+      } else {
+        document.getElementById('subscription').innerHTML = `<h3>NAPAKA: ${response.message} 🤕</h3>`
       }
     } catch (e) {
-      document.getElementById('subscription').innerHTML = '<h2>NEZNANA NAPAKA</h2><p>Prosimo poskusite kasneje!</p>'
+      document.getElementById('subscription').innerHTML = '<h3>NEZNANA NAPAKA 😷</h3><p>Prosimo poskusite kasneje!</p>';
+      console.log(e);
     }
 });
+
+
+document
+  .getElementById('contact-submit-button')
+  .addEventListener('click', async () => {
+
+    let message = document.getElementById('message');
+    let email = document.getElementById('email');
+
+    document.getElementById('subscription').innerHTML = `<div class="loader"></div>`;
+
+    try {
+      let rawResponse = await fetch('http://localhost:3000/api/user/message', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          message: message.value,
+          email: email.value
+        })
+      });
+
+      let response = await rawResponse.json();
+
+      if (rawResponse.status === 200) {
+        document.getElementById('subscription').innerHTML = `<h3>USPESNO STE POSLALI SPOROCILO 😇</h3>`
+      } else {
+        document.getElementById('subscription').innerHTML = `<h3>NAPAKA: ${response.message} 🤕</h3>`
+      }
+    } catch (e) {
+      document.getElementById('subscription').innerHTML = '<h3>NEZNANA NAPAKA 😷</h3><p>Prosimo poskusite kasneje!</p>';
+      console.log(e);
+    }
+  });

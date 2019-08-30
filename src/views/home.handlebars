@@ -105,7 +105,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-6">
-                    <div class="text-container">
+                    <div style="margin-top: 4rem; margin-bottom: 4rem" class="text-container">
                         <h1>MOBILNA APLIKACIJA <br>ZA <span id="js-rotating">SCNG, ERŠ, SPLŠ, GZŠ, VSS, BTŠ, SETS</span></h1>
                         <p class="p-large">Omogoci si lazji vpogled do solskih novic, urnika in malice.</p>
                         <!-- STORE BUTTONS
@@ -201,7 +201,7 @@
 
                 <div class="stats-container">
                     <div class="repo-stats">
-                        <h3>Strezniska aplikacija</h3>
+                        <a class="stats-title" href="https://github.com/bartolomej/scng-api">Strezniska aplikacija</a>
                         <div id="counter">
                             <div class="cell">
                                 <div style="color: #00c9db;" class="counter-value number-count" data-count="{{stats.api.commits}}">1</div>
@@ -221,7 +221,7 @@
 
 
                     <div class="repo-stats">
-                        <h3>Mobilna aplikacija</h3>
+                        <a class="stats-title" href="https://github.com/bartolomej/scng-mobile">Mobilna aplikacija</a>
                         <div id="counter">
                             <div class="cell">
                                 <div style="color: #00c9db;" class="counter-value number-count" data-count="{{stats.mobile.commits}}">1</div>
@@ -264,7 +264,7 @@
                 <!-- Contact Form -->
                 <form id="contactForm" data-toggle="validator" data-focus="false">
                     <div class="form-group">
-                        <select id="school-select" required>
+                        <select id="school-select" required title="sola">
                             <option selected disabled>Izberi solo</option>
                             <option value="volvo">SCNG</option>
                             <option value="saab">ERS</option>
@@ -273,7 +273,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <input type="email" class="form-control-input" id="cemail" required>
+                        <input type="email" class="form-control-input" id="email" required>
                         <label class="label-control" for="cemail">Email</label>
                         <div class="help-block with-errors"></div>
                     </div>
@@ -282,7 +282,7 @@
                         <div class="help-block with-errors"></div>
                     </div-->
                     <div class="form-group">
-                        <button id="submit-button" class="form-control-submit-button">OBVESTI ME</button>
+                        <button id="subscribe-submit-button" class="form-control-submit-button">OBVESTI ME</button>
                     </div>
                     <div class="form-message">
                         <div id="cmsgSubmit" class="h3 text-center hidden"></div>
@@ -310,15 +310,15 @@
             </div> <!-- end of col -->
             <div class="col-md-4">
                 <div class="footer-col middle">
-                    <h4>Linki</h4>
+                    <h4>Povezave</h4>
                     <ul class="list-unstyled li-space-lg">
                         <li class="media">
                             <i class="fas fa-square"></i>
-                            <div class="media-body"><a class="turquoise" href="https://github.com/bartolomej/scng-mobile">Mobilna aplikacija</a></div>
+                            <div class="media-body"><a class="turquoise" style="text-decoration: none" href="https://github.com/bartolomej/scng-mobile">Mobilna aplikacija</a></div>
                         </li>
                         <li class="media">
                             <i class="fas fa-square"></i>
-                            <div class="media-body"><a class="turquoise" href="https://github.com/bartolomej/scng-api">Strezniska aplikacija</a></div>
+                            <div class="media-body"><a class="turquoise" style="text-decoration: none" href="https://github.com/bartolomej/scng-api">Strezniska aplikacija</a></div>
                         </li>
                     </ul>
                 </div>
