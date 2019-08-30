@@ -26,6 +26,8 @@
       "celebrate": "10.0.1",
       "cheerio": "^1.0.0-rc.3",
       "connection-string-parser": "1.0.2",
+      "docsify": "4.9.4",
+      "docsify-cli": "4.3.0",
       "dotenv": "^8.0.0",
       "express": "^4.17.1",
       "express-basic-auth": "1.2.0",
