@@ -1,7 +1,7 @@
 # SCNG services
 
-Repository for SCNG (Solski Center Nova Gorica) API service and 
-native mobile application.
+This is a back-end system for SCNG APP. 
+You can find front-end mobile app repository [here](https://github.com/bartolomej/scng-mobile).
 
 ### Project setup
 1. Clone repo locally `git clone https://github.com/bartolomej/scng-api.git`
@@ -28,14 +28,3 @@ LOGGING = false
 MAIL_USER = <mail>
 MAIL_PASS = <mail-password>
 ```
-
-
-
-## TODOs
-- [ ] implement 'solska malica'
-- [ ] implement logging endpoints for front end system (for analytics purposes)
-- [ ] add code guides
-- [ ] add git workflow guides
-- [x] add admin (analytics) endpoints
-- [ ] add website module (download page, guides,..)
-- [ ] load test server - [artillery](https://artillery.io/)

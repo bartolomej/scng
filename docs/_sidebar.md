@@ -1,7 +1,7 @@
 - Koncepti
 
   - [client-server model](concepts/client-server-model.md)
-  - [HTTP protokol]()
+  - [HTTP protokol](concepts/http.md)
   - [front-end / back-end]()
   - [API - programski vmestnik]()
   - [VCS]()
