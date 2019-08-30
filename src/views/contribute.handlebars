@@ -79,15 +79,15 @@
             <!-- end of dropdown menu -->
 
             <li class="nav-item">
-                <a class="nav-link page-scroll" href="#schools">SOLE</a>
+                <a class="nav-link page-scroll" href="#tech">TEHNOLOGIJE</a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link page-scroll" href="#details">SODELOVANJE</a>
+                <a class="nav-link page-scroll" href="#details">PROGRAMIRANJE</a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link page-scroll" href="#subscription">OBVESCANJE</a>
+                <a class="nav-link page-scroll" href="#design">OBLIKOVANJE</a>
             </li>
 
             <li class="nav-item">
@@ -106,18 +106,14 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="text-container">
-                        <h1>MOBILNA APLIKACIJA <br>ZA <span id="js-rotating">SCNG, ERŠ, SPLŠ, GZŠ, VSS, BTŠ, SETS</span></h1>
-                        <p class="p-large">Omogoci si lazji vpogled do solskih novic, urnika in malice.</p>
-                        <!-- STORE BUTTONS
-                        <a class="btn-solid-lg page-scroll" href="#your-link"><i class="fab fa-apple"></i>APP STORE</a>
-                        <a class="btn-solid-lg page-scroll" href="#your-link"><i class="fab fa-google-play"></i>PLAY STORE</a>
-                        -->
-                        <a class="btn-solid-lg page-scroll" href="#subscription"><i class="fab fa-apple"></i><i class="fab fa-google-play"></i>OBVESTI ME</a>
+                        <h1>STRAN <br>ZA <span id="js-rotating">RAZVIJALCE, OBLIKOVALCE, IDEJE</span></h1>
+                        <p class="p-large">Sodeluj pri nadalnjem razvijanju in vzdrzevanju prve mobilne aplikacije Šolskega centra Nova Gorica.</p>
+                        <a class="btn-solid-lg page-scroll" href="#tech">VEC</a>
                     </div>
                 </div> <!-- end of col -->
                 <div class="col-lg-6">
                     <div class="image-container">
-                        <img class="img-fluid" src="assets/images/header-phone.png" alt="alternative">
+                        <img class="img-fluid" src="assets/images/developer.png" alt="alternative">
                     </div> <!-- end of image-container -->
                 </div> <!-- end of col -->
             </div> <!-- end of row -->
@@ -128,9 +124,9 @@
 
 
 <!-- Testimonials -->
-<div id="schools" class="slider-1">
+<div id="tech" class="slider-1">
 
-    <h3 class="supported-schools-title">Podprto za sole</h3>
+    <h3 class="supported-schools-title">Uporabljene tehnologije</h3>
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -140,12 +136,12 @@
                     <div class="swiper-container card-slider">
                         <div class="swiper-wrapper">
 
-                            {{#each schools}}
+                            {{#each technologies}}
                                 <div class="swiper-slide">
                                     <div class="card">
-                                        <img class="school-logo" src="{{logo}}" alt="alternative">
+                                        <img class="school-logo" src="{{image}}" alt="alternative">
                                         <div class="card-body">
-                                            <p class="testimonial-author">{{name}} - {{fullName}}</p>
+                                            <a style="color: white" href="{{url}}" class="number-count last-commit">{{name}}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -173,16 +169,12 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-6 tech-logo-container">
-                <img style="height: 100px" class="img-fluid" src="assets/images/github.png" alt="alternative">
-                <img style="height: 100px" class="img-fluid" src="assets/images/reactnative.png" alt="alternative">
-                <img style="height: 100px" class="img-fluid" src="assets/images/nodejs.png" alt="alternative">
+                <img style="width: 100%" class="img-fluid" src="assets/images/code.png" alt="alternative">
             </div> <!-- end of col -->
             <div class="col-lg-6">
                 <div class="text-container details-content">
-                    <h3>Pomagaj pri razvoju 🙌</h3>
-                    <p>Ta aplikacija je in bo ostala odprtokodne narave.
-                        To pomeni, da je izvorna koda na voljo za ogled ali spreminjanje komurkoli.
-                        Ce bi rad prispeval na kakrsnikoli nacin k razvoju (programiranje, graficni design, ideje,..) nas kontaktiraj tukaj.</p>
+                    <h3>Programiranje</h3>
+                    <p>Razvijas spletne strani, strezniske ali mobilne aplikacije? Spoznaj se z okolji React Native, Nodejs in Git, ter prispevaj k razvoju.</p>
                     <a class="btn-solid-reg" href="/contribute">SODELUJ</a>
                 </div> <!-- end of text-container -->
             </div> <!-- end of col -->
@@ -193,19 +185,19 @@
 
 
 <!-- Details 2 -->
-<div class="basic-3">
+<div id="design" class="basic-3">
     <div class="second">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6">
                     <div class="text-container details-content">
-                        <h3>Pomagaj pri razsirjanju ✍️</h3>
-                        <p>Imas idejo ali vidis pomankljivost v aplikaciji? Pomagaj izboljsati naso aplikacijo.</p>
-                        <a class="btn-solid-reg" href="/contribute">PRISPEVAJ</a>
+                        <h3>UX / UI design</h3>
+                        <p>Te zanima graficni design ali uporabniska izkusnja? Izdelaj oblikovne predloge z oblikovnimi orodji kot so: Photoshop, Sketch, Figma,..</p>
+                        <a class="btn-solid-reg" href="/sodeluj">PRISPEVAJ</a>
                     </div> <!-- end of text-container -->
                 </div> <!-- end of col -->
                 <div class="col-lg-6 tech-logo-container">
-                    <img style="height: 250px" class="img-fluid" src="assets/images/ideas.png" alt="alternative">
+                    <img style="width: 100%" class="img-fluid" src="assets/images/design.png" alt="alternative">
                 </div> <!-- end of col -->
             </div> <!-- end of row -->
         </div> <!-- end of container -->
@@ -213,70 +205,15 @@
 </div> <!-- end of basic-3 -->
 <!-- end of details 2 -->
 
-<!-- Statistics -->
-<div class="counter">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-
-                <!-- Counter -->
-
-                <div class="stats-container">
-                    <div class="repo-stats">
-                        <h3>Strezniska aplikacija</h3>
-                        <div id="counter">
-                            <div class="cell">
-                                <div style="color: #00c9db;" class="counter-value number-count" data-count="{{stats.api.commits}}">1</div>
-                                <p class="counter-info">Commits</p>
-                            </div>
-                            <div class="cell">
-                                <div style="color: #00c9db;" class="counter-value number-count" data-count="{{stats.api.branches}}">1</div>
-                                <p class="counter-info">Branches</p>
-                            </div>
-                            <div class="cell">
-                                <a href="{{stats.api.lastCommit.url}}" class="number-count last-commit">{{stats.api.lastCommit.sha}}</a>
-                                <p class="counter-info">Last commit</p>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                    <div class="repo-stats">
-                        <h3>Mobilna aplikacija</h3>
-                        <div id="counter">
-                            <div class="cell">
-                                <div style="color: #00c9db;" class="counter-value number-count" data-count="{{stats.mobile.commits}}">1</div>
-                                <p class="counter-info">Commits</p>
-                            </div>
-                            <div class="cell">
-                                <div style="color: #00c9db;" class="counter-value number-count" data-count="{{stats.mobile.branches}}">1</div>
-                                <p class="counter-info">Branches</p>
-                            </div>
-                            <div class="cell">
-                                <a href="{{stats.mobile.lastCommit.url}}" class="number-count last-commit">{{stats.mobile.lastCommit.sha}}</a>
-                                <p class="counter-info">Last commit</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- end of counter -->
-
-            </div> <!-- end of col -->
-        </div> <!-- end of row -->
-    </div> <!-- end of container -->
-</div> <!-- end of counter -->
-<!-- end of statistics -->
-
 
 <!-- Contact -->
 <div id="subscription" class="form">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <h2 id="subscription-title">NAROCI SE NA NOVICE</h2>
+                <h2 id="subscription-title">KONTAKT</h2>
                 <ul class="list-unstyled li-space-lg">
-                    <li class="address">Obvestili te bomo ko bo aplikacija na voljo.</li>
+                    <li class="address">Podaj ideje, predloge, porocila o napakah,..</li>
                 </ul>
             </div> <!-- end of col -->
         </div> <!-- end of row -->
@@ -286,17 +223,13 @@
                 <!-- Contact Form -->
                 <form id="contactForm" data-toggle="validator" data-focus="false">
                     <div class="form-group">
-                        <select id="school-select" required>
-                            <option selected disabled>Izberi solo</option>
-                            <option value="volvo">SCNG</option>
-                            <option value="saab">ERS</option>
-                            <option value="opel">VSS</option>
-                            <option value="audi">SPLS</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
                         <input type="email" class="form-control-input" id="cemail" required>
                         <label class="label-control" for="cemail">Email</label>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control-textarea" id="cmessage" required></textarea>
+                        <label class="label-control" for="cmessage">Your message</label>
                         <div class="help-block with-errors"></div>
                     </div>
                     <!--div class="form-group checkbox">
@@ -304,7 +237,7 @@
                         <div class="help-block with-errors"></div>
                     </div-->
                     <div class="form-group">
-                        <button id="submit-button" class="form-control-submit-button">OBVESTI ME</button>
+                        <button id="submit-button" class="form-control-submit-button">POSLJI</button>
                     </div>
                     <div class="form-message">
                         <div id="cmsgSubmit" class="h3 text-center hidden"></div>
