@@ -34,7 +34,7 @@ module.exports.getReposDetails = async function () {
       message: `Subscriber save failed`,
       description: e.message
     });
-    return new Promise.reject(new Error("Request to GitHub failed"));
+    return Promise.reject(new Error("Request to GitHub failed"));
   }
 
   return {

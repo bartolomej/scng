@@ -3,10 +3,14 @@ const {getSchools} = require('../db/news');
 const {getReposDetails} = require('../services/github');
 
 app.get('/', async (req, res) => {
+  let stats;
+  try {
+    stats = await getReposDetails();
+  } catch (e) {}
   res.render('home', {
     layout: false,
     schools: await getSchools(),
-    stats: await getReposDetails()
+    stats
   });
 });
 

@@ -30,9 +30,15 @@
 .repo-stats {
 }
 
+.align-vertical-middle {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
 @media only screen and (max-width: 779px) {
     .details-content {
         text-align: center;
+        align-items: center;
     }
 }
 
