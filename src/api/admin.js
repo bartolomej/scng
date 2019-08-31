@@ -1,19 +1,36 @@
 const app = require('express').Router();
 const basicAuth = require('express-basic-auth');
-const path = require('path');
-const {ConflictError, InternalError} = require('../errors');
 const {saveSchool, getSchools} = require('../db/schedule');
 const {getLatest} = require('../db/news');
 const {celebrate, Joi, errors} = require('celebrate');
-const {
-  getLatestReviews,
-  updateSchool,
-} = require('../db/admin');
+const {updateSchool,} = require('../db/admin');
+const {send} = require('../services/mail');
 
+
+const schoolBody = celebrate({
+  body: Joi.object().keys({
+    id: Joi.string(),
+    name: Joi.string(),
+    fullName: Joi.string(),
+    homeUrl: Joi.string(),
+    timetableUrl: Joi.string().allow(''),
+    siteVersion: Joi.string(),
+    logo: Joi.string()
+  })
+});
+
+const mailBody = celebrate({
+  body: Joi.object().keys({
+    to: Joi.string(),
+    subject: Joi.string(),
+    title: Joi.string(),
+    text: Joi.string()
+  })
+});
 
 app.use(basicAuth({
   users: {
-    'admin': 'password123',
+    'admin': process.env.ADMIN_PASS,
   },
   unauthorizedResponse: req => ({
     status: 'error',
@@ -32,21 +49,11 @@ app.get('/news', async (req, res) => {
   res.send(await getLatest());
 });
 
-app.get('/feedback', async (req, res) => {
-  res.send(await getLatestReviews());
+app.post('/mail', mailBody, async (req, res) => {
+  res.send(await send(req.body.to, req.body.subject, req.body.title, req.body.text))
 });
 
-app.put('/school/:schoolId', celebrate({
-  body: Joi.object().keys({
-    id: Joi.string(),
-    name: Joi.string(),
-    fullName: Joi.string(),
-    homeUrl: Joi.string(),
-    timetableUrl: Joi.string().allow(''),
-    siteVersion: Joi.string(),
-    logo: Joi.string()
-  })
-}), async (req, res, next) => {
+app.put('/school/:schoolId', schoolBody, async (req, res, next) => {
   try {
     res.send(await updateSchool(
       req.params.schoolId,
@@ -60,17 +67,7 @@ app.put('/school/:schoolId', celebrate({
   } catch (e) { next(e) }
 });
 
-app.post('/school', celebrate({
-  body: Joi.object().keys({
-    id: Joi.string(),
-    name: Joi.string(),
-    fullName: Joi.string(),
-    homeUrl: Joi.string(),
-    timetableUrl: Joi.string().allow(''),
-    siteVersion: Joi.string(),
-    logo: Joi.string()
-  })
-}), async (req, res, next) => {
+app.post('/school', schoolBody, async (req, res, next) => {
   try {
     res.send(await saveSchool(
       req.body.id,
@@ -82,29 +79,6 @@ app.post('/school', celebrate({
       req.body.siteVersion
     ));
   } catch (e) { next(e) }
-});
-
-/**
- * @deprecated
- */
-app.post('/logo', celebrate({
-  body: Joi.object().keys({
-    fileName: Joi.string(),
-  })
-}), async (req, res, next) => {
-  if (Object.keys(req.files).length === 0) {
-    return next(new ConflictError('No files were uploaded'));
-  }
-  let file = req.files.file;
-  file.mv(path.join(__dirname, '..', '..', 'assets', req.body.fileName), error => {
-    if (error) {
-      return next(new InternalError('Error saving files', error.message));
-    }
-    res.send({
-      status: 'ok',
-      message: 'Files uploaded'
-    });
-  });
 });
 
 app.use(errors());

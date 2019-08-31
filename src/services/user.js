@@ -14,27 +14,28 @@ let logger = winston.createLogger({
 
 
 module.exports.sendMessageToAdmin = async function (email, message) {
-  /**
-   * TODO: setup proper app initialization (admins, schools,..)
-   */
+
   try {
-    send(`SPOROCILO: ${email}`, email,
-      'Hejla, hvala da si se narocil na obvestila SCNG aplikacije.', '',
-      '<div><h1>Hello this is a title</h1><p>This is a paragraph</p></div>'
+    send(process.env.ADMIN_EMAIL, `SPOROCILO`,
+      `SPOROCILO UPORABNIKA ${email}`, message
     );
   } catch (e) {
     logger.log({
       level: 'error',
-      message: `Welcome email failed to send`,
+      message: `Message to admin failed to send`,
       description: e.message
     });
-    return Promise.reject(new Error("Subscription mail failed to send"));
+    return Promise.reject(new Error("Message failed to send"));
+  }
+
+  return {
+    status: 'ok',
+    message: 'Message sent'
   }
 };
 
 
 module.exports.subscribe = async function (school, email) {
-  let subscriber;
 
   try {
     let currentSubscriber = await getSubscriber(email);
@@ -44,7 +45,7 @@ module.exports.subscribe = async function (school, email) {
   } catch (e) {}
 
   try {
-    subscriber = await saveSubscriber(email, school);
+    await saveSubscriber(email, school);
   } catch (e) {
     logger.log({
       level: 'error',
@@ -55,9 +56,9 @@ module.exports.subscribe = async function (school, email) {
   }
 
   try {
-    send('SCNG APP 📱👻', email,
-      'Hejla, hvala da si se narocil na obvestila SCNG aplikacije.', '',
-      '<div><h1>Hello this is a title</h1><p>This is a paragraph</p></div>'
+    send(email, 'OBVESTILO O NAROCANJU 👻',
+      'OBVESTILO O NAROCANJU 👻',
+      'Hejla, hvala da si se narocil na obvestila SCNG aplikacije.'
     );
   } catch (e) {
     logger.log({
@@ -68,5 +69,8 @@ module.exports.subscribe = async function (school, email) {
     return Promise.reject(new Error("Subscription mail failed to send"));
   }
 
-  return subscriber;
+  return {
+    status: 'ok',
+    message: 'Subscribed to news feed'
+  }
 };

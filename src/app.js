@@ -94,19 +94,21 @@ createConnection(process.env.DATABASE_URL ?
   process.exit(1);
 });
 
-// catch unhandled errors
-process.on('unhandledRejection', reason => {
-  logger.log({
-    level: 'error',
-    message: `Unhandled promise rejection`,
-    description: reason
+// catch unhandled errors in production
+if (process.env.NODE_ENV !== 'development') {
+  process.on('unhandledRejection', reason => {
+    logger.log({
+      level: 'error',
+      message: `Unhandled promise rejection`,
+      description: reason
+    });
   });
-});
 
-process.on('uncaughtException', e => {
-  logger.log({
-    level: 'error',
-    message: `Uncaught exception`,
-    description: e.message
+  process.on('uncaughtException', e => {
+    logger.log({
+      level: 'error',
+      message: `Uncaught exception`,
+      description: e.message
+    });
   });
-});
+}

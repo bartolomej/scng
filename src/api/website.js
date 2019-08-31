@@ -31,4 +31,10 @@ app.get('/contribute', async (req, res) => {
   });
 });
 
+app.get('/mail', async (req, res) => {
+  res.render('email', {
+    layout: false
+  });
+});
+
 module.exports = app;
