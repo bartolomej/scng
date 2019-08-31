@@ -1,6 +1,9 @@
 const $ = require('cheerio');
-const moment = require('moment');
 
+/**
+ * Parses classes from <select> element
+ * on easistent.com schedule page
+ */
 function parseClasses(html) {
   let parsedClasses = [];
   let selectionBox = $('#id_parameter', html);
@@ -17,13 +20,22 @@ function parseScheduleTable(html) {
   let parsedRows = [];
   $('tr', html).each((i, ele) => {
     let row = [];
-    if (i === 1) row = parseScheduleTopRow(ele);
-    else row = parseScheduleRow(ele);
-    if (row.length !== 0) parsedRows.push(row);
+    if (i === 1) {
+      row = parseScheduleTopRow(ele);
+    } else {
+      row = parseScheduleRow(ele);
+    }
+    if (row.length !== 0) {
+      parsedRows.push(row);
+    }
   });
   return parsedRows;
 }
 
+/**
+ * Parses <th> elements with
+ * day of the week and date values
+ */
 function parseScheduleTopRow(trNode) {
   return $('th', trNode).map((i, ele) => {
     if (i === 0) return null;
@@ -34,6 +46,10 @@ function parseScheduleTopRow(trNode) {
   }).get();
 }
 
+/**
+ * Parses single table body box
+ * used for lessons
+ */
 function parseScheduleRow(trNode) {
   let tableRow = [];
   $('td.ednevnik-seznam_ur_teden-td', trNode).each((i, ele) => {
@@ -46,6 +62,10 @@ function parseScheduleRow(trNode) {
   return tableRow;
 }
 
+/**
+ * Parses corner table boxes with
+ * lesson time information
+ */
 function parseTimeTableData(node) {
   return {
     index: $($(node)[0].children[1]).text(),
@@ -53,6 +73,10 @@ function parseTimeTableData(node) {
   }
 }
 
+/**
+ * Parses main box with details
+ * about lesson
+ */
 function parseLessonTableData(node) {
   const groups = $('.ednevnik-seznam_ur_teden-urnik', node);
   return groups.map((i, ele) => {

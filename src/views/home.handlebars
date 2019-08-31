@@ -265,16 +265,15 @@
                 <form id="contactForm" data-toggle="validator" data-focus="false">
                     <div class="form-group">
                         <select id="school-select" required title="sola">
-                            <option selected disabled>Izberi solo</option>
-                            <option value="volvo">SCNG</option>
-                            <option value="saab">ERS</option>
-                            <option value="opel">VSS</option>
-                            <option value="audi">SPLS</option>
+                            <option selected disabled>Izberi šolo</option>
+                            {{#each schools}}
+                                <option value="{{name}}">{{name}}</option>
+                            {{/each}}
                         </select>
                     </div>
                     <div class="form-group">
                         <input type="email" class="form-control-input" id="email" required>
-                        <label class="label-control" for="cemail">Email</label>
+                        <label class="label-control" for="cemail">Vaš Email</label>
                         <div class="help-block with-errors"></div>
                     </div>
                     <!--div class="form-group checkbox">
@@ -304,8 +303,7 @@
             <div class="col-md-4">
                 <div class="footer-col">
                     <h4>O aplikaciji</h4>
-                    <p>Narejena za zabavo.</p>
-                    <p style="font-weight: 600;">by DevTeam99</p>
+                    <p>Naredil DevTeam99</p>
                 </div>
             </div> <!-- end of col -->
             <div class="col-md-4">
@@ -328,15 +326,9 @@
                 <div class="footer-col last">
                     <h4>Socialni kanali</h4>
                     <span class="fa-stack">
-                            <a href="#your-link">
+                            <a href="https://scng-app.slack.com/">
                                 <i class="fas fa-circle fa-stack-2x"></i>
                                 <i class="fab fa-slack fa-stack-1x"></i>
-                            </a>
-                        </span>
-                    <span class="fa-stack">
-                            <a href="#your-link">
-                                <i class="fas fa-circle fa-stack-2x"></i>
-                                <i class="fab fa-telegram fa-stack-1x"></i>
                             </a>
                     </span>
                 </div>

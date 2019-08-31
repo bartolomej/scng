@@ -21,9 +21,8 @@ app.get('/schedule/:classId', async (req, res, next) => {
     let weekPeriod = Number.parseInt(req.query.period);
     let schedule = [];
     for (let i = 0; i < weekPeriod; i++) {
-      // TODO: only for development
-      let startWeekDay = moment('07-04-2019', 'DD-MM-YYYY').add(i, 'week').day(0);
-      let endWeekDay = moment('12-04-2019', 'DD-MM-YYYY').add(i, 'week').day(4);
+      let startWeekDay = moment().add(i, 'week').day(0);
+      let endWeekDay = moment().add(i, 'week').day(4);
       try {
         schedule.push(await getMultipleSchedule(req.params.classId, startWeekDay, endWeekDay));
       } catch (e) { next(e) }
@@ -39,7 +38,7 @@ app.get('/schedule/:classId', async (req, res, next) => {
 });
 
 app.get('/schedule/:classId/html', async (req, res, next) => {
-  let week = 28;//moment().week() + 17;
+  let week = moment().week() + 17;
   let schoolClass = await getClassWithSchool(req.params.classId);
   let html = await fetchSchedule(schoolClass.school.id, req.params.classId, week);
   try {

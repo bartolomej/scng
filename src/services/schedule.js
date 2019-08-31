@@ -4,7 +4,7 @@ const moment = require('moment');
 const winston = require('winston');
 const {parseScheduleTable, parseClasses} = require('../parsers/schedule-parser');
 const {getSchools, saveClass, getAllClasses} = require('../db/schedule');
-const {saveTimetable} = require('../parsers/table-parser');
+const {saveTimetable} = require('../parsers/table-serializer');
 
 
 let logger = winston.createLogger({
@@ -26,10 +26,8 @@ async function fetchNewSchedule() {
     message: `Fetching schedules for ${classes.length} classes`
   });
 
-
   classes.forEach(async cl => {
-    //let week = moment().week() + 17;
-    let week = 28; // TODO: just for developing
+    let week = moment().week() + 17;
     for (let i = 0; i < WEEKS_IN_ADVANCE; i++) {
       let response = await fetchSchedule(cl.school.id, cl.id, week + i);
       let schedule = parseScheduleTable(response);
@@ -44,7 +42,8 @@ async function fetchNewSchedule() {
         logger.log({
           level: 'error',
           message: `Parse timetable for class ${cl.id} failed`,
-          description: e.message
+          description: e.message,
+          stack: e.stack
         });
       }
     }
@@ -70,23 +69,22 @@ async function fetchClasses() {
       logger.log({
         level: 'error',
         message: `Fetching school ${school.id} timetable failed`,
-        description: e.message
+        description: e.message,
+        stack: e.stack
       });
       return;
     }
 
     parseClasses(schedulePage).forEach(async schoolClass => {
+      let {id, name} = schoolClass;
       try {
-        await saveClass(
-          schoolClass.id,
-          schoolClass.name,
-          school.id
-        )
+        await saveClass(id, name, school.id)
       } catch (e) {
         logger.log({
           level: 'error',
           message: `Saving ${schoolClass.id} class failed`,
-          description: e.message
+          description: e.message,
+          stack: e.stack
         });
       }
     });

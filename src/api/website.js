@@ -7,6 +7,7 @@ app.get('/', async (req, res) => {
   try {
     stats = await getReposDetails();
   } catch (e) {}
+  console.log(stats.api);
   res.render('home', {
     layout: false,
     schools: await getSchools(),

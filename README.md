@@ -1,7 +1,9 @@
 # SCNG services
 
-This is a back-end system for SCNG APP. 
-You can find front-end mobile app repository [here](https://github.com/bartolomej/scng-mobile).
+This is a back-end system for SCNG APP. <br>
+You can find front-end mobile app repository [here](https://github.com/bartolomej/scng-mobile).<br>
+Documentation website is available [here](https://bartolomej.github.io/scng-api/#/).
+
 
 ### Project setup
 1. Clone repo locally `git clone https://github.com/bartolomej/scng-api.git`
@@ -10,7 +12,7 @@ You can find front-end mobile app repository [here](https://github.com/bartolome
 4. Run all tests with `jest test`
 5. Run application with `npm start`
 
-### Environment file
+### Environment variables
 
 ```
 // .env file in root
@@ -25,6 +27,9 @@ PASSWORD = <password>
 DATABASE = scng
 DATABASE_PORT = 3306
 LOGGING = false
+ADMIN_PASS = <admin-mail-password>
+ADMIN_EMAIL = <admin-mail>
 MAIL_USER = <mail>
 MAIL_PASS = <mail-password>
+GITHUB_TOKEN = <github-auth2-token>
 ```

@@ -23,7 +23,8 @@ async function processUpdates() {
       logger.log({
         level: 'error',
         message: `Updating articles for school ${school.id} failed`,
-        description: e.message
+        description: e.message,
+        stack: e.stack
       });
     }
   });
@@ -50,7 +51,8 @@ async function updateArticles(schoolId, schoolPageLink, pageVersion) {
     logger.log({
       level: 'error',
       message: `Fetching article from ${schoolPageLink} failed`,
-      description: e.message
+      description: e.message,
+      stack: e.stack
     });
     return;
   }
@@ -61,7 +63,8 @@ async function updateArticles(schoolId, schoolPageLink, pageVersion) {
     logger.log({
       level: 'error',
       message: `Parsing article from ${schoolPageLink} failed`,
-      description: e.message
+      description: e.message,
+      stack: e.stack
     });
     return;
   }
@@ -86,7 +89,8 @@ async function updateArticles(schoolId, schoolPageLink, pageVersion) {
       logger.log({
         level: 'error',
         message: `Saving article "${article.title}" failed`,
-        description: e.message
+        description: e.message,
+        stack: e.stack
       });
     }
   });
