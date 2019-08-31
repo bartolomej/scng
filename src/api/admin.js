@@ -6,12 +6,8 @@ const {saveSchool, getSchools} = require('../db/schedule');
 const {getLatest} = require('../db/news');
 const {celebrate, Joi, errors} = require('celebrate');
 const {
-  saveNotification,
   getLatestReviews,
-  getLatestNotification,
-  updateFeature,
   updateSchool,
-  saveFeature
 } = require('../db/admin');
 
 
@@ -36,31 +32,8 @@ app.get('/news', async (req, res) => {
   res.send(await getLatest());
 });
 
-app.get('/notification', async (req, res) => {
-  res.send(await getLatestNotification());
-});
-
 app.get('/feedback', async (req, res) => {
   res.send(await getLatestReviews());
-});
-
-app.put('/feature/:id', celebrate({
-  body: Joi.object().keys({
-    title: Joi.string(),
-    description: Joi.string(),
-    status: Joi.string(),
-    visible: Joi.number()
-  })
-}), async (req, res, next) => {
-  try {
-    res.send(await updateFeature(
-      req.params.id,
-      req.body.status,
-      req.body.title,
-      req.body.description,
-      req.body.visible
-    ));
-  } catch (e) { next(e) }
 });
 
 app.put('/school/:schoolId', celebrate({
@@ -83,20 +56,6 @@ app.put('/school/:schoolId', celebrate({
       req.body.timetableUrl,
       req.body.logo,
       req.body.siteVersion
-    ));
-  } catch (e) { next(e) }
-});
-
-app.post('/feature', celebrate({
-  body: Joi.object().keys({
-    title: Joi.string(),
-    status: Joi.string(),
-  })
-}), async (req, res, next) => {
-  try {
-    res.send(await saveFeature(
-      req.body.title,
-      req.body.status
     ));
   } catch (e) { next(e) }
 });
@@ -125,19 +84,9 @@ app.post('/school', celebrate({
   } catch (e) { next(e) }
 });
 
-app.post('/notification', celebrate({
-  body: Joi.object().keys({
-    title: Joi.string(),
-    description: Joi.string(),
-  })
-}), async (req, res, next) => {
-  try {
-    res.send(await saveNotification(
-      req.body.title,
-      req.body.description));
-  } catch (e) { next(e) }
-});
-
+/**
+ * @deprecated
+ */
 app.post('/logo', celebrate({
   body: Joi.object().keys({
     fileName: Joi.string(),

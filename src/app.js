@@ -2,6 +2,7 @@ const createConnection = require('typeorm').createConnection;
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
+const winston = require('winston');
 const bodyParser = require('body-parser');
 const handlebars = require('express-handlebars');
 const fileUpload = require('express-fileupload');
@@ -12,6 +13,15 @@ const ormconfig = require('../ormconfig');
 const app = express();
 require("reflect-metadata");
 
+
+let logger = winston.createLogger({
+  level: 'info',
+  format: winston.format.json(),
+  defaultMeta: { service: 'app-root' },
+  transports: [
+    new winston.transports.Console
+  ]
+});
 
 // parse connection string if present
 const connectionStringParser = new ConnectionStringParser({
@@ -82,4 +92,21 @@ createConnection(process.env.DATABASE_URL ?
 }).catch(error => {
   console.error(error);
   process.exit(1);
+});
+
+// catch unhandled errors
+process.on('unhandledRejection', reason => {
+  logger.log({
+    level: 'error',
+    message: `Unhandled promise rejection`,
+    description: reason
+  });
+});
+
+process.on('uncaughtException', e => {
+  logger.log({
+    level: 'error',
+    message: `Uncaught exception`,
+    description: e.message
+  });
 });
