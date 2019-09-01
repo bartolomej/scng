@@ -5,7 +5,7 @@ const {fetchNewSchedule, fetchClasses} = require('../services/schedule');
 const {processNewsUpdates} = require('../services/news');
 const {getLatest} = require('../db/news');
 const {celebrate, Joi, errors} = require('celebrate');
-const {updateSchool,} = require('../db/admin');
+const {updateSchool, getSubscribers} = require('../db/admin');
 const {send} = require('../services/mail');
 
 
@@ -42,6 +42,10 @@ app.use(basicAuth({
       'No credentials provided'
   })
 }));
+
+app.get('/subscriber', async (req, res) => {
+  res.send(await getSubscribers());
+});
 
 app.get('/school', async (req, res) => {
   res.send(await getSchools());
