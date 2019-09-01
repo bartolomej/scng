@@ -31,16 +31,12 @@ async function initializeDb() {
 }
 
 async function registerWorkers() {
-  if (process.env.NODE_ENV === 'production') {
-    schedule.scheduleJob({
-      hour: 20,
-      minute: 0,
-    }, async () => await fetchNewSchedule());
-  }
-  if (process.env.NODE_ENV === 'production') {
-    schedule.scheduleJob({
-      hour: 20,
-      minute: 0,
-    }, async () => await processNewsUpdates());
-  }
+  schedule.scheduleJob({
+    hour: 20,
+    minute: 0,
+  }, async () => await fetchNewSchedule());
+  schedule.scheduleJob({
+    hour: 20,
+    minute: 0,
+  }, async () => await processNewsUpdates());
 }

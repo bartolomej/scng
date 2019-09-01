@@ -1,6 +1,8 @@
 const app = require('express').Router();
 const basicAuth = require('express-basic-auth');
 const {saveSchool, getSchools} = require('../db/schedule');
+const {fetchNewSchedule, fetchClasses} = require('../services/schedule');
+const {processNewsUpdates} = require('../services/news');
 const {getLatest} = require('../db/news');
 const {celebrate, Joi, errors} = require('celebrate');
 const {updateSchool,} = require('../db/admin');
@@ -51,6 +53,16 @@ app.get('/news', async (req, res) => {
 
 app.post('/mail', mailBody, async (req, res) => {
   res.send(await send(req.body.to, req.body.subject, req.body.title, req.body.text))
+});
+
+app.post('/update', async (req, res) => {
+  fetchNewSchedule();
+  fetchClasses();
+  processNewsUpdates();
+  res.send({
+    status: 'ok',
+    message: 'Processing updates',
+  })
 });
 
 app.put('/school/:schoolId', schoolBody, async (req, res, next) => {
