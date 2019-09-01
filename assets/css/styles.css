@@ -765,6 +765,14 @@ input[type='checkbox'] {
     height: 110%;
 }
 
+@media only screen and (max-width: 779px) {
+    .header {
+        background: linear-gradient(to bottom right, rgba(72, 72, 212, 0), rgba(241, 104, 104, 0)), url('../images/header-background.jpg') center center no-repeat;
+        background-size: cover;
+        height: unset;
+    }
+}
+
 .header .header-content {
 	padding-top: 8.5rem;
 	padding-bottom: 7rem;
