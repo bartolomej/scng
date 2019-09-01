@@ -5,7 +5,6 @@ const fs = require('fs');
 const winston = require('winston');
 const bodyParser = require('body-parser');
 const handlebars = require('express-handlebars');
-const fileUpload = require('express-fileupload');
 require('dotenv').config({path: path.join(__dirname, '..', '.env')});
 const {ConnectionStringParser} = require("connection-string-parser");
 const {NotFoundError} = require('./errors');
@@ -32,6 +31,11 @@ const connectionStringParser = new ConnectionStringParser({
 let connectionObject;
 if (process.env.DATABASE_URL) {
   connectionObject = connectionStringParser.parse(process.env.DATABASE_URL);
+  logger.log({
+    level: 'info',
+    message: `Found mysql connection string`,
+    description: process.env.DATABASE_URL
+  });
 }
 
 // create assets folder if not found
@@ -55,7 +59,6 @@ createConnection(process.env.DATABASE_URL ?
   app.set('views', path.join(__dirname, 'views'));
   app.enable("trust proxy");
   app.use(bodyParser.json());
-  app.use(fileUpload());
 
   // register routes
   app.use('/', require('./api/website'));
@@ -89,6 +92,7 @@ createConnection(process.env.DATABASE_URL ?
     }
     console.log(`Server listening on port: ${process.env.PORT || 3000}`)
   });
+
 }).catch(error => {
   console.error(error);
   process.exit(1);
