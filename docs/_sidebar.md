@@ -15,7 +15,7 @@
 
 - Strezniska aplikacija
 
-  - [Struktura projekta]()
+  - [Struktura projekta](server-app/project-structure.md)
   - [API dokumentacija]()
 
 - Mobilna aplikacija

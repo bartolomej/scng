@@ -16,7 +16,7 @@ module.exports = async function () {
 };
 
 async function initializeDb() {
-  let filePath = path.join(__dirname, 'schools.json');
+  let filePath = path.join(__dirname, '..', 'schools.json');
   let schools = JSON.parse(fs.readFileSync(filePath, 'utf8'));
   schools.forEach(async school => {
     await saveSchool(
