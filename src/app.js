@@ -11,6 +11,8 @@ const {NotFoundError} = require('./errors');
 const ormconfig = require('../ormconfig');
 const app = express();
 require("reflect-metadata");
+// simple req stats -> TODO: remove in the future
+const stats = require('./stats');
 
 
 let logger = winston.createLogger({
@@ -51,6 +53,9 @@ createConnection(process.env.DATABASE_URL ?
 
   // initialize db and register job workers
   await require('./jobs')();
+
+  // remove in the future
+  app.use(stats());
 
   // configure middleware
   app.use('/assets', express.static('assets'));

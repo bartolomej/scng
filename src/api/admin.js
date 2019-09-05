@@ -7,6 +7,7 @@ const {getLatest} = require('../db/news');
 const {celebrate, Joi, errors} = require('celebrate');
 const {updateSchool, getSubscribers} = require('../db/admin');
 const {send} = require('../services/mail');
+const {getStats} = require('../stats');
 
 
 const schoolBody = celebrate({
@@ -53,6 +54,10 @@ app.get('/school', async (req, res) => {
 
 app.get('/news', async (req, res) => {
   res.send(await getLatest());
+});
+
+app.get('/stats', async (req, res) => {
+  res.send(getStats());
 });
 
 app.post('/mail', mailBody, async (req, res) => {
