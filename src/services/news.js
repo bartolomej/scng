@@ -36,8 +36,8 @@ async function updateArticles(schoolId, schoolPageLink, pageVersion) {
 
   logger.log({
     level: 'info',
-    message: `Updating articles for school ${schoolId}`,
-    description: `School href: ${schoolPageLink}`
+    message: `Updating articles`,
+    description: `school: ${schoolId}`
   });
 
   if (pageVersion !== 'v1') {
@@ -50,8 +50,9 @@ async function updateArticles(schoolId, schoolPageLink, pageVersion) {
   } catch (e) {
     logger.log({
       level: 'error',
-      message: `Fetching article from ${schoolPageLink} failed`,
-      description: e.message,
+      message: `Fetching article failed`,
+      description: `school: ${schoolId}`,
+      errorMessage: e.message,
       stack: e.stack
     });
     return;
@@ -62,8 +63,9 @@ async function updateArticles(schoolId, schoolPageLink, pageVersion) {
   } catch (e) {
     logger.log({
       level: 'error',
-      message: `Parsing article from ${schoolPageLink} failed`,
-      description: e.message,
+      message: `Parsing article failed`,
+      description: `school: ${schoolId}`,
+      errorMessage: e.message,
       stack: e.stack
     });
     return;
@@ -88,8 +90,9 @@ async function updateArticles(schoolId, schoolPageLink, pageVersion) {
     } catch (e) {
       logger.log({
         level: 'error',
-        message: `Saving article "${article.title}" failed`,
-        description: e.message,
+        message: `Saving article failed`,
+        description: `school: ${schoolId}, article: "${article.title}"`,
+        errorMessage: e.message,
         stack: e.stack
       });
     }

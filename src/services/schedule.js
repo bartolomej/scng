@@ -27,7 +27,7 @@ async function fetchNewSchedule() {
   });
 
   classes.forEach(async cl => {
-    let week = moment().week() + 17;
+    let week = moment().diff(moment('02.09.2019', 'DD.MM.YYYY'), 'week') + 1;
     for (let i = 0; i < WEEKS_IN_ADVANCE; i++) {
       let response = await fetchSchedule(cl.school.id, cl.id, week + i);
       let schedule = parseScheduleTable(response);
@@ -41,8 +41,9 @@ async function fetchNewSchedule() {
       } catch (e) {
         logger.log({
           level: 'error',
-          message: `Parse timetable for class ${cl.id} failed`,
-          description: e.message,
+          message: `Parsing timetable failed`,
+          description: `school: ${cl.school.id}, class: ${cl.id}`,
+          errorMessage: e.message,
           stack: e.stack
         });
       }
@@ -58,7 +59,8 @@ async function fetchClasses() {
     }
     logger.log({
       level: 'info',
-      message: `Fetching class for ${school.timetableUrl}`,
+      message: `Fetching classes`,
+      description: `school: ${school.id}`
     });
 
     let schedulePage;
@@ -68,8 +70,9 @@ async function fetchClasses() {
     } catch (e) {
       logger.log({
         level: 'error',
-        message: `Fetching school ${school.id} timetable failed`,
-        description: e.message,
+        message: `Fetching classes failed`,
+        description: `school: ${school.id}`,
+        errorMessage: e.message,
         stack: e.stack
       });
       return;
@@ -78,12 +81,18 @@ async function fetchClasses() {
     parseClasses(schedulePage).forEach(async schoolClass => {
       let {id, name} = schoolClass;
       try {
-        await saveClass(id, name, school.id)
+        await saveClass(id, name, school.id);
+        logger.log({
+          level: 'error',
+          message: `Saved class`,
+          description: `school: ${school.id}, class: ${schoolClass.id}`
+        });
       } catch (e) {
         logger.log({
           level: 'error',
-          message: `Saving ${schoolClass.id} class failed`,
-          description: e.message,
+          message: `Saving class failed`,
+          description: `school: ${school.id}, class: ${schoolClass.id}`,
+          errorMessage: e.message,
           stack: e.stack
         });
       }

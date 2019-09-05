@@ -23,7 +23,7 @@ module.exports.sendMessageToAdmin = async function (email, message) {
     logger.log({
       level: 'error',
       message: `Message to admin failed to send`,
-      description: e.message
+      errorMessage: e.message
     });
     return Promise.reject(new Error("Message failed to send"));
   }
