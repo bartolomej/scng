@@ -1,11 +1,11 @@
 module.exports.normal = {
   "type": "mysql",
-  "host": process.env.HOST,
-  "port": process.env.DATABASE_PORT,
+  "host": process.env.DB_HOST,
+  "port": process.env.DB_PORT,
   "synchronize": true,
-  "username": process.env.USERNAME,
-  "password": process.env.PASSWORD,
-  "database": process.env.DATABASE,
+  "username": process.env.DB_USER,
+  "password": process.env.DB_PASSWORD,
+  "database": process.env.DB_NAME,
   "entities": [
     "src/models/*.js"
   ],

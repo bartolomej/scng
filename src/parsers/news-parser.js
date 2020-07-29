@@ -18,7 +18,7 @@ module.exports.parseHomePageV1 = function (html) {
     const title = formatTitle($('h4.title', content).text()); // TODO: test formatTitle before commit v1
     const date = removeWhitespace($('div.date', content).text());
     const href = formatText($('a.main-button', article).attr('href'));
-    if (!exists(title)) articles.push({date, title, href});
+    if (!exists(title)) articles.push({ date, title, href });
   });
   return articles;
 };
@@ -66,19 +66,19 @@ module.exports.parseDateV2 = function (dateString) {
   let dateParts = dateString.split(/[,.]/);
   return moment({
     year: Number.parseInt(dateParts[2]),
-    month: months.indexOf(dateParts[1])+1,
+    month: months.indexOf(dateParts[1]) + 1,
     day: Number.parseInt(dateParts[0])
   });
 };
 
-function formatText(text) {
+function formatText (text) {
   return text
     .replace(/\n/g, ' ')
     .replace(/\t/g, '')
     .replace(/^\s+|\s+$|\s+(?=\s)/g, '');
 }
 
-function formatTitle(title) {
+function formatTitle (title) {
   let parts = formatText(title).split(/\s+/);
   for (let i = 0; i < parts.length; i++) {
     parts[i] = parts[i].toLowerCase();
@@ -94,7 +94,7 @@ function formatTitle(title) {
   return result;
 }
 
-function removeWhitespace(text) {
+function removeWhitespace (text) {
   return text.replace(/ */g, '');
 }
 

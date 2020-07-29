@@ -1,9 +1,8 @@
 require('reflect-metadata');
 const fetch = require('node-fetch');
-const {parseHomePageV1, parseArticlePageV1, parseDateV1, parseDateV2} = require('../parsers/news-parser');
+const { parseHomePageV1, parseArticlePageV1, parseDateV1, parseDateV2 } = require('../parsers/news-parser');
 const winston = require('winston');
-const {save, getSchools} = require('../db/news');
-
+const { save, getSchools } = require('../db/news');
 
 let logger = winston.createLogger({
   level: 'info',
@@ -14,7 +13,7 @@ let logger = winston.createLogger({
   ]
 });
 
-async function processUpdates() {
+async function processUpdates () {
   let schools = await getSchools();
   schools.forEach(async school => {
     try {
@@ -30,7 +29,7 @@ async function processUpdates() {
   });
 }
 
-async function updateArticles(schoolId, schoolPageLink, pageVersion) {
+async function updateArticles (schoolId, schoolPageLink, pageVersion) {
   let articles;
   let homePage;
 
@@ -74,7 +73,7 @@ async function updateArticles(schoolId, schoolPageLink, pageVersion) {
   articles.forEach(async article => {
     let response = await fetch(article.href);
     let html = await response.text();
-    let {content} = parseArticlePageV1(html);
+    let { content } = parseArticlePageV1(html);
 
     let date;
     if (schoolPageLink.includes('ers') ||

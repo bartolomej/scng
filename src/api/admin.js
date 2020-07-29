@@ -1,14 +1,12 @@
 const app = require('express').Router();
 const basicAuth = require('express-basic-auth');
-const {saveSchool, getSchools} = require('../db/schedule');
-const {fetchNewSchedule, fetchClasses} = require('../services/schedule');
-const {processNewsUpdates} = require('../services/news');
-const {getLatest} = require('../db/news');
-const {celebrate, Joi, errors} = require('celebrate');
-const {updateSchool, getSubscribers} = require('../db/admin');
-const {send} = require('../services/mail');
-const {getStats} = require('../stats');
-
+const { saveSchool, getSchools } = require('../db/schedule');
+const { fetchNewSchedule, fetchClasses } = require('../services/schedule');
+const { processNewsUpdates } = require('../services/news');
+const { getLatest } = require('../db/news');
+const { celebrate, Joi, errors } = require('celebrate');
+const { updateSchool, getSubscribers } = require('../db/admin');
+const { send } = require('../services/mail');
 
 const schoolBody = celebrate({
   body: Joi.object().keys({
@@ -33,7 +31,7 @@ const mailBody = celebrate({
 
 app.use(basicAuth({
   users: {
-    'admin': process.env.ADMIN_PASS,
+    'admin': process.env.ADMIN_PASSWORD,
   },
   unauthorizedResponse: req => ({
     status: 'error',
@@ -54,10 +52,6 @@ app.get('/school', async (req, res) => {
 
 app.get('/news', async (req, res) => {
   res.send(await getLatest());
-});
-
-app.get('/stats', async (req, res) => {
-  res.send(getStats());
 });
 
 app.post('/mail', mailBody, async (req, res) => {
@@ -85,7 +79,9 @@ app.put('/school/:schoolId', schoolBody, async (req, res, next) => {
       req.body.logo,
       req.body.siteVersion
     ));
-  } catch (e) { next(e) }
+  } catch (e) {
+    next(e)
+  }
 });
 
 app.post('/school', schoolBody, async (req, res, next) => {
@@ -99,7 +95,9 @@ app.post('/school', schoolBody, async (req, res, next) => {
       req.body.logo,
       req.body.siteVersion
     ));
-  } catch (e) { next(e) }
+  } catch (e) {
+    next(e)
+  }
 });
 
 app.use(errors());

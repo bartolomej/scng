@@ -8,7 +8,6 @@ const {
   parseClasses
 } = require('./schedule-parser').test;
 
-
 describe('Parse classes selection box', function () {
 
   it('should parse class names and ids', async function () {
@@ -19,7 +18,6 @@ describe('Parse classes selection box', function () {
   });
 
 });
-
 
 describe('Parse table elements', function () {
 
@@ -168,7 +166,6 @@ describe('Parse table elements', function () {
   });
 
 });
-
 
 describe('Parse html tree data structure', function () {
 
@@ -334,9 +331,7 @@ describe('Parse html tree data structure', function () {
           group: ''
         }
       ],
-      [
-
-      ],
+      [],
       [
         {
           type: 'normal',
@@ -441,14 +436,13 @@ describe('Parse html tree data structure', function () {
 
 });
 
-
 describe('Tests with network request data', function () {
 
   it('should table full schedule table without lessons', async function () {
     const table = await fetch('https://www.easistent.com/urniki/ajax_urnik', {
       method: 'POST',
       body: 'id_sola=224&id_razred=343294&id_dijak=0&teden=43&qversion=17',
-      headers: {'Content-Type': `application/x-www-form-urlencoded`}
+      headers: { 'Content-Type': `application/x-www-form-urlencoded` }
     }).then(res => res.text());
 
     const parsed = parseScheduleTable(table);
@@ -461,7 +455,7 @@ describe('Tests with network request data', function () {
     const table = await fetch('https://www.easistent.com/urniki/ajax_urnik', {
       method: 'POST',
       body: 'id_sola=224&id_razred=343294&id_dijak=0&teden=39&qversion=17\'',
-      headers: {'Content-Type': `application/x-www-form-urlencoded`}
+      headers: { 'Content-Type': `application/x-www-form-urlencoded` }
     }).then(res => res.text());
 
     const parsed = parseScheduleTable(table);

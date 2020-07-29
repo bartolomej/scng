@@ -12,24 +12,22 @@ Documentation website is available [here](https://bartolomej.github.io/scng-api/
 4. Run all tests with `jest test`
 5. Run application with `npm start`
 
-### Environment variables
+### App configuration
 
-```
-// .env file in root
+Instead of hard-coding config into some file that is committed to git, it is a good practise to provide app configuration values is via "environmental variables".
 
-NAME = scng
-PORT = <port>
-NODE_ENV = <development/production>
-CONNECTION = mysql
-HOST = localhost
-USERNAME = <user>
-PASSWORD = <password>
-DATABASE = scng
-DATABASE_PORT = 3306
-LOGGING = false
-ADMIN_PASS = <admin-mail-password>
-ADMIN_EMAIL = <admin-mail>
-MAIL_USER = <mail>
-MAIL_PASS = <mail-password>
-GITHUB_TOKEN = <github-auth2-token>
-```
+That way you achieve a healthy separation of configuration (the inputs that the app receives) and the application itself.
+Read more about "good practises" [here](*https://12factor.net/config).
+
+An example configuration file can be found under `./env.examples`.
+
+### How to configure email service
+
+1. Create a new dummy google account
+2. [Disable 2FA auth](https://support.google.com/accounts/answer/1064203?co=GENIE.Platform%3DDesktop&hl=en) so that app can login autonomously without your confirmation
+3. Allow access for less secure apps [here](https://myaccount.google.com/lesssecureapps)
+3. Provide google account credentials to environmental variables
+
+### Common issue solutions
+
+- [You get `ER_NOT_SUPPORTED_AUTH_MODE` on startup](https://github.com/typeorm/typeorm/issues/2093#issuecomment-574613981)

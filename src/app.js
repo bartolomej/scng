@@ -5,15 +5,11 @@ const fs = require('fs');
 const winston = require('winston');
 const bodyParser = require('body-parser');
 const handlebars = require('express-handlebars');
-require('dotenv').config({path: path.join(__dirname, '..', '.env')});
-const {ConnectionStringParser} = require("connection-string-parser");
-const {NotFoundError} = require('./errors');
+require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
+const { ConnectionStringParser } = require("connection-string-parser");
 const ormconfig = require('../ormconfig');
 const app = express();
 require("reflect-metadata");
-// simple req stats -> TODO: remove in the future
-const stats = require('./stats');
-
 
 let logger = winston.createLogger({
   level: 'info',
@@ -24,14 +20,13 @@ let logger = winston.createLogger({
   ]
 });
 
-// parse connection string if present
-const connectionStringParser = new ConnectionStringParser({
-  scheme: "mysql",
-  hosts: []
-});
-
 let connectionObject;
 if (process.env.DATABASE_URL) {
+  // parse connection string if passed as env variable
+  const connectionStringParser = new ConnectionStringParser({
+    scheme: "mysql",
+    hosts: []
+  });
   connectionObject = connectionStringParser.parse(process.env.DATABASE_URL);
   logger.log({
     level: 'info',
@@ -52,10 +47,7 @@ createConnection(process.env.DATABASE_URL ?
 ).then(async () => {
 
   // initialize db and register job workers
-  await require('./jobs')();
-
-  // remove in the future
-  app.use(stats());
+  require('./jobs')();
 
   // configure middleware
   app.use('/assets', express.static('assets'));

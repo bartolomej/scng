@@ -2,10 +2,9 @@ require('reflect-metadata');
 const fetch = require('node-fetch');
 const moment = require('moment');
 const winston = require('winston');
-const {parseScheduleTable, parseClasses} = require('../parsers/schedule-parser');
-const {getSchools, saveClass, getAllClasses} = require('../db/schedule');
-const {saveTimetable} = require('../parsers/table-serializer');
-
+const { parseScheduleTable, parseClasses } = require('../parsers/schedule-parser');
+const { getSchools, saveClass, getAllClasses } = require('../db/schedule');
+const { saveTimetable } = require('../parsers/table-serializer');
 
 let logger = winston.createLogger({
   level: 'info',
@@ -16,7 +15,7 @@ let logger = winston.createLogger({
   ]
 });
 
-async function fetchNewSchedule() {
+async function fetchNewSchedule () {
   // fetch n weeks of schedule in advance
   const WEEKS_IN_ADVANCE = 3;
   let classes = await getAllClasses();
@@ -51,7 +50,7 @@ async function fetchNewSchedule() {
   });
 }
 
-async function fetchClasses() {
+async function fetchClasses () {
   let schools = await getSchools();
   schools.forEach(async school => {
     if (school.timetableUrl === '') {
@@ -79,7 +78,7 @@ async function fetchClasses() {
     }
 
     parseClasses(schedulePage).forEach(async schoolClass => {
-      let {id, name} = schoolClass;
+      let { id, name } = schoolClass;
       try {
         await saveClass(id, name, school.id);
         logger.log({
@@ -100,14 +99,14 @@ async function fetchClasses() {
   });
 }
 
-async function fetchSchedule(schoolId, classId, week, studentId = 0) {
+async function fetchSchedule (schoolId, classId, week, studentId = 0) {
   const response = await fetch('https://www.easistent.com/urniki/ajax_urnik', {
     method: 'POST',
     body: `id_sola=${schoolId}&` +
-          `id_razred=${classId}&` +
-          `id_dijak=${studentId}&` +
-          `teden=${week}&qversion=17`,
-    headers: {'Content-Type': `application/x-www-form-urlencoded`}
+      `id_razred=${classId}&` +
+      `id_dijak=${studentId}&` +
+      `teden=${week}&qversion=17`,
+    headers: { 'Content-Type': `application/x-www-form-urlencoded` }
   });
   return await response.text();
 }

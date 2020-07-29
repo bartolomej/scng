@@ -1,6 +1,6 @@
 const moment = require('moment');
 const crypto = require('crypto');
-const {saveLesson, saveTimetable} = require('../db/schedule');
+const { saveLesson, saveTimetable } = require('../db/schedule');
 
 /**
  * Serializes and saves timetable array
@@ -12,12 +12,12 @@ module.exports.saveTimetable = async function (table, classId) {
   for (let d = 0; d < 5; d++) {
     let date = parseDate(table[0][d].date);
     for (let l = 1; l < table.length; l++) {
-      let {start, end} = parsePeriod(table[l][0].period, date);
-      let lessons = table[l][d+1];
+      let { start, end } = parsePeriod(table[l][0].period, date);
+      let lessons = table[l][d + 1];
       let timetableId = hash(date.format('DD-MM-YYYY') + (l - 1) + classId);
       await saveTimetable(timetableId, date.toDate(), l - 1, classId);
       for (let i = 0; i < lessons.length; i++) {
-        let {type, fullName, shortName, teacher, classRoom, group} = lessons[i];
+        let { type, fullName, shortName, teacher, classRoom, group } = lessons[i];
         let lessonId = hash(timetableId + lessons[i].shortName);
         await saveLesson(
           lessonId, timetableId, type, start.toDate(), end.toDate(),
@@ -28,7 +28,7 @@ module.exports.saveTimetable = async function (table, classId) {
   }
 };
 
-function parsePeriod(period, date) {
+function parsePeriod (period, date) {
   let p = period.split(' - ').map(t => t.split(':'));
   let start = moment(date);
   let end = moment(date);
@@ -38,10 +38,10 @@ function parsePeriod(period, date) {
   end.hours(Number.parseInt(p[1][0]));
   end.minutes(Number.parseInt(p[1][1]));
   end.seconds(0);
-  return {start, end};
+  return { start, end };
 }
 
-function parseDate(date) {
+function parseDate (date) {
   let parsed = date.replace(' ', '').split('.');
   let m = moment();
   m.date(Number.parseInt(parsed[0]));
@@ -49,7 +49,7 @@ function parseDate(date) {
   return m;
 }
 
-function hash(string) {
+function hash (string) {
   return crypto.createHash('md5')
     .update(string).digest('hex');
 }

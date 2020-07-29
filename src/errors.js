@@ -1,5 +1,5 @@
 module.exports.ValidationError = class ValidationError extends Error {
-  constructor(message, description) {
+  constructor (message, description) {
     super(message);
 
     if (Error.captureStackTrace) {
@@ -13,7 +13,7 @@ module.exports.ValidationError = class ValidationError extends Error {
 };
 
 module.exports.NotFoundError = class NotFoundError extends Error {
-  constructor(message, description) {
+  constructor (message, description) {
     super(message);
 
     if (Error.captureStackTrace) {
@@ -27,7 +27,7 @@ module.exports.NotFoundError = class NotFoundError extends Error {
 };
 
 module.exports.ConflictError = class ConflictError extends Error {
-  constructor(message, description) {
+  constructor (message, description) {
     super(message);
 
     if (Error.captureStackTrace) {
@@ -41,7 +41,7 @@ module.exports.ConflictError = class ConflictError extends Error {
 };
 
 module.exports.InternalError = class InternalError extends Error {
-  constructor(message, description) {
+  constructor (message, description) {
     super(message);
 
     if (Error.captureStackTrace) {

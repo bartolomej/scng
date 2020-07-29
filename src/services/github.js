@@ -1,7 +1,6 @@
 const fetch = require('node-fetch');
 const winston = require('winston');
 
-
 let logger = winston.createLogger({
   level: 'info',
   format: winston.format.json(),
@@ -11,6 +10,10 @@ let logger = winston.createLogger({
   ]
 });
 
+/**
+ * Fetches remote repository contribution statistics from Github API.
+ * [Github REST API docs](https://developer.github.com/v3/)
+ */
 module.exports.getReposDetails = async function () {
   const HOST = 'https://api.github.com';
 
@@ -31,7 +34,7 @@ module.exports.getReposDetails = async function () {
   } catch (e) {
     logger.log({
       level: 'error',
-      message: `Subscriber save failed`,
+      message: `Request to Github failed`,
       description: e.message
     });
     return Promise.reject(new Error("Request to GitHub failed"));
@@ -61,7 +64,7 @@ module.exports.getReposDetails = async function () {
   }
 };
 
-function calculateTotalCommits(commitActivity) {
+function calculateTotalCommits (commitActivity) {
   let totalCommits = 0;
   for (let i = 0; i < commitActivity.length; i++) {
     totalCommits += commitActivity[i].total;
@@ -69,12 +72,13 @@ function calculateTotalCommits(commitActivity) {
   return totalCommits;
 }
 
-async function request(url) {
-  let response = await fetch(url, {
-    method: 'GET',
-    headers: {
-      Authorization: `token ${process.env.GITHUB_TOKEN}`
-    }
-  });
+async function request (url) {
+  let headers = {};
+  if (process.env["GITHUB_TOKEN"]) {
+    headers["Authorization"] = `token ${process.env.GITHUB_TOKEN}`;
+  } else {
+    logger.info("Making request to Github API without auth token (limited to 50 req/hour)")
+  }
+  let response = await fetch(url, { method: 'GET', headers });
   return await response.json();
 }

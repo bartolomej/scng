@@ -1,9 +1,9 @@
 const schedule = require('node-schedule');
 const fs = require('fs');
 const path = require('path');
-const {fetchNewSchedule, fetchClasses} = require('./services/schedule');
-const {saveSchool} = require('./db/schedule');
-const {processNewsUpdates} = require('./services/news');
+const { fetchNewSchedule, fetchClasses } = require('./services/schedule');
+const { saveSchool } = require('./db/schedule');
+const { processNewsUpdates } = require('./services/news');
 
 module.exports = async function () {
   if (process.env.NODE_ENV !== 'development') {
@@ -15,7 +15,7 @@ module.exports = async function () {
   }
 };
 
-async function initializeDb() {
+async function initializeDb () {
   let filePath = path.join(__dirname, '..', 'schools.json');
   let schools = JSON.parse(fs.readFileSync(filePath, 'utf8'));
   schools.forEach(async school => {
@@ -30,7 +30,9 @@ async function initializeDb() {
   });
 }
 
-async function registerWorkers() {
+async function registerWorkers () {
+  // schedule daily updates
+  // DOCS: https://github.com/node-schedule/node-schedule
   schedule.scheduleJob({
     hour: 20,
     minute: 0,

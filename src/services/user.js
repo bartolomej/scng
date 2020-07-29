@@ -1,7 +1,6 @@
-const {saveSubscriber, getSubscriber} = require('../db/user');
-const {send} = require('./mail');
+const { saveSubscriber, getSubscriber } = require('../db/user');
+const { send } = require('./mail');
 const winston = require('winston');
-
 
 let logger = winston.createLogger({
   level: 'info',
@@ -11,7 +10,6 @@ let logger = winston.createLogger({
     new winston.transports.Console
   ]
 });
-
 
 module.exports.sendMessageToAdmin = async function (email, message) {
 
@@ -34,26 +32,15 @@ module.exports.sendMessageToAdmin = async function (email, message) {
   }
 };
 
-
 module.exports.subscribe = async function (school, email) {
 
+  // check if user already subscribed to email news
   try {
     let currentSubscriber = await getSubscriber(email);
     if (currentSubscriber) {
       return Promise.reject(new Error("Already subscribed"))
     }
   } catch (e) {}
-
-  try {
-    await saveSubscriber(email, school);
-  } catch (e) {
-    logger.log({
-      level: 'error',
-      message: `Subscriber save failed`,
-      description: e.message
-    });
-    return Promise.reject(new Error("Subscription save failed"));
-  }
 
   try {
     send(email, 'OBVESTILO O NAROCANJU 👻',
@@ -67,6 +54,18 @@ module.exports.subscribe = async function (school, email) {
       description: e.message
     });
     return Promise.reject(new Error("Subscription mail failed to send"));
+  }
+
+  // remember subscriber
+  try {
+    await saveSubscriber(email, school);
+  } catch (e) {
+    logger.log({
+      level: 'error',
+      message: `Subscriber save failed`,
+      description: e.message
+    });
+    return Promise.reject(new Error("Subscription save failed"));
   }
 
   return {

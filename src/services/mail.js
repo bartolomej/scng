@@ -2,7 +2,6 @@ const nodemailer = require('nodemailer');
 const hbs = require('nodemailer-express-handlebars');
 const winston = require('winston');
 
-
 let logger = winston.createLogger({
   level: 'info',
   format: winston.format.json(),
@@ -12,11 +11,15 @@ let logger = winston.createLogger({
   ]
 });
 
+/**
+ * Nodemailer is a email transporter library for Node.js.
+ * [Nodemailer documentation](https://nodemailer.com/about/)
+ */
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: process.env.MAIL_USER,
-    pass: process.env.MAIL_PASS
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASSWORD
   }
 });
 
@@ -32,8 +35,9 @@ transporter.use('compile', hbs({
 
 module.exports.send = async function (to, subject, title, text, attachments = []) {
   const message = {
-    from: 'SCNG APP 📱' + '<' + process.env.MAIL_USER + '>',
-    to, subject,
+    from: 'SCNG APP 📱' + '<' + process.env.EMAIL_USER + '>',
+    to,
+    subject,
     attachments,
     text, // plain text version of the message
     template: 'email',

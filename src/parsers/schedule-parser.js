@@ -4,7 +4,7 @@ const $ = require('cheerio');
  * Parses classes from <select> element
  * on easistent.com schedule page
  */
-function parseClasses(html) {
+function parseClasses (html) {
   let parsedClasses = [];
   let selectionBox = $('#id_parameter', html);
   $('option', selectionBox).each((i, ele) => {
@@ -16,7 +16,7 @@ function parseClasses(html) {
   return parsedClasses;
 }
 
-function parseScheduleTable(html) {
+function parseScheduleTable (html) {
   let parsedRows = [];
   $('tr', html).each((i, ele) => {
     let row = [];
@@ -36,7 +36,7 @@ function parseScheduleTable(html) {
  * Parses <th> elements with
  * day of the week and date values
  */
-function parseScheduleTopRow(trNode) {
+function parseScheduleTopRow (trNode) {
   return $('th', trNode).map((i, ele) => {
     if (i === 0) return null;
     else return {
@@ -50,7 +50,7 @@ function parseScheduleTopRow(trNode) {
  * Parses single table body box
  * used for lessons
  */
-function parseScheduleRow(trNode) {
+function parseScheduleRow (trNode) {
   let tableRow = [];
   $('td.ednevnik-seznam_ur_teden-td', trNode).each((i, ele) => {
     if (i === 0) {
@@ -66,7 +66,7 @@ function parseScheduleRow(trNode) {
  * Parses corner table boxes with
  * lesson time information
  */
-function parseTimeTableData(node) {
+function parseTimeTableData (node) {
   return {
     index: $($(node)[0].children[1]).text(),
     period: $($(node)[0].children[3]).text()
@@ -77,7 +77,7 @@ function parseTimeTableData(node) {
  * Parses main box with details
  * about lesson
  */
-function parseLessonTableData(node) {
+function parseLessonTableData (node) {
   const groups = $('.ednevnik-seznam_ur_teden-urnik', node);
   return groups.map((i, ele) => {
     if ($('span', ele).length !== 0) {
@@ -107,7 +107,7 @@ function parseLessonTableData(node) {
   }).get();
 }
 
-function formatText(text) {
+function formatText (text) {
   return text
     .replace(/\n/g, ' ')
     .replace(/\t/g, '')

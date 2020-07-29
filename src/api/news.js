@@ -1,9 +1,8 @@
 const app = require('express').Router();
-const {getLatest, getSchools} = require('../db/news');
-const {NotFoundError} = require('../errors');
+const { getLatest, getSchools } = require('../db/news');
+const { NotFoundError } = require('../errors');
 const fs = require('fs');
 const path = require('path');
-
 
 app.get('/', async (req, res) => {
   res.send(await getLatest(10));
@@ -20,7 +19,5 @@ app.get('/logo/:id', async (req, res, next) => {
     next(new NotFoundError(`Image ${req.params.id} not found`))
   });
 });
-
-
 
 module.exports = app;
