@@ -1,1 +1,0 @@
-(**STRAN JE V IZDELAVI**)

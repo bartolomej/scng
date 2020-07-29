@@ -1,0 +1,10 @@
+{
+  "name": "SCNG API",
+  "description": "Backend application for SCNG.",
+  "repository": "https://github.com/bartolomej/scng-api",
+  "logo": "https://github.com/bartolomej/scng-api/blob/master/assets/images/logo/scng.png?raw=true",
+  "keywords": ["node", "express", "api", "scng"],
+  "addons": [
+    "jawsdb"
+  ]
+}

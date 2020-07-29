@@ -1,5 +1,5 @@
 {
-   "name": "scng-api-service",
+   "name": "scng-api",
    "version": "1.0.0",
    "description": "A restfull scng api service",
    "main": "app.js",

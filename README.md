@@ -1,4 +1,11 @@
-# SCNG services
+<p align="center">
+    <img width="200" src="./assets/images/logo/scng.png" />
+</p>
+
+# SCNG API
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
 
 This is a back-end system for SCNG APP. <br>
 You can find front-end mobile app repository [here](https://github.com/bartolomej/scng-mobile).<br>
@@ -17,7 +24,7 @@ Documentation website is available [here](https://bartolomej.github.io/scng-api/
 Instead of hard-coding config into some file that is committed to git, it is a good practise to provide app configuration values is via "environmental variables".
 
 That way you achieve a healthy separation of configuration (the inputs that the app receives) and the application itself.
-Read more about "good practises" [here](*https://12factor.net/config).
+Read more about "good practises" [here](https://12factor.net/config).
 
 An example configuration file can be found under `./env.examples`.
 
