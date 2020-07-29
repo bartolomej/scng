@@ -19,6 +19,14 @@ Documentation website is available [here](https://bartolomej.github.io/scng-api/
 4. Run all tests with `jest test`
 5. Run application with `npm start`
 
+### Some tech used
+- [TypeORM](https://typeorm.io/) - Object Relational Mapper for Node.js
+- [Nodemailer](https://nodemailer.com/about/) - simple email module for Node.js
+- [Cheerio](https://cheerio.js.org/) - HTML parsing
+- [Winston](https://github.com/winstonjs/winston) - universal logging library
+- [Heroku](https://heroku.com/) - cloud deployment platform
+- [Handlebars](https://handlebarsjs.com/) - templating engine
+
 ### App configuration
 
 Instead of hard-coding config into some file that is committed to git, it is a good practise to provide app configuration values is via "environmental variables".
@@ -34,6 +42,12 @@ An example configuration file can be found under `./env.examples`.
 2. [Disable 2FA auth](https://support.google.com/accounts/answer/1064203?co=GENIE.Platform%3DDesktop&hl=en) so that app can login autonomously without your confirmation
 3. Allow access for less secure apps [here](https://myaccount.google.com/lesssecureapps)
 3. Provide google account credentials to environmental variables
+
+### Deployment
+
+The easiest way to deploy this app is using Heroku platform:
+1. click deploy to heroku button (located at the top of readme)
+2. set environment variables under `settings -> config vars`
 
 ### Common issue solutions
 
