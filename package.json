@@ -40,7 +40,7 @@
       "nodemailer": "6.3.0",
       "nodemailer-express-handlebars": "3.1.0",
       "reflect-metadata": "^0.1.10",
-      "typeorm": "0.2.18",
+      "typeorm": "0.2.25",
       "uuid": "latest",
       "winston": "^3.2.1"
    },
