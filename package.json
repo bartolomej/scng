@@ -22,7 +22,7 @@
    },
    "homepage": "https://github.com/bartolomej/scng#readme",
    "dependencies": {
-      "@hapi/hapi": "^18.3.1",
+      "@hapi/hapi": "^18.4.1",
       "body-parser": "^1.19.0",
       "celebrate": "10.0.1",
       "cheerio": "^1.0.0-rc.3",
